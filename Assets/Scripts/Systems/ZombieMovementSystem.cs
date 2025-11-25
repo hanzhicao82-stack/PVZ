@@ -11,10 +11,20 @@ namespace PVZ.DOTS.Systems
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     public partial struct ZombieMovementSystem : ISystem
     {
+        private bool _hasLoggedStart;
+
         public void OnUpdate(ref SystemState state)
         {
+            // 检查游戏状态
+            if (SystemAPI.TryGetSingleton<GameStateComponent>(out var gameState))
+            {
+                if (gameState.CurrentState != GameState.Playing)
+                    return;
+            }
+
             float deltaTime = SystemAPI.Time.DeltaTime;
 
+            int zombieCount = 0;
             // 遍历所有僵尸实体，更新它们的位置
             foreach (var (transform, zombie) in 
                 SystemAPI.Query<RefRW<LocalTransform>, RefRO<ZombieComponent>>())
@@ -23,6 +33,13 @@ namespace PVZ.DOTS.Systems
                 float3 position = transform.ValueRO.Position;
                 position.x -= zombie.ValueRO.MovementSpeed * deltaTime;
                 transform.ValueRW.Position = position;
+                zombieCount++;
+            }
+
+            if (!_hasLoggedStart && zombieCount > 0)
+            {
+                UnityEngine.Debug.Log($"ZombieMovementSystem: 开始移动 {zombieCount} 个僵尸");
+                _hasLoggedStart = true;
             }
         }
     }

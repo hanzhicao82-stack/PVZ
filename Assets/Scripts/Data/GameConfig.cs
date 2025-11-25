@@ -23,6 +23,11 @@ namespace PVZ.DOTS.Data
         public float ZombieSpawnStartDelay;
         public int MaxZombiesPerWave;
 
+        // 游戏时间配置
+        public float GameDuration;      // 单局游戏时长（秒）
+        public int TotalWaves;          // 总波次数
+        public int MaxZombiesReached;   // 最多允许几个僵尸到达终点
+
         // 默认配置
         public static GameConfig Default => new GameConfig
         {
@@ -34,7 +39,10 @@ namespace PVZ.DOTS.Data
             MaxSun = 9999,
             ZombieSpawnInterval = 5f,
             ZombieSpawnStartDelay = 10f,
-            MaxZombiesPerWave = 10
+            MaxZombiesPerWave = 10,
+            GameDuration = 180f,        // 3分钟
+            TotalWaves = 5,
+            MaxZombiesReached = 5
         };
     }
 

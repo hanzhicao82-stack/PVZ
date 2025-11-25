@@ -20,9 +20,18 @@ namespace PVZ.DOTS.Config
         [Serializable]
         private class Root
         {
+            public GameSettings gameSettings;
             public ZombieSpawnConfig zombieSpawn;
             public PlantConfigEntry[] plants;
             public ZombieConfigEntry[] zombies;
+        }
+
+        [Serializable]
+        private class GameSettings
+        {
+            public float gameDuration = 180f;
+            public int totalWaves = 5;
+            public int maxZombiesReached = 5;
         }
 
         [Serializable]
@@ -59,8 +68,9 @@ namespace PVZ.DOTS.Config
             public float health;
         }
 
-        void Awake()
+        void Start()  // 改为Start以确保World已初始化
         {
+            UnityEngine.Debug.Log("GameConfigLoader: Start() 开始执行...");
             string json = null;
             if (configJson != null)
             {
@@ -81,6 +91,7 @@ namespace PVZ.DOTS.Config
             {
                 root = new Root
                 {
+                    gameSettings = new GameSettings(),
                     zombieSpawn = new ZombieSpawnConfig(),
                     plants = Array.Empty<PlantConfigEntry>(),
                     zombies = Array.Empty<ZombieConfigEntry>()
@@ -96,6 +107,7 @@ namespace PVZ.DOTS.Config
                     {
                         root = new Root
                         {
+                            gameSettings = new GameSettings(),
                             zombieSpawn = new ZombieSpawnConfig(),
                             plants = Array.Empty<PlantConfigEntry>(),
                             zombies = Array.Empty<ZombieConfigEntry>()
@@ -108,6 +120,7 @@ namespace PVZ.DOTS.Config
                     UnityEngine.Debug.LogError("GameConfigLoader: JSON 解析异常: " + e.Message);
                     root = new Root
                     {
+                        gameSettings = new GameSettings(),
                         zombieSpawn = new ZombieSpawnConfig(),
                         plants = Array.Empty<PlantConfigEntry>(),
                         zombies = Array.Empty<ZombieConfigEntry>()
@@ -139,6 +152,21 @@ namespace PVZ.DOTS.Config
             }
 
             // 设置或添加 GameConfigComponent（僵尸生成相关）
+            // 从第一个僵尸配置获取默认属性，如果没有则使用硬编码默认值
+            float defaultZombieSpeed = 1.0f;
+            float defaultZombieAttack = 10.0f;
+            float defaultZombieInterval = 1.0f;
+            float defaultZombieHealth = 100.0f;
+
+            if (root.zombies != null && root.zombies.Length > 0)
+            {
+                var firstZombie = root.zombies[0];
+                defaultZombieSpeed = firstZombie.movementSpeed;
+                defaultZombieAttack = firstZombie.attackDamage;
+                defaultZombieInterval = firstZombie.attackInterval;
+                defaultZombieHealth = firstZombie.health;
+            }
+
             var componentData = new GameConfigComponent
             {
                 ZombieSpawnInterval = root.zombieSpawn.interval,
@@ -147,10 +175,10 @@ namespace PVZ.DOTS.Config
                 SpawnX = root.zombieSpawn.spawnX,
                 LaneZSpacing = root.zombieSpawn.laneZSpacing,
                 LaneZOffset = root.zombieSpawn.laneZOffset,
-                ZombieMovementSpeed = 0f,
-                ZombieAttackDamage = 0f,
-                ZombieAttackInterval = 0f,
-                ZombieHealth = 0f
+                ZombieMovementSpeed = defaultZombieSpeed,
+                ZombieAttackDamage = defaultZombieAttack,
+                ZombieAttackInterval = defaultZombieInterval,
+                ZombieHealth = defaultZombieHealth
             };
             if (entityManager.HasComponent<GameConfigComponent>(configEntity))
                 entityManager.SetComponentData(configEntity, componentData);
@@ -214,7 +242,36 @@ namespace PVZ.DOTS.Config
                 });
             }
 
-            UnityEngine.Debug.Log($"GameConfigLoader: 配置加载完成。植物:{plantBuffer.Length} 僵尸:{zombieBuffer.Length}");
+            // UnityEngine.Debug.Log($"GameConfigLoader: 配置加载完成。植物:{plantBuffer.Length} 僵尸:{zombieBuffer.Length}");
+
+            // 创建或更新 GameStateComponent (单局游戏状态)
+            Entity gameStateEntity;
+            if (entityManager.CreateEntityQuery(typeof(GameStateComponent)).CalculateEntityCount() > 0)
+            {
+                gameStateEntity = entityManager.CreateEntityQuery(typeof(GameStateComponent)).GetSingletonEntity();
+            }
+            else
+            {
+                gameStateEntity = entityManager.CreateEntity();
+            }
+
+            var gameStateData = new GameStateComponent
+            {
+                CurrentState = GameState.Playing,  // 自动开始游戏
+                RemainingTime = root.gameSettings?.gameDuration ?? 180f,
+                TotalGameTime = root.gameSettings?.gameDuration ?? 180f,
+                CurrentWave = 0,
+                TotalWaves = root.gameSettings?.totalWaves ?? 5,
+                ZombiesKilled = 0,
+                ZombiesReachedEnd = 0
+            };
+
+            if (entityManager.HasComponent<GameStateComponent>(gameStateEntity))
+                entityManager.SetComponentData(gameStateEntity, gameStateData);
+            else
+                entityManager.AddComponentData(gameStateEntity, gameStateData);
+
+            UnityEngine.Debug.Log($"GameConfigLoader: 游戏状态初始化完成。状态:{gameStateData.CurrentState} 时长:{gameStateData.TotalGameTime}秒 波次:{gameStateData.TotalWaves}");
         }
     }
 }

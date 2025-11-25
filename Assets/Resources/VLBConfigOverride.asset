@@ -24,10 +24,10 @@ MonoBehaviour:
   globalNoiseScale: 0.5
   globalNoiseVelocity: {x: 0.07, y: 0.18, z: 0.05}
   fadeOutCameraTag: MainCamera
-  noise3DData: {fileID: 0}
+  noise3DData: {fileID: 4900000, guid: 91ed995e34859c846bb4dea7d34e9292, type: 3}
   noise3DSize: 64
-  dustParticlesPrefab: {fileID: 0}
-  ditheringNoiseTexture: {fileID: 0}
+  dustParticlesPrefab: {fileID: 19822582, guid: 472bc216b0f362147943a3cedc36711f, type: 3}
+  ditheringNoiseTexture: {fileID: 2800000, guid: 52f46dcaae8132a4090a9a8d14ece711, type: 3}
   featureEnabledColorGradient: 1
   featureEnabledDepthBlend: 1
   featureEnabledNoise3D: 1
@@ -35,5 +35,5 @@ MonoBehaviour:
   featureEnabledMeshSkewing: 1
   featureEnabledShaderAccuracyHigh: 1
   pluginVersion: 1920
-  _DummyMaterial: {fileID: 0}
-  _BeamShader: {fileID: 0}
+  _DummyMaterial: {fileID: 2100000, guid: 6cd51964d30c218419b472bb54eb5afa, type: 2}
+  _BeamShader: {fileID: 4800000, guid: ea13b6d1d69710f41abc9f80a0c852b6, type: 3}

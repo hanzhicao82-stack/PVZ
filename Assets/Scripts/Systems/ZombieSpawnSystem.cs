@@ -34,6 +34,13 @@ namespace PVZ.DOTS.Systems
 
         public void OnUpdate(ref SystemState state)
         {
+            // 检查游戏状态，只在Playing时生成僵尸
+            if (SystemAPI.TryGetSingleton<GameStateComponent>(out var gameState))
+            {
+                if (gameState.CurrentState != GameState.Playing)
+                    return;
+            }
+
             float currentTime = (float)SystemAPI.Time.ElapsedTime;
 
             // 初始化配置（等待配置组件出现）
@@ -47,11 +54,15 @@ namespace PVZ.DOTS.Systems
                     _spawnX = config.SpawnX;
                     _laneZSpacing = config.LaneZSpacing;
                     _laneZOffset = config.LaneZOffset;
-                    _zombieMovementSpeed = config.ZombieMovementSpeed;
-                    _zombieAttackDamage = config.ZombieAttackDamage;
-                    _zombieAttackInterval = config.ZombieAttackInterval;
-                    _zombieHealth = config.ZombieHealth;
+                    
+                    // 从配置中读取默认僵尸属性，如果为0则使用硬编码默认值
+                    _zombieMovementSpeed = config.ZombieMovementSpeed > 0 ? config.ZombieMovementSpeed : 1.0f;
+                    _zombieAttackDamage = config.ZombieAttackDamage > 0 ? config.ZombieAttackDamage : 10.0f;
+                    _zombieAttackInterval = config.ZombieAttackInterval > 0 ? config.ZombieAttackInterval : 1.0f;
+                    _zombieHealth = config.ZombieHealth > 0 ? config.ZombieHealth : 100.0f;
+                    
                     _initialized = true;
+                    UnityEngine.Debug.Log($"ZombieSpawnSystem: 初始化完成。生成间隔={_spawnInterval}s, 延迟={_startDelay}s, 行数={_laneCount}, 僵尸速度={_zombieMovementSpeed}");
                 }
                 else
                 {
@@ -104,6 +115,8 @@ namespace PVZ.DOTS.Systems
             ecb.AddComponent(zombieEntity, LocalTransform.FromPosition(new float3(_spawnX, 0, spawnZ)));
 
             _lastSpawnTime = currentTime;
+
+            UnityEngine.Debug.Log($"ZombieSpawnSystem: 生成僵尸 Lane={lane} Position=({_spawnX}, 0, {spawnZ})");
 
             ecb.Playback(state.EntityManager);
             ecb.Dispose();

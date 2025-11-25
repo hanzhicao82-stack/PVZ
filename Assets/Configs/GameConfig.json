@@ -1,4 +1,9 @@
 {
+  "gameSettings": {
+    "gameDuration": 180.0,
+    "totalWaves": 5,
+    "maxZombiesReached": 5
+  },
   "zombieSpawn": {
     "interval": 5.0,
     "startDelay": 0.0,
