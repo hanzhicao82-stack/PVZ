@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - UICamera
+  - Border
+  - Fish
+  - Gold
+  - FishShadow
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 3DUI
+  - Character
+  - Character2
+  - Character3
+  - Video
+  - PostProcess_01
+  - PostProcess_02
+  - PostProcess_03
+  - Scene_01
+  - Scene_02
+  - 
+  - Character_RT
+  - EffectSkill
+  - Border
+  - FishCannon
+  - BornNoDark
+  - BornWithDark
+  - IdleWithDark
+  - DieNormal
+  - DieWithGame
+  - DieWithUI
+  - 
+  - 
+  - Ground_SSPR
+  - 
+  - 
+  m_SortingLayers:
+  - name: Battle
+    uniqueID: 3007534027
+    locked: 0
+  - name: BattleDisplay
+    uniqueID: 221253559
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Message
+    uniqueID: 802349459
+    locked: 0
+  - name: Top
+    uniqueID: 543419237
+    locked: 0

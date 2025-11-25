@@ -1,0 +1,23 @@
+{
+  "zombieSpawn": {
+    "interval": 5.0,
+    "startDelay": 0.0,
+    "laneCount": 5,
+    "spawnX": 15.0,
+    "laneZSpacing": 2.0,
+    "laneZOffset": -4.0
+  },
+  "plants": [
+    { "type": "Peashooter", "sunCost": 100, "attackDamage": 20.0, "attackInterval": 1.5, "attackRange": 10.0, "health": 100.0, "sunProductionInterval": 0.0, "sunProductionAmount": 0 },
+    { "type": "Sunflower",  "sunCost": 50,  "attackDamage": 0.0,  "attackInterval": 0.0,  "attackRange": 0.0,  "health": 100.0, "sunProductionInterval": 10.0, "sunProductionAmount": 25 },
+    { "type": "WallNut",    "sunCost": 50,  "attackDamage": 0.0,  "attackInterval": 0.0,  "attackRange": 0.0,  "health": 400.0, "sunProductionInterval": 0.0, "sunProductionAmount": 0 },
+    { "type": "SnowPea",    "sunCost": 175, "attackDamage": 20.0, "attackInterval": 1.5, "attackRange": 10.0, "health": 100.0, "sunProductionInterval": 0.0, "sunProductionAmount": 0 },
+    { "type": "Repeater",   "sunCost": 200, "attackDamage": 40.0, "attackInterval": 1.5, "attackRange": 10.0, "health": 100.0, "sunProductionInterval": 0.0, "sunProductionAmount": 0 }
+  ],
+  "zombies": [
+    { "type": "Normal",     "movementSpeed": 1.0,  "attackDamage": 10.0, "attackInterval": 1.0, "health": 100.0 },
+    { "type": "ConeHead",   "movementSpeed": 1.0,  "attackDamage": 10.0, "attackInterval": 1.0, "health": 200.0 },
+    { "type": "BucketHead", "movementSpeed": 1.0,  "attackDamage": 10.0, "attackInterval": 1.0, "health": 400.0 },
+    { "type": "Flag",       "movementSpeed": 1.2,  "attackDamage": 12.0, "attackInterval": 0.9, "health": 150.0 }
+  ]
+}
