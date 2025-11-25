@@ -27,94 +27,6 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
-    "com.coffee.ui-particle": {
-      "version": "file:ParticleEffectForUGUI",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {
-        "com.unity.ugui": "1.0.0",
-        "com.unity.modules.particlesystem": "1.0.0"
-      }
-    },
-    "com.game.editorbox": {
-      "version": "http://192.168.2.240/programmer/unity/UnityEditorPackages.git?path=/EditorBox",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "431ae8a411dfb8ff51c93c5db644d86251153130"
-    },
-    "com.game.egt": {
-      "version": "http://192.168.2.240/programmer/unity/UnityEditorPackages.git?path=/EditorTools",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "431ae8a411dfb8ff51c93c5db644d86251153130"
-    },
-    "com.game.json": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Game/Json#r/json-3.0.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "2.0.0"
-      },
-      "hash": "2610e5e61d8a74af8465b218ea86e65f9ed53353"
-    },
-    "com.game.litmotion": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Game/LitMotion",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "aa3dd51800be569f54f987717656f3ba0c38fae7"
-    },
-    "com.game.metaframework": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Game/Meta#d/main_login_20250723",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "1dcef3630d0a333d4caf433d1611936afdabc914"
-    },
-    "com.game.sdk": {
-      "version": "http://192.168.2.240/programmer/unity/unitysdk.git?#dev",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "fc9481164ec3b55a2bdb85957515893c0ae69f61"
-    },
-    "com.game.timeline": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Game/Timeline#d/main_tml_20250701",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "8b53a8c6118e702f93fc256bab36d69c0c07a96b"
-    },
-    "com.greenbamboogames.playablegraphmonitor": {
-      "version": "file:UnityPlayableGraphMonitorTool",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "com.mole.json": {
-      "version": "http://192.168.2.240/programmer/publicmodule.git?path=/Plugin/MoleJson/Packages/Mole Json/",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "2.0.0"
-      },
-      "hash": "7f6138943397f863cfad40904fddf1f55164f4d0"
-    },
-    "com.mole.svc": {
-      "version": "http://192.168.2.240/programmer/publicmodule.git?path=/Plugin/MoleShaderVariantCollection#r/svc-1.1.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "f584e3439641e22a05d54b7cde8a92d353ccd026"
-    },
-    "com.thinkingdata.analytics": {
-      "version": "file:com.thinkingdata.analytics@9a2f855c68",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -286,7 +198,7 @@
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.1",
-      "depth": 1,
+      "depth": 3,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -299,44 +211,23 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.recorder": {
-      "version": "file:com.unity.recorder@4.0.3",
+      "version": "4.0.3",
       "depth": 0,
-      "source": "embedded",
+      "source": "registry",
       "dependencies": {
         "com.unity.timeline": "1.0.0"
-      }
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.render-pipelines.core": {
-      "version": "http://192.168.2.240/programmer/ut-graphics.git?path=/Packages/com.unity.render-pipelines.core#r/urp.core-14.0.12002",
-      "depth": 0,
-      "source": "git",
+      "version": "14.0.12",
+      "depth": 1,
+      "source": "builtin",
       "dependencies": {
         "com.unity.ugui": "1.0.0",
         "com.unity.modules.physics": "1.0.0",
         "com.unity.modules.terrain": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
-      },
-      "hash": "51b4268f1499ba8b7ca0960b2ff3f70d40aa8325"
-    },
-    "com.unity.render-pipelines.universal": {
-      "version": "http://192.168.2.240/programmer/ut-graphics.git?path=/Packages/com.unity.render-pipelines.universal#fish/urp.universal-14.0.12008-fish",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.mathematics": "1.2.1",
-        "com.unity.burst": "1.8.9",
-        "com.unity.render-pipelines.core": "14.0.12002",
-        "com.unity.shadergraph": "14.0.12",
-        "com.unity.render-pipelines.universal-config": "14.0.9"
-      },
-      "hash": "47df5b842401d2e81feb371f22388bfbfcc286ae"
-    },
-    "com.unity.render-pipelines.universal-config": {
-      "version": "14.0.10",
-      "depth": 1,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.render-pipelines.core": "14.0.10"
       }
     },
     "com.unity.scriptablebuildpipeline": {
@@ -453,81 +344,6 @@
         "com.unity.shadergraph": "14.0.12",
         "com.unity.render-pipelines.core": "14.0.12"
       }
-    },
-    "com.ut.divideassetbundle": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Universal/DivideAssetBundle#r/divide-0.0.4",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "5bd6e7bbee777209fc34bf0ac632a3b07679441c"
-    },
-    "com.ut.editorenhance": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Universal/EditorEnhance",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "ece2c6312224531dece84f6b318a4ce441f432d0"
-    },
-    "com.ut.network": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Universal/Network#r/network-2.1.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "973f6029316677e5a04ace3671d0df4ba9aa4b9f"
-    },
-    "com.ut.playerbuild": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Universal/PlayerBuild#d/main_login_20250723",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "3.2.1"
-      },
-      "hash": "ef8d39736f414c052cf3107f7821b6d6fca78a60"
-    },
-    "com.ut.rendering": {
-      "version": "http://192.168.2.240/programmer/ut-graphics.git?path=/Packages/com.ut.rendering#r/rendering-0.2.22",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.collections": "2.5.1",
-        "com.unity.nuget.newtonsoft-json": "2.0.0",
-        "com.unity.render-pipelines.universal": "14.0.12008"
-      },
-      "hash": "3646fe661178999982885af6cf1eb6a324450c78"
-    },
-    "com.ut.rs": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Universal/RS#d/main_login_20250723",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "2360b222c2b0aa04a5bf7a2dce3d5980760fde9d"
-    },
-    "com.ut.rule": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Universal/Rule#d/main_AssetTools_20250814",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.ut.toolkit": "0.2.0",
-        "com.unity.nuget.mono-cecil": "1.11.4",
-        "com.unity.nuget.newtonsoft-json": "2.0.0"
-      },
-      "hash": "ef2c9c7822a4dde3b00700816b5a820242ed3d86"
-    },
-    "com.ut.timeline": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Universal/Timeline#r/timeline-0.3.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "c0ac2b9c753d269cac6293526e19e4e30861933e"
-    },
-    "com.ut.toolkit": {
-      "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/Universal/Toolkit#d/main_login_20250723",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {
-        "com.unity.nuget.mono-cecil": "1.11.4"
-      },
-      "hash": "9619c8289b9da8bca96989c46f5f845ee7d0787b"
     },
     "io.github.protobuf-net": {
       "version": "http://192.168.2.240/programmer/UnityPackages.git?path=/3rd/protobuf-net#r/network-2.1.0",

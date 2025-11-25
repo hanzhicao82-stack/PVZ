@@ -132,7 +132,6 @@ GameObject:
   m_Component:
   - component: {fileID: 203844589}
   - component: {fileID: 203844588}
-  - component: {fileID: 203844587}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -140,29 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &203844587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 203844586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Version: 3
-  m_UsePipelineSettings: 1
-  m_AdditionalLightsShadowResolutionTier: 2
-  m_LightLayerMask: 1
-  m_RenderingLayers: 1
-  m_CustomShadowLayers: 0
-  m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
-  m_LightCookieSize: {x: 1, y: 1}
-  m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 1
 --- !u!108 &203844588
 Light:
   m_ObjectHideFlags: 0
@@ -249,7 +225,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 683392898}
-  - component: {fileID: 683392897}
+  - component: {fileID: 683392899}
+  - component: {fileID: 683392900}
+  - component: {fileID: 683392901}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -257,21 +235,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &683392897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 683392896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 344f85e53f8413b41a852ae5e3444c33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  autoCreateUI: 1
-  autoCreateConfigLoader: 1
-  gameConfigJson: {fileID: 4900000, guid: 8ce7af7c336b37246a89230c10e463fb, type: 3}
 --- !u!4 &683392898
 Transform:
   m_ObjectHideFlags: 0
@@ -287,6 +250,76 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &683392899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683392896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59fb38fe678a4b641b7edf7024d08d14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawPlants: 1
+  drawZombies: 1
+  drawProjectiles: 1
+  drawGrid: 1
+  drawHealthBars: 1
+  drawAttackRanges: 0
+  gridRows: 5
+  gridColumns: 9
+  gridCellWidth: 1.5
+  gridCellHeight: 2
+  gridOrigin: {x: -6, y: 0, z: -4}
+  plantColor: {r: 0, g: 1, b: 0, a: 1}
+  zombieColor: {r: 1, g: 0, b: 0, a: 1}
+  projectileColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  gridColor: {r: 1, g: 1, b: 1, a: 0.3}
+  healthBarBackground: {r: 0.3, g: 0.3, b: 0.3, a: 0.8}
+  healthBarForeground: {r: 0, g: 1, b: 0, a: 1}
+--- !u!114 &683392900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683392896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c69e1b368439ce942880123bc234ba93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableGridDrawing: 1
+  gridColor: {r: 0, g: 1, b: 0, a: 0.5}
+  cellColor: {r: 0, g: 1, b: 0, a: 0.1}
+  showCellFill: 1
+  showRowColumnIndex: 1
+  lineWidth: 2
+  mapOffset: {x: -4.5, y: 0, z: 0}
+--- !u!114 &683392901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 683392896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344f85e53f8413b41a852ae5e3444c33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoCreateUI: 1
+  autoCreateConfigLoader: 1
+  autoLoadLevel: 1
+  gameConfigJson: {fileID: 11500000, guid: 0f6428fc7e02e914da06312a4469a16a, type: 3}
+  levelConfigJson: {fileID: 0}
+  startLevelId: 1
+  autoCreateMapGridDebugger: 1
+  autoCreateEntityDebugger: 1
+  mapOffset: {x: -4.5, y: 0, z: 0}
+  autoAdjustMapOffset: 1
 --- !u!1 &961739749
 GameObject:
   m_ObjectHideFlags: 0

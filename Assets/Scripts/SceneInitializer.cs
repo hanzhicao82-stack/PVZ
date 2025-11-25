@@ -18,8 +18,31 @@ namespace PVZ.DOTS
         [Tooltip("是否在场景加载时自动创建配置加载器")]
         public bool autoCreateConfigLoader = true;
 
+        [Tooltip("是否自动加载关卡配置")]
+        public bool autoLoadLevel = true;
+
         [Header("配置引用")]
         public TextAsset gameConfigJson;
+
+        [Header("关卡设置1")]
+        public TextAsset levelConfigJson;
+
+        [Header("关卡设置2")]
+        public int startLevelId = 1;
+
+        [Header("调试工具")]
+        [Tooltip("是否自动创建地图网格调试工具")]
+        public bool autoCreateMapGridDebugger = true;
+
+        [Tooltip("是否自动创建实体位置调试工具")]
+        public bool autoCreateEntityDebugger = true;
+
+        [Header("地图配置")]
+        [Tooltip("地图偏移位置（用于居中显示）")]
+        public Vector3 mapOffset = new Vector3(-4.5f, 0, 0);
+
+        [Tooltip("是否在加载关卡后自动调整地图偏移")]
+        public bool autoAdjustMapOffset = true;
 
         void Awake()
         {
@@ -31,10 +54,33 @@ namespace PVZ.DOTS
                 CreateConfigLoader();
             }
 
+            // 创建关卡配置加载器
+            if (autoLoadLevel && levelConfigJson != null)
+            {
+                CreateLevelConfigLoader();
+            }
+
             // 创建UI系统
             if (autoCreateUI)
             {
                 CreateGameUI();
+            }
+
+            // 创建调试工具
+            if (autoCreateMapGridDebugger)
+            {
+                CreateMapGridDebugger();
+            }
+
+            if (autoCreateEntityDebugger)
+            {
+                CreateEntityDebugger();
+            }
+
+            // 延迟调整地图偏移（等待关卡加载完成）
+            if (autoLoadLevel && autoAdjustMapOffset && levelConfigJson != null)
+            {
+                StartCoroutine(AdjustMapOffsetAfterLevelLoad());
             }
 
             UnityEngine.Debug.Log("SceneInitializer: 场景初始化完成！");
@@ -49,6 +95,20 @@ namespace PVZ.DOTS
                 var loader = configLoaderObj.AddComponent<Config.GameConfigLoader>();
                 loader.configJson = gameConfigJson;
                 UnityEngine.Debug.Log("SceneInitializer: 创建 GameConfigLoader");
+            }
+        }
+
+        private void CreateLevelConfigLoader()
+        {
+            var levelLoaderObj = GameObject.Find("LevelConfigLoader");
+            if (levelLoaderObj == null)
+            {
+                levelLoaderObj = new GameObject("LevelConfigLoader");
+                var levelLoader = levelLoaderObj.AddComponent<Config.LevelConfigLoader>();
+                levelLoader.levelConfigJson = levelConfigJson;
+                levelLoader.loadOnStart = true;
+                levelLoader.levelToLoad = startLevelId;
+                UnityEngine.Debug.Log($"SceneInitializer: 创建 LevelConfigLoader (关卡ID={startLevelId})");
             }
         }
 
@@ -233,6 +293,75 @@ namespace PVZ.DOTS
             return buttonObj;
         }
 
+        private void CreateMapGridDebugger()
+        {
+            var debuggerObj = GameObject.Find("MapGridDebugger");
+            if (debuggerObj == null)
+            {
+                debuggerObj = new GameObject("MapGridDebugger");
+                var debugger = debuggerObj.AddComponent<PVZ.DOTS.Debug.MapGridDebugDrawer>();
+                debugger.enableGridDrawing = true;
+                debugger.showCellFill = true;
+                debugger.showRowColumnIndex = true;
+                debugger.mapOffset = mapOffset;
+                UnityEngine.Debug.Log("SceneInitializer: 创建 MapGridDebugger");
+            }
+        }
+
+        private System.Collections.IEnumerator AdjustMapOffsetAfterLevelLoad()
+        {
+            // 等待1秒确保关卡加载完成
+            yield return new WaitForSeconds(1f);
+
+            var world = World.DefaultGameObjectInjectionWorld;
+            if (world == null || !world.IsCreated)
+            {
+                UnityEngine.Debug.LogWarning("SceneInitializer: World未创建，无法调整地图偏移");
+                yield break;
+            }
+
+            var entityManager = world.EntityManager;
+            var query = entityManager.CreateEntityQuery(typeof(Components.LevelConfigComponent));
+
+            if (!query.IsEmptyIgnoreFilter)
+            {
+                var levelEntity = query.GetSingletonEntity();
+                var levelConfig = entityManager.GetComponentData<Components.LevelConfigComponent>(levelEntity);
+
+                // 根据关卡配置自动计算地图偏移（居中显示）
+                float totalWidth = levelConfig.ColumnCount * levelConfig.CellWidth;
+                mapOffset = new Vector3(-totalWidth * 0.5f, 0, 0);
+
+                // 更新MapGridDebugger的偏移
+                var debuggerObj = GameObject.Find("MapGridDebugger");
+                if (debuggerObj != null)
+                {
+                    var debugger = debuggerObj.GetComponent<PVZ.DOTS.Debug.MapGridDebugDrawer>();
+                    if (debugger != null)
+                    {
+                        debugger.mapOffset = mapOffset;
+                        UnityEngine.Debug.Log($"SceneInitializer: 自动调整地图偏移为 {mapOffset}（列数={levelConfig.ColumnCount}, 格子宽度={levelConfig.CellWidth}）");
+                    }
+                }
+            }
+
+            query.Dispose();
+        }
+
+        private void CreateEntityDebugger()
+        {
+            var debuggerObj = GameObject.Find("EntityDebugger");
+            if (debuggerObj == null)
+            {
+                debuggerObj = new GameObject("EntityDebugger");
+                var debugger = debuggerObj.AddComponent<PVZ.DOTS.Debug.EntityPositionDebugDrawer>();
+                debugger.showPlants = true;
+                debugger.showZombies = true;
+                debugger.showProjectiles = true;
+                UnityEngine.Debug.Log("SceneInitializer: 创建 EntityDebugger");
+            }
+        }
+
 #if UNITY_EDITOR
         [UnityEditor.MenuItem("PVZ/Setup Main Scene")]
         private static void SetupMainScene()
@@ -242,13 +371,18 @@ namespace PVZ.DOTS
             {
                 gameManagerObj = new GameObject("GameManager");
                 var initializer = gameManagerObj.AddComponent<SceneInitializer>();
-                
+
                 // 尝试加载配置文件
                 var configPath = "Assets/Configs/GameConfig.json";
+                var levelConfigPath = "Assets/Configs/LevelConfig.json";
                 initializer.gameConfigJson = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(configPath);
-                
+                initializer.levelConfigJson = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(levelConfigPath);
+                initializer.autoLoadLevel = true;
+                initializer.startLevelId = 1;
+                initializer.autoAdjustMapOffset = true;
+
                 UnityEditor.Selection.activeGameObject = gameManagerObj;
-                UnityEngine.Debug.Log("已创建GameManager并添加SceneInitializer。请在Inspector中配置gameConfigJson引用。");
+                UnityEngine.Debug.Log("已创建GameManager并添加SceneInitializer。已自动配置游戏和关卡配置文件。");
             }
             else
             {

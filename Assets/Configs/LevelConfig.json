@@ -1,0 +1,232 @@
+{
+  "levels": [
+    {
+      "levelId": 1,
+      "levelName": "白天1-1",
+      "type": "Day",
+      "difficulty": "Easy",
+      "mapConfig": {
+        "rowCount": 5,
+        "columnCount": 9,
+        "cellWidth": 1.5,
+        "cellHeight": 2.0
+      },
+      "gameRules": {
+        "gameDuration": 120.0,
+        "totalWaves": 3,
+        "maxZombiesReached": 5,
+        "startingSun": 150,
+        "waveIntensityMultiplier": 1.2
+      },
+      "zombieSpawn": {
+        "interval": 8.0,
+        "startDelay": 10.0
+      },
+      "specialRules": {
+        "hasFog": false,
+        "hasPool": false,
+        "hasRoof": false,
+        "isNightLevel": false,
+        "hasGrave": false,
+        "isBossLevel": false
+      },
+      "waves": [
+        { "waveNumber": 1, "zombieType": "Normal", "count": 3, "spawnDelay": 0.0 },
+        { "waveNumber": 2, "zombieType": "Normal", "count": 5, "spawnDelay": 0.0 },
+        { "waveNumber": 3, "zombieType": "Normal", "count": 4, "spawnDelay": 0.0 },
+        { "waveNumber": 3, "zombieType": "ConeHead", "count": 2, "spawnDelay": 5.0 }
+      ],
+      "availablePlants": ["Peashooter", "Sunflower", "WallNut"]
+    },
+    {
+      "levelId": 2,
+      "levelName": "白天1-2",
+      "type": "Day",
+      "difficulty": "Normal",
+      "mapConfig": {
+        "rowCount": 5,
+        "columnCount": 9,
+        "cellWidth": 1.5,
+        "cellHeight": 2.0
+      },
+      "gameRules": {
+        "gameDuration": 180.0,
+        "totalWaves": 5,
+        "maxZombiesReached": 5,
+        "startingSun": 150,
+        "waveIntensityMultiplier": 1.3
+      },
+      "zombieSpawn": {
+        "interval": 6.0,
+        "startDelay": 8.0
+      },
+      "specialRules": {
+        "hasFog": false,
+        "hasPool": false,
+        "hasRoof": false,
+        "isNightLevel": false,
+        "hasGrave": false,
+        "isBossLevel": false
+      },
+      "waves": [
+        { "waveNumber": 1, "zombieType": "Normal", "count": 4, "spawnDelay": 0.0 },
+        { "waveNumber": 2, "zombieType": "Normal", "count": 5, "spawnDelay": 0.0 },
+        { "waveNumber": 2, "zombieType": "ConeHead", "count": 1, "spawnDelay": 3.0 },
+        { "waveNumber": 3, "zombieType": "Normal", "count": 6, "spawnDelay": 0.0 },
+        { "waveNumber": 3, "zombieType": "ConeHead", "count": 2, "spawnDelay": 4.0 },
+        { "waveNumber": 4, "zombieType": "ConeHead", "count": 3, "spawnDelay": 0.0 },
+        { "waveNumber": 4, "zombieType": "BucketHead", "count": 1, "spawnDelay": 5.0 },
+        { "waveNumber": 5, "zombieType": "Normal", "count": 5, "spawnDelay": 0.0 },
+        { "waveNumber": 5, "zombieType": "ConeHead", "count": 3, "spawnDelay": 3.0 },
+        { "waveNumber": 5, "zombieType": "BucketHead", "count": 2, "spawnDelay": 6.0 }
+      ],
+      "availablePlants": ["Peashooter", "Sunflower", "WallNut", "SnowPea"]
+    },
+    {
+      "levelId": 3,
+      "levelName": "夜晚2-1",
+      "type": "Night",
+      "difficulty": "Normal",
+      "mapConfig": {
+        "rowCount": 5,
+        "columnCount": 9,
+        "cellWidth": 1.5,
+        "cellHeight": 2.0
+      },
+      "gameRules": {
+        "gameDuration": 200.0,
+        "totalWaves": 6,
+        "maxZombiesReached": 5,
+        "startingSun": 100,
+        "waveIntensityMultiplier": 1.4
+      },
+      "zombieSpawn": {
+        "interval": 5.0,
+        "startDelay": 15.0
+      },
+      "specialRules": {
+        "hasFog": false,
+        "hasPool": false,
+        "hasRoof": false,
+        "isNightLevel": true,
+        "hasGrave": true,
+        "isBossLevel": false
+      },
+      "waves": [
+        { "waveNumber": 1, "zombieType": "Normal", "count": 5, "spawnDelay": 0.0 },
+        { "waveNumber": 2, "zombieType": "Normal", "count": 6, "spawnDelay": 0.0 },
+        { "waveNumber": 2, "zombieType": "ConeHead", "count": 2, "spawnDelay": 3.0 },
+        { "waveNumber": 3, "zombieType": "ConeHead", "count": 4, "spawnDelay": 0.0 },
+        { "waveNumber": 4, "zombieType": "Normal", "count": 7, "spawnDelay": 0.0 },
+        { "waveNumber": 4, "zombieType": "ConeHead", "count": 3, "spawnDelay": 3.0 },
+        { "waveNumber": 5, "zombieType": "ConeHead", "count": 4, "spawnDelay": 0.0 },
+        { "waveNumber": 5, "zombieType": "BucketHead", "count": 2, "spawnDelay": 4.0 },
+        { "waveNumber": 6, "zombieType": "Normal", "count": 8, "spawnDelay": 0.0 },
+        { "waveNumber": 6, "zombieType": "ConeHead", "count": 5, "spawnDelay": 2.0 },
+        { "waveNumber": 6, "zombieType": "BucketHead", "count": 3, "spawnDelay": 5.0 }
+      ],
+      "availablePlants": ["Peashooter", "Sunflower", "WallNut", "SnowPea", "Repeater"]
+    },
+    {
+      "levelId": 4,
+      "levelName": "泳池3-1",
+      "type": "Pool",
+      "difficulty": "Normal",
+      "mapConfig": {
+        "rowCount": 6,
+        "columnCount": 9,
+        "cellWidth": 1.5,
+        "cellHeight": 2.0
+      },
+      "gameRules": {
+        "gameDuration": 240.0,
+        "totalWaves": 7,
+        "maxZombiesReached": 5,
+        "startingSun": 150,
+        "waveIntensityMultiplier": 1.5
+      },
+      "zombieSpawn": {
+        "interval": 5.0,
+        "startDelay": 10.0
+      },
+      "specialRules": {
+        "hasFog": false,
+        "hasPool": true,
+        "hasRoof": false,
+        "isNightLevel": false,
+        "hasGrave": false,
+        "isBossLevel": false
+      },
+      "waves": [
+        { "waveNumber": 1, "zombieType": "Normal", "count": 6, "spawnDelay": 0.0 },
+        { "waveNumber": 2, "zombieType": "Normal", "count": 7, "spawnDelay": 0.0 },
+        { "waveNumber": 2, "zombieType": "ConeHead", "count": 2, "spawnDelay": 3.0 },
+        { "waveNumber": 3, "zombieType": "ConeHead", "count": 5, "spawnDelay": 0.0 },
+        { "waveNumber": 4, "zombieType": "Normal", "count": 8, "spawnDelay": 0.0 },
+        { "waveNumber": 4, "zombieType": "ConeHead", "count": 4, "spawnDelay": 2.0 },
+        { "waveNumber": 5, "zombieType": "ConeHead", "count": 5, "spawnDelay": 0.0 },
+        { "waveNumber": 5, "zombieType": "BucketHead", "count": 3, "spawnDelay": 4.0 },
+        { "waveNumber": 6, "zombieType": "Normal", "count": 10, "spawnDelay": 0.0 },
+        { "waveNumber": 6, "zombieType": "ConeHead", "count": 6, "spawnDelay": 2.0 },
+        { "waveNumber": 6, "zombieType": "BucketHead", "count": 3, "spawnDelay": 5.0 },
+        { "waveNumber": 7, "zombieType": "ConeHead", "count": 8, "spawnDelay": 0.0 },
+        { "waveNumber": 7, "zombieType": "BucketHead", "count": 5, "spawnDelay": 3.0 },
+        { "waveNumber": 7, "zombieType": "Flag", "count": 2, "spawnDelay": 6.0 }
+      ],
+      "availablePlants": ["Peashooter", "Sunflower", "WallNut", "SnowPea", "Repeater"]
+    },
+    {
+      "levelId": 5,
+      "levelName": "屋顶5-1 Boss战",
+      "type": "BossFight",
+      "difficulty": "Expert",
+      "mapConfig": {
+        "rowCount": 5,
+        "columnCount": 9,
+        "cellWidth": 1.5,
+        "cellHeight": 2.0
+      },
+      "gameRules": {
+        "gameDuration": 300.0,
+        "totalWaves": 10,
+        "maxZombiesReached": 3,
+        "startingSun": 200,
+        "waveIntensityMultiplier": 1.8
+      },
+      "zombieSpawn": {
+        "interval": 4.0,
+        "startDelay": 15.0
+      },
+      "specialRules": {
+        "hasFog": false,
+        "hasPool": false,
+        "hasRoof": true,
+        "isNightLevel": false,
+        "hasGrave": false,
+        "isBossLevel": true
+      },
+      "waves": [
+        { "waveNumber": 1, "zombieType": "Normal", "count": 8, "spawnDelay": 0.0 },
+        { "waveNumber": 2, "zombieType": "ConeHead", "count": 6, "spawnDelay": 0.0 },
+        { "waveNumber": 3, "zombieType": "Normal", "count": 10, "spawnDelay": 0.0 },
+        { "waveNumber": 3, "zombieType": "ConeHead", "count": 5, "spawnDelay": 2.0 },
+        { "waveNumber": 4, "zombieType": "ConeHead", "count": 8, "spawnDelay": 0.0 },
+        { "waveNumber": 4, "zombieType": "BucketHead", "count": 4, "spawnDelay": 3.0 },
+        { "waveNumber": 5, "zombieType": "BucketHead", "count": 6, "spawnDelay": 0.0 },
+        { "waveNumber": 6, "zombieType": "Normal", "count": 12, "spawnDelay": 0.0 },
+        { "waveNumber": 6, "zombieType": "ConeHead", "count": 8, "spawnDelay": 2.0 },
+        { "waveNumber": 7, "zombieType": "ConeHead", "count": 10, "spawnDelay": 0.0 },
+        { "waveNumber": 7, "zombieType": "BucketHead", "count": 5, "spawnDelay": 3.0 },
+        { "waveNumber": 8, "zombieType": "BucketHead", "count": 8, "spawnDelay": 0.0 },
+        { "waveNumber": 9, "zombieType": "Normal", "count": 15, "spawnDelay": 0.0 },
+        { "waveNumber": 9, "zombieType": "ConeHead", "count": 10, "spawnDelay": 2.0 },
+        { "waveNumber": 9, "zombieType": "BucketHead", "count": 6, "spawnDelay": 4.0 },
+        { "waveNumber": 10, "zombieType": "ConeHead", "count": 12, "spawnDelay": 0.0 },
+        { "waveNumber": 10, "zombieType": "BucketHead", "count": 10, "spawnDelay": 2.0 },
+        { "waveNumber": 10, "zombieType": "Flag", "count": 5, "spawnDelay": 5.0 }
+      ],
+      "availablePlants": ["Peashooter", "Sunflower", "WallNut", "SnowPea", "Repeater"]
+    }
+  ],
+  "currentLevelId": 1
+}
