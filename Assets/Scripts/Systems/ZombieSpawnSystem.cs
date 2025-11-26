@@ -3,6 +3,8 @@ using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Collections;
 using PVZ.DOTS.Components;
+using PVZ.DOTS.Utils;
+
 namespace PVZ.DOTS.Systems
 {
     /// <summary>
@@ -65,7 +67,7 @@ namespace PVZ.DOTS.Systems
                     _zombieHealth = 100.0f;
                     
                     configLoaded = true;
-                    UnityEngine.Debug.Log($"ZombieSpawnSystem: 从关卡配置初始化。生成间隔={_spawnInterval}s, 延迟={_startDelay}s, 行数={_rowCount}, 列数={_columnCount}, 格子大小=({_cellWidth}, {_cellHeight})");
+                    GameLogger.Log("ZombieSpawnSystem", $"从关卡配置初始化。生成间隔={_spawnInterval}s, 延迟={_startDelay}s, 行数={_rowCount}, 列数={_columnCount}, 格子大小=({_cellWidth}, {_cellHeight})");
                 }
                 // 如果没有关卡配置，尝试使用游戏全局配置
                 else if (SystemAPI.TryGetSingleton<PVZ.DOTS.Components.GameConfigComponent>(out var config))
@@ -84,7 +86,7 @@ namespace PVZ.DOTS.Systems
                     _zombieHealth = config.ZombieHealth > 0 ? config.ZombieHealth : 100.0f;
                     
                     configLoaded = true;
-                    UnityEngine.Debug.Log($"ZombieSpawnSystem: 从全局配置初始化。生成间隔={_spawnInterval}s, 延迟={_startDelay}s, 行数={_rowCount}");
+                    GameLogger.Log("ZombieSpawnSystem", $"从全局配置初始化。生成间隔={_spawnInterval}s, 延迟={_startDelay}s, 行数={_rowCount}");
                 }
                 
                 if (configLoaded)
@@ -112,9 +114,9 @@ namespace PVZ.DOTS.Systems
             int spawnRow = _random.NextInt(0, _rowCount);
             int spawnColumn = _columnCount; // 超出地图最右侧（地图外）
             
-            // 计算世界坐标（基于地图网格）
-            float worldX = spawnColumn * _cellWidth - (_columnCount * _cellWidth) / 2f;
-            float worldZ = spawnRow * _cellHeight - (_rowCount * _cellHeight) / 2f;
+            // 计算世界坐标（左下角为原点0,0,0）
+            float worldX = spawnColumn * _cellWidth;
+            float worldZ = spawnRow * _cellWidth;
 
             // 创建僵尸实体
             Entity zombieEntity = ecb.CreateEntity();
@@ -147,7 +149,7 @@ namespace PVZ.DOTS.Systems
 
             _lastSpawnTime = currentTime;
 
-            UnityEngine.Debug.Log($"ZombieSpawnSystem: 生成僵尸 Row={spawnRow} Column={spawnColumn} WorldPos=({worldX:F2}, 0, {worldZ:F2})");
+            GameLogger.Log("ZombieSpawnSystem", $"生成僵尸 Row={spawnRow} Column={spawnColumn} WorldPos=({worldX:F2}, 0, {worldZ:F2})");
 
             ecb.Playback(state.EntityManager);
             ecb.Dispose();

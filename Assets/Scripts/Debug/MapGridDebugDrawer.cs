@@ -31,9 +31,9 @@ namespace PVZ.DOTS.Debug
         [Range(1f, 5f)]
         public float lineWidth = 2f;
 
-        [Header("地图偏移")]
-        [Tooltip("地图起始位置偏移")]
-        public Vector3 mapOffset = new Vector3(-4.5f, 0, 0);
+        [Header("地图边界标记")]
+        [Tooltip("边界颜色")]
+        public Color borderColor = Color.yellow;
 
         private World gameWorld;
         private EntityManager entityManager;
@@ -82,7 +82,7 @@ namespace PVZ.DOTS.Debug
             int columns = config.ColumnCount;
             float cellSize = config.CellWidth;
 
-            // 计算地图总尺寸
+            // 计算地图总尺寸（左下角为原点0,0,0）
             float totalWidth = columns * cellSize;
             float totalHeight = rows * cellSize;
 
@@ -94,7 +94,7 @@ namespace PVZ.DOTS.Debug
                 {
                     for (int col = 0; col < columns; col++)
                     {
-                        Vector3 cellCenter = mapOffset + new Vector3(
+                        Vector3 cellCenter = new Vector3(
                             col * cellSize + cellSize * 0.5f,
                             0,
                             row * cellSize + cellSize * 0.5f
@@ -111,16 +111,16 @@ namespace PVZ.DOTS.Debug
             // 绘制水平线
             for (int row = 0; row <= rows; row++)
             {
-                Vector3 start = mapOffset + new Vector3(0, 0, row * cellSize);
-                Vector3 end = mapOffset + new Vector3(totalWidth, 0, row * cellSize);
+                Vector3 start = new Vector3(0, 0, row * cellSize);
+                Vector3 end = new Vector3(totalWidth, 0, row * cellSize);
                 DrawThickLine(start, end, lineWidth);
             }
 
             // 绘制垂直线
             for (int col = 0; col <= columns; col++)
             {
-                Vector3 start = mapOffset + new Vector3(col * cellSize, 0, 0);
-                Vector3 end = mapOffset + new Vector3(col * cellSize, 0, totalHeight);
+                Vector3 start = new Vector3(col * cellSize, 0, 0);
+                Vector3 end = new Vector3(col * cellSize, 0, totalHeight);
                 DrawThickLine(start, end, lineWidth);
             }
 
@@ -154,14 +154,14 @@ namespace PVZ.DOTS.Debug
             // 绘制行号
             for (int row = 0; row < rows; row++)
             {
-                Vector3 labelPos = mapOffset + new Vector3(-cellSize * 0.5f, 0.2f, row * cellSize + cellSize * 0.5f);
+                Vector3 labelPos = new Vector3(-cellSize * 0.5f, 0.2f, row * cellSize + cellSize * 0.5f);
                 UnityEditor.Handles.Label(labelPos, $"R{row}");
             }
 
             // 绘制列号
             for (int col = 0; col < columns; col++)
             {
-                Vector3 labelPos = mapOffset + new Vector3(col * cellSize + cellSize * 0.5f, 0.2f, -cellSize * 0.5f);
+                Vector3 labelPos = new Vector3(col * cellSize + cellSize * 0.5f, 0.2f, -cellSize * 0.5f);
                 UnityEditor.Handles.Label(labelPos, $"C{col}");
             }
 #endif
@@ -169,16 +169,16 @@ namespace PVZ.DOTS.Debug
 
         private void DrawMapBorder(float totalWidth, float totalHeight)
         {
-            // 绘制地图四角的标记点
-            Gizmos.color = Color.yellow;
-            float markerSize = 0.3f;
+            // 绘制地图四角的标记点（左下角固定在原点0,0,0）
+            Gizmos.color = borderColor;
+            float markerSize = 1f;
 
             Vector3[] corners = new Vector3[]
             {
-                mapOffset, // 左下
-                mapOffset + new Vector3(totalWidth, 0, 0), // 右下
-                mapOffset + new Vector3(totalWidth, 0, totalHeight), // 右上
-                mapOffset + new Vector3(0, 0, totalHeight) // 左上
+                Vector3.zero, // 左下 (0,0,0)
+                new Vector3(totalWidth, 0, 0), // 右下
+                new Vector3(totalWidth, 0, totalHeight), // 右上
+                new Vector3(0, 0, totalHeight) // 左上
             };
 
             foreach (var corner in corners)
@@ -187,7 +187,7 @@ namespace PVZ.DOTS.Debug
             }
 
             // 绘制中心点
-            Vector3 center = mapOffset + new Vector3(totalWidth * 0.5f, 0, totalHeight * 0.5f);
+            Vector3 center = new Vector3(totalWidth * 0.5f, 0, totalHeight * 0.5f);
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(center, markerSize * 1.5f);
         }

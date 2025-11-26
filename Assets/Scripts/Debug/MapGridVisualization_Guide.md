@@ -29,7 +29,7 @@ cellColor = 绿色极透明;              // 格子填充颜色
 showCellFill = true;               // 显示格子填充
 showRowColumnIndex = true;         // 显示行列索引
 lineWidth = 2f;                    // 网格线宽度
-mapOffset = (-4.5f, 0, 0);        // 地图起始位置偏移
+mapOffset = (0f, 0, 0);        // 地图起始位置偏移
 ```
 
 ### 2. EntityPositionDebugDrawer - 实体位置绘制器

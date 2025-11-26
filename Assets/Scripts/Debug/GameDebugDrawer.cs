@@ -15,22 +15,13 @@ namespace PVZ.DOTS.Debug
         public bool drawPlants = true;
         public bool drawZombies = true;
         public bool drawProjectiles = true;
-        public bool drawGrid = true;
         public bool drawHealthBars = true;
         public bool drawAttackRanges = false;
-
-        [Header("网格配置")]
-        public int gridRows = 5;
-        public int gridColumns = 9;
-        public float gridCellWidth = 1.5f;
-        public float gridCellHeight = 2f;
-        public Vector3 gridOrigin = new Vector3(-6f, 0f, -4f);
 
         [Header("颜色配置")]
         public Color plantColor = Color.green;
         public Color zombieColor = Color.red;
         public Color projectileColor = Color.yellow;
-        public Color gridColor = new Color(1f, 1f, 1f, 0.3f);
         public Color healthBarBackground = new Color(0.3f, 0.3f, 0.3f, 0.8f);
         public Color healthBarForeground = Color.green;
 
@@ -44,23 +35,10 @@ namespace PVZ.DOTS.Debug
         void OnDrawGizmos()
         {
             if (!Application.isPlaying)
-            {
-                // 编辑模式下只绘制网格
-                if (drawGrid)
-                {
-                    DrawGridGizmos();
-                }
                 return;
-            }
 
             if (World.DefaultGameObjectInjectionWorld == null || _entityManager == null)
                 return;
-
-            // 绘制网格
-            if (drawGrid)
-            {
-                DrawGridGizmos();
-            }
 
             // 绘制植物
             if (drawPlants)
@@ -78,27 +56,6 @@ namespace PVZ.DOTS.Debug
             if (drawProjectiles)
             {
                 DrawProjectiles();
-            }
-        }
-
-        void DrawGridGizmos()
-        {
-            Gizmos.color = gridColor;
-
-            // 绘制横线
-            for (int row = 0; row <= gridRows; row++)
-            {
-                Vector3 start = gridOrigin + new Vector3(0, 0, row * gridCellHeight);
-                Vector3 end = start + new Vector3(gridColumns * gridCellWidth, 0, 0);
-                Gizmos.DrawLine(start, end);
-            }
-
-            // 绘制竖线
-            for (int col = 0; col <= gridColumns; col++)
-            {
-                Vector3 start = gridOrigin + new Vector3(col * gridCellWidth, 0, 0);
-                Vector3 end = start + new Vector3(0, 0, gridRows * gridCellHeight);
-                Gizmos.DrawLine(start, end);
             }
         }
 
@@ -332,7 +289,6 @@ namespace PVZ.DOTS.Debug
             drawPlants = GUILayout.Toggle(drawPlants, "显示植物");
             drawZombies = GUILayout.Toggle(drawZombies, "显示僵尸");
             drawProjectiles = GUILayout.Toggle(drawProjectiles, "显示子弹");
-            drawGrid = GUILayout.Toggle(drawGrid, "显示网格");
             drawHealthBars = GUILayout.Toggle(drawHealthBars, "显示生命值");
             drawAttackRanges = GUILayout.Toggle(drawAttackRanges, "显示攻击范围");
 

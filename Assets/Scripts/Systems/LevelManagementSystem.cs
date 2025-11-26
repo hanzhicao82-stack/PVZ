@@ -1,6 +1,7 @@
 using Unity.Entities;
 using Unity.Collections;
 using PVZ.DOTS.Components;
+using PVZ.DOTS.Utils;
 
 namespace PVZ.DOTS.Systems
 {
@@ -37,7 +38,7 @@ namespace PVZ.DOTS.Systems
 
             if (!_initialized)
             {
-                UnityEngine.Debug.Log($"LevelManagementSystem: 初始化关卡管理 LevelId={levelConfig.LevelId} Type={levelConfig.Type} " +
+                GameLogger.Log("LevelManagementSystem", $"初始化关卡管理 LevelId={levelConfig.LevelId} Type={levelConfig.Type} " +
                     $"Difficulty={levelConfig.Difficulty} TotalWaves={levelConfig.TotalWaves}");
                 _initialized = true;
             }
@@ -57,7 +58,7 @@ namespace PVZ.DOTS.Systems
                 if (SystemAPI.TryGetSingletonRW<GameStateComponent>(out var gameStateRW))
                 {
                     gameStateRW.ValueRW.CurrentWave = _currentWave;
-                    UnityEngine.Debug.Log($"LevelManagementSystem: 开始第 {_currentWave}/{levelConfig.TotalWaves} 波");
+                    GameLogger.Log("LevelManagementSystem", $"开始第 {_currentWave}/{levelConfig.TotalWaves} 波");
                 }
 
                 // 触发波次开始事件（可以在这里生成特定波次的僵尸）
@@ -91,7 +92,7 @@ namespace PVZ.DOTS.Systems
                 }
             }
 
-            UnityEngine.Debug.Log($"LevelManagementSystem: 第{waveNumber}波将生成 {zombieCount} 个僵尸");
+            GameLogger.Log("LevelManagementSystem", $"第{waveNumber}波将生成 {zombieCount} 个僵尸");
         }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Unity.Entities;
+using PVZ.DOTS.Utils;
 using Debug = UnityEngine.Debug;
 
 namespace PVZ.DOTS
@@ -37,16 +38,16 @@ namespace PVZ.DOTS
         [Tooltip("是否自动创建实体位置调试工具")]
         public bool autoCreateEntityDebugger = true;
 
-        [Header("地图配置")]
-        [Tooltip("地图偏移位置（用于居中显示）")]
-        public Vector3 mapOffset = new Vector3(-4.5f, 0, 0);
+        // [Header("地图配置")]
+        // [Tooltip("地图偏移位置（用于居中显示）")]
+        private Vector3 mapOffset = Vector3.zero;
 
         [Tooltip("是否在加载关卡后自动调整地图偏移")]
         public bool autoAdjustMapOffset = true;
 
         void Awake()
         {
-            UnityEngine.Debug.Log("SceneInitializer: 开始初始化场景...");
+            GameLogger.Log("SceneInitializer", "开始初始化场景...");
 
             // 创建配置加载器
             if (autoCreateConfigLoader)
@@ -83,7 +84,7 @@ namespace PVZ.DOTS
                 StartCoroutine(AdjustMapOffsetAfterLevelLoad());
             }
 
-            UnityEngine.Debug.Log("SceneInitializer: 场景初始化完成！");
+            GameLogger.Log("SceneInitializer", "场景初始化完成！");
         }
 
         private void CreateConfigLoader()
@@ -94,7 +95,7 @@ namespace PVZ.DOTS
                 configLoaderObj = new GameObject("GameConfigLoader");
                 var loader = configLoaderObj.AddComponent<Config.GameConfigLoader>();
                 loader.configJson = gameConfigJson;
-                UnityEngine.Debug.Log("SceneInitializer: 创建 GameConfigLoader");
+                GameLogger.Log("SceneInitializer", "创建 GameConfigLoader");
             }
         }
 
@@ -108,7 +109,7 @@ namespace PVZ.DOTS
                 levelLoader.levelConfigJson = levelConfigJson;
                 levelLoader.loadOnStart = true;
                 levelLoader.levelToLoad = startLevelId;
-                UnityEngine.Debug.Log($"SceneInitializer: 创建 LevelConfigLoader (关卡ID={startLevelId})");
+                GameLogger.Log("SceneInitializer", $"创建 LevelConfigLoader (关卡ID={startLevelId})");
             }
         }
 
@@ -125,7 +126,7 @@ namespace PVZ.DOTS
                 canvasObj.AddComponent<CanvasScaler>();
                 canvasObj.AddComponent<GraphicRaycaster>();
 
-                UnityEngine.Debug.Log("SceneInitializer: 创建 Canvas");
+                GameLogger.Log("SceneInitializer", "创建 Canvas");
             }
 
             // 创建GameUI管理器
@@ -153,7 +154,7 @@ namespace PVZ.DOTS
                 // 创建失败面板
                 uiManager.defeatPanel = CreateResultPanel("DefeatPanel", gameUIObj.transform, "失败", Color.red, uiManager);
 
-                UnityEngine.Debug.Log("SceneInitializer: 创建 GameUI 完成");
+                GameLogger.Log("SceneInitializer", "创建 GameUI 完成");
             }
         }
 
@@ -303,8 +304,7 @@ namespace PVZ.DOTS
                 debugger.enableGridDrawing = true;
                 debugger.showCellFill = true;
                 debugger.showRowColumnIndex = true;
-                debugger.mapOffset = mapOffset;
-                UnityEngine.Debug.Log("SceneInitializer: 创建 MapGridDebugger");
+                GameLogger.Log("SceneInitializer", "创建 MapGridDebugger");
             }
         }
 
@@ -316,7 +316,7 @@ namespace PVZ.DOTS
             var world = World.DefaultGameObjectInjectionWorld;
             if (world == null || !world.IsCreated)
             {
-                UnityEngine.Debug.LogWarning("SceneInitializer: World未创建，无法调整地图偏移");
+                GameLogger.LogWarning("SceneInitializer", "World未创建，无法调整地图偏移");
                 yield break;
             }
 
@@ -339,8 +339,7 @@ namespace PVZ.DOTS
                     var debugger = debuggerObj.GetComponent<PVZ.DOTS.Debug.MapGridDebugDrawer>();
                     if (debugger != null)
                     {
-                        debugger.mapOffset = mapOffset;
-                        UnityEngine.Debug.Log($"SceneInitializer: 自动调整地图偏移为 {mapOffset}（列数={levelConfig.ColumnCount}, 格子宽度={levelConfig.CellWidth}）");
+                        GameLogger.Log("SceneInitializer", $"自动调整地图偏移为 {mapOffset}（列数={levelConfig.ColumnCount}, 格子宽度={levelConfig.CellWidth}）");
                     }
                 }
             }
@@ -358,7 +357,7 @@ namespace PVZ.DOTS
                 debugger.showPlants = true;
                 debugger.showZombies = true;
                 debugger.showProjectiles = true;
-                UnityEngine.Debug.Log("SceneInitializer: 创建 EntityDebugger");
+                GameLogger.Log("SceneInitializer", "创建 EntityDebugger");
             }
         }
 
@@ -382,11 +381,11 @@ namespace PVZ.DOTS
                 initializer.autoAdjustMapOffset = true;
 
                 UnityEditor.Selection.activeGameObject = gameManagerObj;
-                UnityEngine.Debug.Log("已创建GameManager并添加SceneInitializer。已自动配置游戏和关卡配置文件。");
+                GameLogger.Log("SceneInitializer", "已创建GameManager并添加SceneInitializer。已自动配置游戏和关卡配置文件。");
             }
             else
             {
-                UnityEngine.Debug.Log("GameManager已存在。");
+                GameLogger.Log("SceneInitializer", "GameManager已存在。");
             }
         }
 #endif

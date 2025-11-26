@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Unity.Entities;
 using PVZ.DOTS.Components;
+using PVZ.DOTS.Utils;
 
 namespace PVZ.DOTS
 {
@@ -37,7 +38,7 @@ namespace PVZ.DOTS
             {
                 if (!_hasLoggedUIStart)
                 {
-                    UnityEngine.Debug.LogWarning("GameUIManager: 找不到GameStateComponent");
+                    GameLogger.LogWarning("GameUIManager", "找不到GameStateComponent");
                     _hasLoggedUIStart = true;
                 }
                 return;
@@ -47,7 +48,7 @@ namespace PVZ.DOTS
 
             if (!_hasLoggedUIStart)
             {
-                UnityEngine.Debug.Log($"GameUIManager: 开始更新UI，状态={gameState.CurrentState}, 剩余时间={gameState.RemainingTime}");
+                GameLogger.Log("GameUIManager", $"开始更新UI，状态={gameState.CurrentState}, 剩余时间={gameState.RemainingTime}");
                 _hasLoggedUIStart = true;
             }
 
