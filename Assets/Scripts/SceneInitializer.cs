@@ -16,20 +16,18 @@ namespace PVZ.DOTS
         [Tooltip("是否在场景加载时自动创建UI")]
         public bool autoCreateUI = true;
 
-        [Tooltip("是否在场景加载时自动创建配置加载器")]
-        public bool autoCreateConfigLoader = true;
-
-        [Tooltip("是否自动加载关卡配置")]
-        public bool autoLoadLevel = true;
+        [Tooltip("是否使用GameLoader加载配置")]
+        public bool useGameLoader = true;
 
         [Header("配置引用")]
         public TextAsset gameConfigJson;
 
-        [Header("关卡设置1")]
+        [Header("关卡设置")]
         public TextAsset levelConfigJson;
-
-        [Header("关卡设置2")]
         public int startLevelId = 1;
+
+        [Tooltip("是否在加载完成后自动设置Playing状态")]
+        public bool autoSetGamePlaying = false;
 
         [Header("调试工具")]
         [Tooltip("是否自动创建地图网格调试工具")]
@@ -38,27 +36,20 @@ namespace PVZ.DOTS
         [Tooltip("是否自动创建实体位置调试工具")]
         public bool autoCreateEntityDebugger = true;
 
-        // [Header("地图配置")]
-        // [Tooltip("地图偏移位置（用于居中显示）")]
-        private Vector3 mapOffset = Vector3.zero;
-
         [Tooltip("是否在加载关卡后自动调整地图偏移")]
         public bool autoAdjustMapOffset = true;
+
+        private Vector3 mapOffset = Vector3.zero;
+        private GameLoader _gameLoader;
 
         void Awake()
         {
             GameLogger.Log("SceneInitializer", "开始初始化场景...");
 
-            // 创建配置加载器
-            if (autoCreateConfigLoader)
+            // 使用GameLoader加载配置
+            if (useGameLoader)
             {
-                CreateConfigLoader();
-            }
-
-            // 创建关卡配置加载器
-            if (autoLoadLevel && levelConfigJson != null)
-            {
-                CreateLevelConfigLoader();
+                CreateGameLoader();
             }
 
             // 创建UI系统
@@ -78,39 +69,54 @@ namespace PVZ.DOTS
                 CreateEntityDebugger();
             }
 
-            // 延迟调整地图偏移（等待关卡加载完成）
-            if (autoLoadLevel && autoAdjustMapOffset && levelConfigJson != null)
-            {
-                StartCoroutine(AdjustMapOffsetAfterLevelLoad());
-            }
-
             GameLogger.Log("SceneInitializer", "场景初始化完成！");
         }
 
-        private void CreateConfigLoader()
+        private void CreateGameLoader()
         {
-            var configLoaderObj = GameObject.Find("GameConfigLoader");
-            if (configLoaderObj == null)
+            var loaderObj = GameObject.Find("GameLoader");
+            if (loaderObj == null)
             {
-                configLoaderObj = new GameObject("GameConfigLoader");
-                var loader = configLoaderObj.AddComponent<Config.GameConfigLoader>();
-                loader.configJson = gameConfigJson;
-                GameLogger.Log("SceneInitializer", "创建 GameConfigLoader");
+                loaderObj = new GameObject("GameLoader");
+                _gameLoader = loaderObj.AddComponent<GameLoader>();
+            }
+            else
+            {
+                _gameLoader = loaderObj.GetComponent<GameLoader>();
+            }
+
+            if (_gameLoader != null)
+            {
+                _gameLoader.gameConfigJson = gameConfigJson;
+                _gameLoader.levelConfigJson = levelConfigJson;
+                _gameLoader.levelToLoad = startLevelId;
+                _gameLoader.autoSetGamePlaying = autoSetGamePlaying;
+
+                // 注册回调
+                _gameLoader.OnLoadComplete += OnLoadComplete;
+                _gameLoader.OnLevelConfigLoaded += OnLevelConfigLoaded;
+
+                // 开始加载
+                _gameLoader.StartLoad();
+
+                GameLogger.Log("SceneInitializer", $"创建 GameLoader (关卡ID={startLevelId})");
             }
         }
 
-        private void CreateLevelConfigLoader()
+        private void OnLoadComplete()
         {
-            var levelLoaderObj = GameObject.Find("LevelConfigLoader");
-            if (levelLoaderObj == null)
+            GameLogger.Log("SceneInitializer", "GameLoader 加载完成");
+
+            // 调整地图偏移
+            if (autoAdjustMapOffset)
             {
-                levelLoaderObj = new GameObject("LevelConfigLoader");
-                var levelLoader = levelLoaderObj.AddComponent<Config.LevelConfigLoader>();
-                levelLoader.levelConfigJson = levelConfigJson;
-                levelLoader.loadOnStart = true;
-                levelLoader.levelToLoad = startLevelId;
-                GameLogger.Log("SceneInitializer", $"创建 LevelConfigLoader (关卡ID={startLevelId})");
+                AdjustMapOffset();
             }
+        }
+
+        private void OnLevelConfigLoaded(Components.LevelConfigComponent levelConfig)
+        {
+            GameLogger.Log("SceneInitializer", $"关卡配置已加载: {levelConfig.RowCount}行 × {levelConfig.ColumnCount}列");
         }
 
         private void CreateGameUI()
@@ -308,43 +314,19 @@ namespace PVZ.DOTS
             }
         }
 
-        private System.Collections.IEnumerator AdjustMapOffsetAfterLevelLoad()
+        private void AdjustMapOffset()
         {
-            // 等待1秒确保关卡加载完成
-            yield return new WaitForSeconds(1f);
-
-            var world = World.DefaultGameObjectInjectionWorld;
-            if (world == null || !world.IsCreated)
+            if (_gameLoader == null || !_gameLoader.TryGetLevelConfig(out var levelConfig))
             {
-                GameLogger.LogWarning("SceneInitializer", "World未创建，无法调整地图偏移");
-                yield break;
+                GameLogger.LogWarning("SceneInitializer", "无法获取关卡配置，跳过地图偏移调整");
+                return;
             }
 
-            var entityManager = world.EntityManager;
-            var query = entityManager.CreateEntityQuery(typeof(Components.LevelConfigComponent));
+            // 根据关卡配置自动计算地图偏移（居中显示）
+            float totalWidth = levelConfig.ColumnCount * levelConfig.CellWidth;
+            mapOffset = new Vector3(-totalWidth * 0.5f, 0, 0);
 
-            if (!query.IsEmptyIgnoreFilter)
-            {
-                var levelEntity = query.GetSingletonEntity();
-                var levelConfig = entityManager.GetComponentData<Components.LevelConfigComponent>(levelEntity);
-
-                // 根据关卡配置自动计算地图偏移（居中显示）
-                float totalWidth = levelConfig.ColumnCount * levelConfig.CellWidth;
-                mapOffset = new Vector3(-totalWidth * 0.5f, 0, 0);
-
-                // 更新MapGridDebugger的偏移
-                var debuggerObj = GameObject.Find("MapGridDebugger");
-                if (debuggerObj != null)
-                {
-                    var debugger = debuggerObj.GetComponent<PVZ.DOTS.Debug.MapGridDebugDrawer>();
-                    if (debugger != null)
-                    {
-                        GameLogger.Log("SceneInitializer", $"自动调整地图偏移为 {mapOffset}（列数={levelConfig.ColumnCount}, 格子宽度={levelConfig.CellWidth}）");
-                    }
-                }
-            }
-
-            query.Dispose();
+            GameLogger.Log("SceneInitializer", $"自动调整地图偏移为 {mapOffset}（列数={levelConfig.ColumnCount}, 格子宽度={levelConfig.CellWidth}）");
         }
 
         private void CreateEntityDebugger()
@@ -376,9 +358,10 @@ namespace PVZ.DOTS
                 var levelConfigPath = "Assets/Configs/LevelConfig.json";
                 initializer.gameConfigJson = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(configPath);
                 initializer.levelConfigJson = UnityEditor.AssetDatabase.LoadAssetAtPath<TextAsset>(levelConfigPath);
-                initializer.autoLoadLevel = true;
+                initializer.useGameLoader = true;
                 initializer.startLevelId = 1;
                 initializer.autoAdjustMapOffset = true;
+                initializer.autoSetGamePlaying = false;
 
                 UnityEditor.Selection.activeGameObject = gameManagerObj;
                 GameLogger.Log("SceneInitializer", "已创建GameManager并添加SceneInitializer。已自动配置游戏和关卡配置文件。");

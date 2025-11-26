@@ -98,6 +98,7 @@ namespace PVZ.DOTS.Debug
         private int _columnCount;
         private float _cellSize;
         private bool _initialized = false;
+        private PVZ.DOTS.GameLoader _gameLoader;
 
         private void Start()
         {
@@ -111,7 +112,7 @@ namespace PVZ.DOTS.Debug
             _lastPlantSpawnTime = Time.time;
             _lastZombieSpawnTime = Time.time;
 
-            // 加载关卡配置
+            // 使用GameLoader加载关卡配置
             LoadLevelConfig();
 
             if (autoStartOnPlay)
@@ -129,45 +130,48 @@ namespace PVZ.DOTS.Debug
                 return;
             }
 
-            // 查找或创建LevelConfigLoader
-            var loader = FindObjectOfType<PVZ.DOTS.Config.LevelConfigLoader>();
-            if (loader == null)
+            // 查找或创建GameLoader
+            var loaderObj = GameObject.Find("GameLoader");
+            if (loaderObj == null)
             {
-                var loaderObj = new GameObject("LevelConfigLoader");
-                loader = loaderObj.AddComponent<PVZ.DOTS.Config.LevelConfigLoader>();
+                loaderObj = new GameObject("GameLoader");
+                _gameLoader = loaderObj.AddComponent<PVZ.DOTS.GameLoader>();
+            }
+            else
+            {
+                _gameLoader = loaderObj.GetComponent<PVZ.DOTS.GameLoader>();
             }
 
-            loader.levelConfigJson = levelConfigJson;
-            loader.levelToLoad = testLevelId;
-            loader.loadOnStart = true;
-            loader.LoadLevel(testLevelId);
-
-            GameLogger.Log("PerformanceTest", $"加载关卡 {testLevelId}");
-
-            // 延迟设置游戏状态
-            if (autoSetGamePlaying)
+            if (_gameLoader != null)
             {
-                StartCoroutine(SetGamePlayingAfterDelay());
+                _gameLoader.levelConfigJson = levelConfigJson;
+                _gameLoader.levelToLoad = testLevelId;
+                _gameLoader.autoSetGamePlaying = autoSetGamePlaying;
+                _gameLoader.playingStateDelay = 0.5f;
+
+                // 注册回调
+                _gameLoader.OnLoadComplete += OnLoadComplete;
+                _gameLoader.OnLevelConfigLoaded += OnLevelConfigLoaded;
+
+                // 开始加载
+                _gameLoader.StartLoad();
+
+                GameLogger.Log("PerformanceTest", $"使用GameLoader加载关卡 {testLevelId}");
             }
         }
 
-        private System.Collections.IEnumerator SetGamePlayingAfterDelay()
+        private void OnLoadComplete()
         {
-            yield return new WaitForSeconds(0.5f);
+            GameLogger.Log("PerformanceTest", "关卡加载完成");
+        }
 
-            if (_entityManager == null)
-                yield break;
-
-            var query = _entityManager.CreateEntityQuery(typeof(GameStateComponent));
-            if (!query.IsEmptyIgnoreFilter)
-            {
-                var gameStateEntity = query.GetSingletonEntity();
-                var gameState = _entityManager.GetComponentData<GameStateComponent>(gameStateEntity);
-                gameState.CurrentState = GameState.Playing;
-                _entityManager.SetComponentData(gameStateEntity, gameState);
-                GameLogger.Log("PerformanceTest", "游戏状态设置为Playing");
-            }
-            query.Dispose();
+        private void OnLevelConfigLoaded(PVZ.DOTS.Components.LevelConfigComponent levelConfig)
+        {
+            _rowCount = levelConfig.RowCount;
+            _columnCount = levelConfig.ColumnCount;
+            _cellSize = levelConfig.CellWidth;
+            _initialized = true;
+            GameLogger.Log("PerformanceTest", $"关卡配置已加载：{_rowCount}行 × {_columnCount}列，格子大小={_cellSize}");
         }
 
         private void Update()
