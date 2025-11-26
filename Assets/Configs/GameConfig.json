@@ -20,9 +20,9 @@
     { "type": "Repeater",   "sunCost": 200, "attackDamage": 40.0, "attackInterval": 1.5, "attackRange": 10.0, "health": 100.0, "sunProductionInterval": 0.0, "sunProductionAmount": 0 }
   ],
   "zombies": [
-    { "type": "Normal",     "movementSpeed": 1.0,  "attackDamage": 10.0, "attackInterval": 1.0, "health": 100.0 },
-    { "type": "ConeHead",   "movementSpeed": 1.0,  "attackDamage": 10.0, "attackInterval": 1.0, "health": 200.0 },
-    { "type": "BucketHead", "movementSpeed": 1.0,  "attackDamage": 10.0, "attackInterval": 1.0, "health": 400.0 },
+    { "type": "Normal",     "movementSpeed": 1.0,  "attackDamage": 40.0, "attackInterval": 1.0, "health": 100.0 },
+    { "type": "ConeHead",   "movementSpeed": 1.0,  "attackDamage": 40.0, "attackInterval": 1.0, "health": 200.0 },
+    { "type": "BucketHead", "movementSpeed": 1.0,  "attackDamage": 40.0, "attackInterval": 1.0, "health": 400.0 },
     { "type": "Flag",       "movementSpeed": 1.2,  "attackDamage": 12.0, "attackInterval": 0.9, "health": 150.0 }
   ]
 }

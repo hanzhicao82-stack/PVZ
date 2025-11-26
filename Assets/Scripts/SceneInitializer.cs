@@ -44,6 +44,7 @@ namespace PVZ.DOTS
 
         void Awake()
         {
+            UnityEngine.Debug.Log("=== SceneInitializer: Awake 开始 ===");
             GameLogger.Log("SceneInitializer", "开始初始化场景...");
 
             // 使用GameLoader加载配置
@@ -70,6 +71,7 @@ namespace PVZ.DOTS
             }
 
             GameLogger.Log("SceneInitializer", "场景初始化完成！");
+            UnityEngine.Debug.Log("=== SceneInitializer: Awake 结束 ===");
         }
 
         private void CreateGameLoader()

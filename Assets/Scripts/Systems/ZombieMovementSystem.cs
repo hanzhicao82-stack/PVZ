@@ -29,10 +29,14 @@ namespace PVZ.DOTS.Systems
             foreach (var (transform, zombie) in 
                 SystemAPI.Query<RefRW<LocalTransform>, RefRO<ZombieComponent>>())
             {
-                // 僵尸向左移动
-                float3 position = transform.ValueRO.Position;
-                position.x -= zombie.ValueRO.MovementSpeed * deltaTime;
-                transform.ValueRW.Position = position;
+                // 只有当移动速度大于0时才移动（攻击时速度为0）
+                if (zombie.ValueRO.MovementSpeed > 0f)
+                {
+                    // 僵尸向左移动
+                    float3 position = transform.ValueRO.Position;
+                    position.x -= zombie.ValueRO.MovementSpeed * deltaTime;
+                    transform.ValueRW.Position = position;
+                }
                 zombieCount++;
             }
 

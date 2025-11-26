@@ -21,6 +21,10 @@ namespace PVZ.DOTS.Debug
         [Tooltip("是否在Start时自动开始")]
         public bool autoStartOnPlay = false;
 
+        [Header("游戏配置")]
+        [Tooltip("游戏配置文件")]
+        public TextAsset gameConfigJson;
+
         [Header("关卡配置")]
         [Tooltip("关卡配置文件")]
         public TextAsset levelConfigJson;
@@ -99,13 +103,20 @@ namespace PVZ.DOTS.Debug
         private float _cellSize;
         private bool _initialized = false;
         private PVZ.DOTS.GameLoader _gameLoader;
+        private bool _lastGamePlayingState = true; // 记录上一次的游戏状态
 
         private void Start()
         {
+            UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 开始 ===");
             var world = World.DefaultGameObjectInjectionWorld;
             if (world != null)
             {
                 _entityManager = world.EntityManager;
+                UnityEngine.Debug.Log("PerformanceTestSpawner: EntityManager 已获取");
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("PerformanceTestSpawner: 无法获取 World!");
             }
 
             _random = new Unity.Mathematics.Random((uint)System.DateTime.Now.Ticks);
@@ -120,31 +131,41 @@ namespace PVZ.DOTS.Debug
                 enableAutoSpawn = true;
                 GameLogger.Log("PerformanceTest", "性能测试自动启动");
             }
+            
+            UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 结束 ===");
         }
 
         private void LoadLevelConfig()
         {
+            UnityEngine.Debug.Log("=== PerformanceTestSpawner: LoadLevelConfig 开始 ===");
+            
             if (levelConfigJson == null)
             {
                 GameLogger.LogWarning("PerformanceTest", "未设置关卡配置文件，使用默认配置");
+                UnityEngine.Debug.LogWarning("PerformanceTestSpawner: levelConfigJson 为 null!");
                 return;
             }
+
+            UnityEngine.Debug.Log($"PerformanceTestSpawner: levelConfigJson 已设置，准备加载关卡 {testLevelId}");
 
             // 查找或创建GameLoader
             var loaderObj = GameObject.Find("GameLoader");
             if (loaderObj == null)
             {
+                UnityEngine.Debug.Log("PerformanceTestSpawner: 未找到 GameLoader，创建新的");
                 loaderObj = new GameObject("GameLoader");
                 _gameLoader = loaderObj.AddComponent<PVZ.DOTS.GameLoader>();
             }
             else
             {
+                UnityEngine.Debug.Log("PerformanceTestSpawner: 找到已存在的 GameLoader");
                 _gameLoader = loaderObj.GetComponent<PVZ.DOTS.GameLoader>();
             }
 
             if (_gameLoader != null)
             {
                 _gameLoader.levelConfigJson = levelConfigJson;
+                _gameLoader.gameConfigJson = gameConfigJson;
                 _gameLoader.levelToLoad = testLevelId;
                 _gameLoader.autoSetGamePlaying = autoSetGamePlaying;
                 _gameLoader.playingStateDelay = 0.5f;
@@ -153,31 +174,66 @@ namespace PVZ.DOTS.Debug
                 _gameLoader.OnLoadComplete += OnLoadComplete;
                 _gameLoader.OnLevelConfigLoaded += OnLevelConfigLoaded;
 
+                UnityEngine.Debug.Log("PerformanceTestSpawner: 回调已注册，开始加载...");
+                
                 // 开始加载
                 _gameLoader.StartLoad();
 
                 GameLogger.Log("PerformanceTest", $"使用GameLoader加载关卡 {testLevelId}");
             }
+            else
+            {
+                UnityEngine.Debug.LogError("PerformanceTestSpawner: GameLoader 组件为 null!");
+            }
+            
+            UnityEngine.Debug.Log("=== PerformanceTestSpawner: LoadLevelConfig 结束 ===");
         }
 
         private void OnLoadComplete()
         {
+            UnityEngine.Debug.Log("=== PerformanceTestSpawner: OnLoadComplete 回调触发 ===");
             GameLogger.Log("PerformanceTest", "关卡加载完成");
+            GameStateManager.Instance.SetGameStatePlaying();
+            UnityEngine.Debug.Log("PerformanceTestSpawner: 游戏状态已设置为 Playing");
         }
 
         private void OnLevelConfigLoaded(PVZ.DOTS.Components.LevelConfigComponent levelConfig)
         {
+            UnityEngine.Debug.Log("=== PerformanceTestSpawner: OnLevelConfigLoaded 回调触发 ===");
             _rowCount = levelConfig.RowCount;
             _columnCount = levelConfig.ColumnCount;
             _cellSize = levelConfig.CellWidth;
             _initialized = true;
             GameLogger.Log("PerformanceTest", $"关卡配置已加载：{_rowCount}行 × {_columnCount}列，格子大小={_cellSize}");
+            UnityEngine.Debug.Log($"PerformanceTestSpawner: _initialized = true, 行={_rowCount}, 列={_columnCount}");
         }
 
         private void Update()
         {
             if (!enableAutoSpawn || _entityManager == null)
                 return;
+
+            // 检查游戏状态，只在Playing时生成
+            bool isPlaying = IsGamePlaying();
+            
+            // 状态变化时输出日志
+            if (isPlaying != _lastGamePlayingState)
+            {
+                if (!isPlaying)
+                {
+                    UnityEngine.Debug.Log("PerformanceTestSpawner: 游戏已结束，停止生成实体");
+                }
+                else
+                {
+                    UnityEngine.Debug.Log("PerformanceTestSpawner: 游戏已开始，恢复生成实体");
+                }
+                _lastGamePlayingState = isPlaying;
+            }
+            
+            if (!isPlaying)
+            {
+                return;
+            }
 
             // 初始化地图配置
             if (!_initialized)
@@ -234,6 +290,26 @@ namespace PVZ.DOTS.Debug
             }
 
             query.Dispose();
+        }
+
+        /// <summary>
+        /// 检查游戏是否在Playing状态
+        /// </summary>
+        private bool IsGamePlaying()
+        {
+            if (_entityManager == null)
+                return false;
+
+            var query = _entityManager.CreateEntityQuery(typeof(GameStateComponent));
+            bool isPlaying = false;
+
+            if (query.TryGetSingleton<GameStateComponent>(out var gameState))
+            {
+                isPlaying = gameState.CurrentState == GameState.Playing;
+            }
+
+            query.Dispose();
+            return isPlaying;
         }
 
         private void SpawnPlants()

@@ -23,7 +23,7 @@ namespace PVZ.DOTS
         public int levelToLoad = 1;
         
         [Tooltip("是否自动设置游戏状态为Playing")]
-        public bool autoSetGamePlaying = false;
+        public bool autoSetGamePlaying = true;
         
         [Tooltip("加载后延迟多少秒设置Playing状态")]
         public float playingStateDelay = 0.5f;
@@ -64,12 +64,16 @@ namespace PVZ.DOTS
         /// </summary>
         public void StartLoad()
         {
+            UnityEngine.Debug.Log("=== GameLoader: StartLoad 被调用 ===");
+            
             if (_isLoading)
             {
                 GameLogger.LogWarning("GameLoader", "加载已在进行中");
+                UnityEngine.Debug.LogWarning("GameLoader: 已经在加载中，跳过");
                 return;
             }
 
+            UnityEngine.Debug.Log("GameLoader: 启动协程 LoadSequence");
             StartCoroutine(LoadSequence());
         }
 
@@ -87,6 +91,7 @@ namespace PVZ.DOTS
             _isLoading = true;
             _loadComplete = false;
 
+            UnityEngine.Debug.Log("=== GameLoader: LoadSequence 协程开始 ===");
             GameLogger.Log("GameLoader", "开始加载流程...");
 
             // 等待EntityManager初始化
@@ -96,6 +101,7 @@ namespace PVZ.DOTS
                 if (world != null)
                 {
                     _entityManager = world.EntityManager;
+                    UnityEngine.Debug.Log("GameLoader: EntityManager 已获取");
                 }
                 yield return null;
             }
@@ -103,25 +109,42 @@ namespace PVZ.DOTS
             // 1. 加载游戏配置
             if (gameConfigJson != null)
             {
+                UnityEngine.Debug.Log("GameLoader: 开始加载游戏配置...");
                 yield return LoadGameConfig();
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning("GameLoader: gameConfigJson 为 null，跳过游戏配置加载");
             }
 
             // 2. 加载关卡配置
             if (levelConfigJson != null)
             {
+                UnityEngine.Debug.Log("GameLoader: 开始加载关卡配置...");
                 yield return LoadLevelConfig();
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning("GameLoader: levelConfigJson 为 null，跳过关卡配置加载");
             }
 
             // 3. 等待配置实体创建完成
+            UnityEngine.Debug.Log("GameLoader: 等待配置实体创建...");
             yield return new WaitForSeconds(0.1f);
 
             // 4. 触发回调
+            UnityEngine.Debug.Log("GameLoader: 准备触发回调...");
             if (OnLevelConfigLoaded != null)
             {
                 var query = _entityManager.CreateEntityQuery(typeof(Components.LevelConfigComponent));
                 if (query.TryGetSingleton<Components.LevelConfigComponent>(out var levelConfig))
                 {
+                    UnityEngine.Debug.Log("GameLoader: 触发 OnLevelConfigLoaded 回调");
                     OnLevelConfigLoaded?.Invoke(levelConfig);
+                }
+                else
+                {
+                    UnityEngine.Debug.LogWarning("GameLoader: 未找到 LevelConfigComponent");
                 }
                 query.Dispose();
             }
@@ -131,7 +154,12 @@ namespace PVZ.DOTS
                 var query = _entityManager.CreateEntityQuery(typeof(Components.GameConfigComponent));
                 if (query.TryGetSingleton<Components.GameConfigComponent>(out var gameConfig))
                 {
+                    UnityEngine.Debug.Log("GameLoader: 触发 OnGameConfigLoaded 回调");
                     OnGameConfigLoaded?.Invoke(gameConfig);
+                }
+                else
+                {
+                    UnityEngine.Debug.LogWarning("GameLoader: 未找到 GameConfigComponent");
                 }
                 query.Dispose();
             }
@@ -139,15 +167,18 @@ namespace PVZ.DOTS
             // 5. 设置游戏状态
             if (autoSetGamePlaying)
             {
+                UnityEngine.Debug.Log($"GameLoader: 等待 {playingStateDelay} 秒后设置 Playing 状态");
                 yield return new WaitForSeconds(playingStateDelay);
-                SetGameStatePlaying();
+                GameStateManager.Instance.SetGameStatePlaying();
             }
 
             _isLoading = false;
             _loadComplete = true;
 
+            UnityEngine.Debug.Log("GameLoader: 触发 OnLoadComplete 回调");
             GameLogger.Log("GameLoader", "加载流程完成！");
             OnLoadComplete?.Invoke();
+            UnityEngine.Debug.Log("=== GameLoader: LoadSequence 协程结束 ===");
         }
 
         private IEnumerator LoadGameConfig()
@@ -186,26 +217,6 @@ namespace PVZ.DOTS
 
             yield return new WaitForSeconds(0.1f);
             GameLogger.Log("GameLoader", "关卡配置加载完成");
-        }
-
-        private void SetGameStatePlaying()
-        {
-            if (_entityManager == null)
-                return;
-
-            var query = _entityManager.CreateEntityQuery(typeof(Components.GameStateComponent));
-            if (query.TryGetSingleton<Components.GameStateComponent>(out var gameState))
-            {
-                var entity = query.GetSingletonEntity();
-                gameState.CurrentState = Components.GameState.Playing;
-                _entityManager.SetComponentData(entity, gameState);
-                GameLogger.Log("GameLoader", "游戏状态设置为Playing");
-            }
-            else
-            {
-                GameLogger.LogWarning("GameLoader", "未找到GameStateComponent");
-            }
-            query.Dispose();
         }
 
         /// <summary>

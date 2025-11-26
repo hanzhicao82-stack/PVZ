@@ -2,7 +2,6 @@ using System;
 using Unity.Entities;
 using UnityEngine;
 using PVZ.DOTS.Components;
-using PVZ.DOTS.Utils;
 using Debug = UnityEngine.Debug;
 
 namespace PVZ.DOTS.Config
@@ -71,7 +70,7 @@ namespace PVZ.DOTS.Config
 
         void Start()  // 改为Start以确保World已初始化
         {
-            GameLogger.Log("GameConfigLoader", "Start() 开始执行...");
+            UnityEngine.Debug.Log("GameConfigLoader: Start() 开始执行...");
             string json = null;
             if (configJson != null)
             {
@@ -97,7 +96,7 @@ namespace PVZ.DOTS.Config
                     plants = Array.Empty<PlantConfigEntry>(),
                     zombies = Array.Empty<ZombieConfigEntry>()
                 };
-                GameLogger.LogWarning("GameConfigLoader", "未找到 JSON，使用默认值。");
+                UnityEngine.Debug.LogWarning("GameConfigLoader: 未找到 JSON，使用默认值。");
             }
             else
             {
@@ -113,12 +112,12 @@ namespace PVZ.DOTS.Config
                             plants = Array.Empty<PlantConfigEntry>(),
                             zombies = Array.Empty<ZombieConfigEntry>()
                         };
-                        GameLogger.LogWarning("GameConfigLoader", "JSON 解析失败，使用默认值。");
+                        UnityEngine.Debug.LogWarning("GameConfigLoader: JSON 解析失败，使用默认值。");
                     }
                 }
                 catch (Exception e)
                 {
-                    GameLogger.LogError("GameConfigLoader", "JSON 解析异常: " + e.Message);
+                    UnityEngine.Debug.LogError("GameConfigLoader: JSON 解析异常: " + e.Message);
                     root = new Root
                     {
                         gameSettings = new GameSettings(),
@@ -132,7 +131,7 @@ namespace PVZ.DOTS.Config
             var world = World.DefaultGameObjectInjectionWorld;
             if (world == null)
             {
-                GameLogger.LogError("GameConfigLoader", "没有可用的 World。");
+                UnityEngine.Debug.LogError("GameConfigLoader: 没有可用的 World。");
                 return;
             }
             var entityManager = world.EntityManager;
@@ -143,7 +142,7 @@ namespace PVZ.DOTS.Config
                 configEntity = entityManager.CreateEntityQuery(typeof(GameConfigComponent)).GetSingletonEntity();
                 if (!overwriteExisting)
                 {
-                    GameLogger.Log("GameConfigLoader", "已存在配置实体，未覆盖。");
+                    UnityEngine.Debug.Log("GameConfigLoader: 已存在配置实体，未覆盖。");
                     return;
                 }
             }
@@ -200,7 +199,7 @@ namespace PVZ.DOTS.Config
             {
                 if (!Enum.TryParse<PlantType>(p.type, true, out var plantType))
                 {
-                    GameLogger.LogWarning("GameConfigLoader", $"未知植物类型: {p.type}");
+                    UnityEngine.Debug.LogWarning($"未知植物类型: {p.type}");
                     continue;
                 }
                 plantBuffer.Add(new PlantConfigElement
@@ -230,7 +229,7 @@ namespace PVZ.DOTS.Config
             {
                 if (!Enum.TryParse<ZombieType>(z.type, true, out var zombieType))
                 {
-                    GameLogger.LogWarning("GameConfigLoader", $"未知僵尸类型: {z.type}");
+                    UnityEngine.Debug.LogWarning($"未知僵尸类型: {z.type}");
                     continue;
                 }
                 zombieBuffer.Add(new ZombieConfigElement
@@ -272,7 +271,7 @@ namespace PVZ.DOTS.Config
             else
                 entityManager.AddComponentData(gameStateEntity, gameStateData);
 
-            GameLogger.Log("GameConfigLoader", $"游戏状态初始化完成。状态:{gameStateData.CurrentState} 时长:{gameStateData.TotalGameTime}秒 波次:{gameStateData.TotalWaves}");
+            UnityEngine.Debug.Log($"GameConfigLoader: 游戏状态初始化完成。状态:{gameStateData.CurrentState} 时长:{gameStateData.TotalGameTime}秒 波次:{gameStateData.TotalWaves}");
         }
     }
 }
