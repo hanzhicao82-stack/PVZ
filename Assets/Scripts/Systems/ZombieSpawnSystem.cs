@@ -15,11 +15,11 @@ namespace PVZ.DOTS.Systems
         private Random _random;
         private bool _initialized;
         private float _startDelay;
-        private int _laneCount;
+        private int _rowCount;
+        private int _columnCount;
         private float _spawnInterval;
-        private float _spawnX;
-        private float _laneZSpacing;
-        private float _laneZOffset;
+        private float _cellWidth;
+        private float _cellHeight;
         private float _zombieMovementSpeed;
         private float _zombieAttackDamage;
         private float _zombieAttackInterval;
@@ -43,17 +43,39 @@ namespace PVZ.DOTS.Systems
 
             float currentTime = (float)SystemAPI.Time.ElapsedTime;
 
-            // 初始化配置（等待配置组件出现）
+            // 初始化配置（优先从关卡配置读取，如果没有则使用游戏全局配置）
             if (!_initialized)
             {
-                if (SystemAPI.TryGetSingleton<PVZ.DOTS.Components.GameConfigComponent>(out var config))
+                bool configLoaded = false;
+                
+                // 优先尝试从关卡配置读取
+                if (SystemAPI.TryGetSingleton<LevelConfigComponent>(out var levelConfig))
+                {
+                    _spawnInterval = levelConfig.ZombieSpawnInterval;
+                    _startDelay = levelConfig.ZombieSpawnStartDelay;
+                    _rowCount = levelConfig.RowCount;  // 使用关卡的行数
+                    _columnCount = levelConfig.ColumnCount; // 使用关卡的列数
+                    _cellWidth = levelConfig.CellWidth;
+                    _cellHeight = levelConfig.CellHeight;
+                    
+                    // 使用默认僵尸属性
+                    _zombieMovementSpeed = 1.0f;
+                    _zombieAttackDamage = 10.0f;
+                    _zombieAttackInterval = 1.0f;
+                    _zombieHealth = 100.0f;
+                    
+                    configLoaded = true;
+                    UnityEngine.Debug.Log($"ZombieSpawnSystem: 从关卡配置初始化。生成间隔={_spawnInterval}s, 延迟={_startDelay}s, 行数={_rowCount}, 列数={_columnCount}, 格子大小=({_cellWidth}, {_cellHeight})");
+                }
+                // 如果没有关卡配置，尝试使用游戏全局配置
+                else if (SystemAPI.TryGetSingleton<PVZ.DOTS.Components.GameConfigComponent>(out var config))
                 {
                     _spawnInterval = config.ZombieSpawnInterval;
                     _startDelay = config.ZombieSpawnStartDelay;
-                    _laneCount = config.LaneCount;
-                    _spawnX = config.SpawnX;
-                    _laneZSpacing = config.LaneZSpacing;
-                    _laneZOffset = config.LaneZOffset;
+                    _rowCount = config.LaneCount;
+                    _columnCount = 9; // 默认9列
+                    _cellWidth = 1.0f;
+                    _cellHeight = 1.0f;
                     
                     // 从配置中读取默认僵尸属性，如果为0则使用硬编码默认值
                     _zombieMovementSpeed = config.ZombieMovementSpeed > 0 ? config.ZombieMovementSpeed : 1.0f;
@@ -61,8 +83,13 @@ namespace PVZ.DOTS.Systems
                     _zombieAttackInterval = config.ZombieAttackInterval > 0 ? config.ZombieAttackInterval : 1.0f;
                     _zombieHealth = config.ZombieHealth > 0 ? config.ZombieHealth : 100.0f;
                     
+                    configLoaded = true;
+                    UnityEngine.Debug.Log($"ZombieSpawnSystem: 从全局配置初始化。生成间隔={_spawnInterval}s, 延迟={_startDelay}s, 行数={_rowCount}");
+                }
+                
+                if (configLoaded)
+                {
                     _initialized = true;
-                    UnityEngine.Debug.Log($"ZombieSpawnSystem: 初始化完成。生成间隔={_spawnInterval}s, 延迟={_startDelay}s, 行数={_laneCount}, 僵尸速度={_zombieMovementSpeed}");
                 }
                 else
                 {
@@ -81,9 +108,13 @@ namespace PVZ.DOTS.Systems
 
             EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
-            // 随机选择一行
-            int lane = _random.NextInt(0, _laneCount);
-            float spawnZ = lane * _laneZSpacing + _laneZOffset; // 根据行号计算Z坐标
+            // 随机选择一行，僵尸从地图最右侧外部生成
+            int spawnRow = _random.NextInt(0, _rowCount);
+            int spawnColumn = _columnCount; // 超出地图最右侧（地图外）
+            
+            // 计算世界坐标（基于地图网格）
+            float worldX = spawnColumn * _cellWidth - (_columnCount * _cellWidth) / 2f;
+            float worldZ = spawnRow * _cellHeight - (_rowCount * _cellHeight) / 2f;
 
             // 创建僵尸实体
             Entity zombieEntity = ecb.CreateEntity();
@@ -95,7 +126,7 @@ namespace PVZ.DOTS.Systems
                 AttackDamage = _zombieAttackDamage,
                 AttackInterval = _zombieAttackInterval,
                 LastAttackTime = 0f,
-                Lane = lane
+                Lane = spawnRow
             });
 
             ecb.AddComponent(zombieEntity, new HealthComponent
@@ -107,16 +138,16 @@ namespace PVZ.DOTS.Systems
 
             ecb.AddComponent(zombieEntity, new GridPositionComponent
             {
-                Row = lane,
-                Column = 9,
-                WorldPosition = new float3(_spawnX, 0, spawnZ)
+                Row = spawnRow,
+                Column = spawnColumn,
+                WorldPosition = new float3(worldX, 0, worldZ)
             });
 
-            ecb.AddComponent(zombieEntity, LocalTransform.FromPosition(new float3(_spawnX, 0, spawnZ)));
+            ecb.AddComponent(zombieEntity, LocalTransform.FromPosition(new float3(worldX, 0, worldZ)));
 
             _lastSpawnTime = currentTime;
 
-            UnityEngine.Debug.Log($"ZombieSpawnSystem: 生成僵尸 Lane={lane} Position=({_spawnX}, 0, {spawnZ})");
+            UnityEngine.Debug.Log($"ZombieSpawnSystem: 生成僵尸 Row={spawnRow} Column={spawnColumn} WorldPos=({worldX:F2}, 0, {worldZ:F2})");
 
             ecb.Playback(state.EntityManager);
             ecb.Dispose();

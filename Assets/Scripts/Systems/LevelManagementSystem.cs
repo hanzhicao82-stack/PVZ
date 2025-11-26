@@ -75,7 +75,6 @@ namespace PVZ.DOTS.Systems
             var levelEntity = query.GetSingletonEntity();
             if (!state.EntityManager.HasBuffer<WaveConfigElement>(levelEntity))
             {
-                query.Dispose();
                 return;
             }
 
@@ -93,7 +92,6 @@ namespace PVZ.DOTS.Systems
             }
 
             UnityEngine.Debug.Log($"LevelManagementSystem: 第{waveNumber}波将生成 {zombieCount} 个僵尸");
-            query.Dispose();
         }
     }
 }

@@ -6,8 +6,8 @@
       "type": "Day",
       "difficulty": "Easy",
       "mapConfig": {
-        "rowCount": 5,
-        "columnCount": 9,
+        "rowCount": 50,
+        "columnCount": 20,
         "cellWidth": 1.5,
         "cellHeight": 2.0
       },
@@ -44,8 +44,8 @@
       "type": "Day",
       "difficulty": "Normal",
       "mapConfig": {
-        "rowCount": 5,
-        "columnCount": 9,
+        "rowCount": 50,
+        "columnCount": 20,
         "cellWidth": 1.5,
         "cellHeight": 2.0
       },
@@ -88,8 +88,8 @@
       "type": "Night",
       "difficulty": "Normal",
       "mapConfig": {
-        "rowCount": 5,
-        "columnCount": 9,
+        "rowCount": 50,
+        "columnCount": 20,
         "cellWidth": 1.5,
         "cellHeight": 2.0
       },
@@ -133,8 +133,8 @@
       "type": "Pool",
       "difficulty": "Normal",
       "mapConfig": {
-        "rowCount": 6,
-        "columnCount": 9,
+        "rowCount": 60,
+        "columnCount": 20,
         "cellWidth": 1.5,
         "cellHeight": 2.0
       },
@@ -181,8 +181,8 @@
       "type": "BossFight",
       "difficulty": "Expert",
       "mapConfig": {
-        "rowCount": 5,
-        "columnCount": 9,
+        "rowCount": 50,
+        "columnCount": 20,
         "cellWidth": 1.5,
         "cellHeight": 2.0
       },
