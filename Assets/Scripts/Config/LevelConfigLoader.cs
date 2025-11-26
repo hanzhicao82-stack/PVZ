@@ -133,6 +133,16 @@ namespace PVZ.DOTS.Config
 
             var entityManager = world.EntityManager;
 
+            // 检查并清理旧的关卡配置实体
+            var existingQuery = entityManager.CreateEntityQuery(typeof(LevelConfigComponent));
+            if (!existingQuery.IsEmptyIgnoreFilter)
+            {
+                int existingCount = existingQuery.CalculateEntityCount();
+                UnityEngine.Debug.LogWarning($"LevelConfigLoader: 发现 {existingCount} 个已存在的LevelConfigComponent实体，将清除后重新创建");
+                entityManager.DestroyEntity(existingQuery);
+            }
+            existingQuery.Dispose();
+
             // 创建关卡配置实体
             Entity levelEntity = entityManager.CreateEntity();
 

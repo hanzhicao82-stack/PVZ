@@ -61,10 +61,19 @@ namespace PVZ.DOTS.Debug
 
         void DrawPlants()
         {
+            if (_entityManager == null)
+                return;
+
             var query = _entityManager.CreateEntityQuery(
                 typeof(PlantComponent),
                 typeof(LocalTransform)
             );
+
+            if (query.IsEmptyIgnoreFilter)
+            {
+                query.Dispose();
+                return;
+            }
 
             var entities = query.ToEntityArray(Unity.Collections.Allocator.Temp);
             
@@ -117,14 +126,24 @@ namespace PVZ.DOTS.Debug
             }
 
             entities.Dispose();
+            query.Dispose();
         }
 
         void DrawZombies()
         {
+            if (_entityManager == null)
+                return;
+
             var query = _entityManager.CreateEntityQuery(
                 typeof(ZombieComponent),
                 typeof(LocalTransform)
             );
+
+            if (query.IsEmptyIgnoreFilter)
+            {
+                query.Dispose();
+                return;
+            }
 
             var entities = query.ToEntityArray(Unity.Collections.Allocator.Temp);
             
@@ -172,14 +191,24 @@ namespace PVZ.DOTS.Debug
             }
 
             entities.Dispose();
+            query.Dispose();
         }
 
         void DrawProjectiles()
         {
+            if (_entityManager == null)
+                return;
+
             var query = _entityManager.CreateEntityQuery(
                 typeof(ProjectileComponent),
                 typeof(LocalTransform)
             );
+
+            if (query.IsEmptyIgnoreFilter)
+            {
+                query.Dispose();
+                return;
+            }
 
             var entities = query.ToEntityArray(Unity.Collections.Allocator.Temp);
             
@@ -216,6 +245,7 @@ namespace PVZ.DOTS.Debug
             }
 
             entities.Dispose();
+            query.Dispose();
         }
 
         void DrawHealthBar(Vector3 position, float currentHealth, float maxHealth)
@@ -283,6 +313,10 @@ namespace PVZ.DOTS.Debug
             GUILayout.Label($"植物数量: {plantQuery.CalculateEntityCount()}");
             GUILayout.Label($"僵尸数量: {zombieQuery.CalculateEntityCount()}");
             GUILayout.Label($"子弹数量: {projectileQuery.CalculateEntityCount()}");
+
+            plantQuery.Dispose();
+            zombieQuery.Dispose();
+            projectileQuery.Dispose();
 
             GUILayout.Space(10);
             GUILayout.Label("--- 绘制选项 ---", new GUIStyle(GUI.skin.label) { fontStyle = FontStyle.Bold });
