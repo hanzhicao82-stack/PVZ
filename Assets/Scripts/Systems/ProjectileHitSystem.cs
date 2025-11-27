@@ -9,12 +9,12 @@ using PVZ.DOTS.Utils;
 namespace PVZ.DOTS.Systems
 {
     /// <summary>
-    /// 战斗系统 - 处理子弹碰撞和伤害计算
+    /// 子弹击中系统 - 处理子弹碰撞和伤害计算
     /// 优化：使用行分组减少碰撞检测次数
     /// </summary>
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     [UpdateAfter(typeof(ProjectileMovementSystem))]
-    public partial struct CombatSystem : ISystem
+    public partial struct ProjectileHitSystem : ISystem
     {
         private const float COLLISION_RADIUS = 0.5f;
         private const float COLLISION_RADIUS_SQ = COLLISION_RADIUS * COLLISION_RADIUS;
@@ -69,7 +69,7 @@ namespace PVZ.DOTS.Systems
                             {
                                 health.IsDead = true;
                                 ecb.DestroyEntity(zombieEntity);
-                                GameLogger.Log("CombatSystem", $"僵尸被击杀 Lane={lane}");
+                                GameLogger.Log("ProjectileHitSystem", $"僵尸被击杀 Lane={lane}");
                             }
                             else
                             {

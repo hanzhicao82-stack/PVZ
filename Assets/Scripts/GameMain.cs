@@ -7,10 +7,10 @@ using Debug = UnityEngine.Debug;
 namespace PVZ.DOTS
 {
     /// <summary>
-    /// 场景初始化脚本 - 自动创建游戏所需的运行时组件
+    /// 游戏主入口 - 自动创建游戏所需的运行时组件
     /// 在Unity编辑器中：右键场景中的Hierarchy > Create Empty，命名为"GameManager"，添加此脚本
     /// </summary>
-    public class SceneInitializer : MonoBehaviour
+    public class GameMain : MonoBehaviour
     {
         [Header("自动创建运行时组件")]
         [Tooltip("是否在场景加载时自动创建UI")]
@@ -25,9 +25,6 @@ namespace PVZ.DOTS
         [Header("关卡设置")]
         public TextAsset levelConfigJson;
         public int startLevelId = 1;
-
-        [Tooltip("是否在加载完成后自动设置Playing状态")]
-        public bool autoSetGamePlaying = false;
 
         [Header("调试工具")]
         [Tooltip("是否自动创建地图网格调试工具")]
@@ -44,8 +41,8 @@ namespace PVZ.DOTS
 
         void Awake()
         {
-            UnityEngine.Debug.Log("=== SceneInitializer: Awake 开始 ===");
-            GameLogger.Log("SceneInitializer", "开始初始化场景...");
+            UnityEngine.Debug.Log("=== GameMain: Awake 开始 ===");
+            GameLogger.Log("GameMain", "开始初始化场景...");
 
             // 使用GameLoader加载配置
             if (useGameLoader)
@@ -70,8 +67,8 @@ namespace PVZ.DOTS
                 CreateEntityDebugger();
             }
 
-            GameLogger.Log("SceneInitializer", "场景初始化完成！");
-            UnityEngine.Debug.Log("=== SceneInitializer: Awake 结束 ===");
+            GameLogger.Log("GameMain", "场景初始化完成！");
+            UnityEngine.Debug.Log("=== GameMain: Awake 结束 ===");
         }
 
         private void CreateGameLoader()
@@ -92,7 +89,6 @@ namespace PVZ.DOTS
                 _gameLoader.gameConfigJson = gameConfigJson;
                 _gameLoader.levelConfigJson = levelConfigJson;
                 _gameLoader.levelToLoad = startLevelId;
-                _gameLoader.autoSetGamePlaying = autoSetGamePlaying;
 
                 // 注册回调
                 _gameLoader.OnLoadComplete += OnLoadComplete;
@@ -101,24 +97,28 @@ namespace PVZ.DOTS
                 // 开始加载
                 _gameLoader.StartLoad();
 
-                GameLogger.Log("SceneInitializer", $"创建 GameLoader (关卡ID={startLevelId})");
+                GameLogger.Log("GameMain", $"创建 GameLoader (关卡ID={startLevelId})");
             }
         }
 
         private void OnLoadComplete()
         {
-            GameLogger.Log("SceneInitializer", "GameLoader 加载完成");
+            GameLogger.Log("GameMain", "GameLoader 加载完成");
 
             // 调整地图偏移
             if (autoAdjustMapOffset)
             {
                 AdjustMapOffset();
             }
+
+            // 设置游戏状态为 Playing
+            GameStateManager.Instance.SetGameStatePlaying();
+            GameLogger.Log("GameMain", "游戏状态已设置为 Playing");
         }
 
         private void OnLevelConfigLoaded(Components.LevelConfigComponent levelConfig)
         {
-            GameLogger.Log("SceneInitializer", $"关卡配置已加载: {levelConfig.RowCount}行 × {levelConfig.ColumnCount}列");
+            GameLogger.Log("GameMain", $"关卡配置已加载: {levelConfig.RowCount}行 × {levelConfig.ColumnCount}列");
         }
 
         private void CreateGameUI()
@@ -134,7 +134,7 @@ namespace PVZ.DOTS
                 canvasObj.AddComponent<CanvasScaler>();
                 canvasObj.AddComponent<GraphicRaycaster>();
 
-                GameLogger.Log("SceneInitializer", "创建 Canvas");
+                GameLogger.Log("GameMain", "创建 Canvas");
             }
 
             // 创建GameUI管理器
@@ -162,7 +162,7 @@ namespace PVZ.DOTS
                 // 创建失败面板
                 uiManager.defeatPanel = CreateResultPanel("DefeatPanel", gameUIObj.transform, "失败", Color.red, uiManager);
 
-                GameLogger.Log("SceneInitializer", "创建 GameUI 完成");
+                GameLogger.Log("GameMain", "创建 GameUI 完成");
             }
         }
 
@@ -312,7 +312,7 @@ namespace PVZ.DOTS
                 debugger.enableGridDrawing = true;
                 debugger.showCellFill = true;
                 debugger.showRowColumnIndex = true;
-                GameLogger.Log("SceneInitializer", "创建 MapGridDebugger");
+                GameLogger.Log("GameMain", "创建 MapGridDebugger");
             }
         }
 
@@ -320,7 +320,7 @@ namespace PVZ.DOTS
         {
             if (_gameLoader == null || !_gameLoader.TryGetLevelConfig(out var levelConfig))
             {
-                GameLogger.LogWarning("SceneInitializer", "无法获取关卡配置，跳过地图偏移调整");
+                GameLogger.LogWarning("GameMain", "无法获取关卡配置，跳过地图偏移调整");
                 return;
             }
 
@@ -328,7 +328,7 @@ namespace PVZ.DOTS
             float totalWidth = levelConfig.ColumnCount * levelConfig.CellWidth;
             mapOffset = new Vector3(-totalWidth * 0.5f, 0, 0);
 
-            GameLogger.Log("SceneInitializer", $"自动调整地图偏移为 {mapOffset}（列数={levelConfig.ColumnCount}, 格子宽度={levelConfig.CellWidth}）");
+            GameLogger.Log("GameMain", $"自动调整地图偏移为 {mapOffset}（列数={levelConfig.ColumnCount}, 格子宽度={levelConfig.CellWidth}）");
         }
 
         private void CreateEntityDebugger()
@@ -341,7 +341,7 @@ namespace PVZ.DOTS
                 debugger.showPlants = true;
                 debugger.showZombies = true;
                 debugger.showProjectiles = true;
-                GameLogger.Log("SceneInitializer", "创建 EntityDebugger");
+                GameLogger.Log("GameMain", "创建 EntityDebugger");
             }
         }
 
@@ -353,7 +353,7 @@ namespace PVZ.DOTS
             if (gameManagerObj == null)
             {
                 gameManagerObj = new GameObject("GameManager");
-                var initializer = gameManagerObj.AddComponent<SceneInitializer>();
+                var initializer = gameManagerObj.AddComponent<GameMain>();
 
                 // 尝试加载配置文件
                 var configPath = "Assets/Configs/GameConfig.json";
@@ -363,14 +363,13 @@ namespace PVZ.DOTS
                 initializer.useGameLoader = true;
                 initializer.startLevelId = 1;
                 initializer.autoAdjustMapOffset = true;
-                initializer.autoSetGamePlaying = false;
 
                 UnityEditor.Selection.activeGameObject = gameManagerObj;
-                GameLogger.Log("SceneInitializer", "已创建GameManager并添加SceneInitializer。已自动配置游戏和关卡配置文件。");
+                GameLogger.Log("GameMain", "已创建GameManager并添加GameMain。已自动配置游戏和关卡配置文件。");
             }
             else
             {
-                GameLogger.Log("SceneInitializer", "GameManager已存在。");
+                GameLogger.Log("GameMain", "GameManager已存在。");
             }
         }
 #endif

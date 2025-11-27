@@ -21,12 +21,6 @@ namespace PVZ.DOTS
         [Header("加载选项")]
         [Tooltip("要加载的关卡ID")]
         public int levelToLoad = 1;
-        
-        [Tooltip("是否自动设置游戏状态为Playing")]
-        public bool autoSetGamePlaying = true;
-        
-        [Tooltip("加载后延迟多少秒设置Playing状态")]
-        public float playingStateDelay = 0.5f;
 
         private EntityManager _entityManager;
         private bool _isLoading = false;
@@ -164,13 +158,8 @@ namespace PVZ.DOTS
                 query.Dispose();
             }
 
-            // 5. 设置游戏状态
-            if (autoSetGamePlaying)
-            {
-                UnityEngine.Debug.Log($"GameLoader: 等待 {playingStateDelay} 秒后设置 Playing 状态");
-                yield return new WaitForSeconds(playingStateDelay);
-                GameStateManager.Instance.SetGameStatePlaying();
-            }
+            // 5. 等待配置加载完成
+            yield return new WaitForSeconds(0.1f);
 
             _isLoading = false;
             _loadComplete = true;

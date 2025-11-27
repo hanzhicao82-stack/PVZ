@@ -1,4 +1,4 @@
-# CombatSystem 性能优化说明
+# ProjectileHitSystem 性能优化说明
 
 ## 问题分析
 
@@ -111,7 +111,7 @@ private const float COLLISION_RADIUS_SQ = 0.25f;  // 预计算
 1. **使用 Burst 编译器**
    ```csharp
    [BurstCompile]
-   public partial struct CombatSystem : ISystem
+   public partial struct ProjectileHitSystem : ISystem
    ```
 
 2. **使用 Job 并行化**

@@ -199,7 +199,7 @@ namespace PVZ.DOTS
             DisableSystem<Systems.ZombieSpawnSystem>(world);
             DisableSystem<Systems.PlantAttackSystem>(world);
             DisableSystem<Systems.ProjectileMovementSystem>(world);
-            DisableSystem<Systems.CombatSystem>(world);
+            DisableSystem<Systems.ProjectileHitSystem>(world);
             DisableSystem<Systems.SunProductionSystem>(world);
         }
 

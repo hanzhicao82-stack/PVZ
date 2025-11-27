@@ -167,8 +167,6 @@ namespace PVZ.DOTS.Debug
                 _gameLoader.levelConfigJson = levelConfigJson;
                 _gameLoader.gameConfigJson = gameConfigJson;
                 _gameLoader.levelToLoad = testLevelId;
-                _gameLoader.autoSetGamePlaying = autoSetGamePlaying;
-                _gameLoader.playingStateDelay = 0.5f;
 
                 // 注册回调
                 _gameLoader.OnLoadComplete += OnLoadComplete;
