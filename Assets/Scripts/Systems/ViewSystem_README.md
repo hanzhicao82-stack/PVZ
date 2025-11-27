@@ -39,7 +39,6 @@
 ```csharp
 ViewSystemConfig.Instance.enableSpineSystem = true;
 ViewSystemConfig.Instance.enableMeshRendererSystem = true;
-ViewSystemConfig.Instance.defaultZombieRenderType = ViewRenderType.Spine;
 ```
 
 ### 2. ViewSystemBase (基类)
@@ -146,13 +145,13 @@ entityManager.AddComponentData(zombie, new HealthComponent { ... });
 // 添加视图配置
 entityManager.AddComponentData(zombie, new ViewPrefabComponent
 {
-    PrefabPath = "Prefabs/Zombies/NormalZombie_Spine",
-    RenderType = ViewRenderType.Spine
+    PrefabPath = "Prefabs/Zombies/NormalZombie_Spine"
 });
 
 // ViewLoaderSystem 会自动：
 // 1. 加载预制体
-// 2. 添加 SpineRenderComponent
+// 2. 检测预制体上的组件类型（Spine 或 MeshRenderer）
+// 3. 添加对应的渲染标记组件（SpineRenderComponent 或 MeshRenderComponent）
 // 3. 添加 ViewInstanceComponent
 // 4. 添加 ViewStateComponent
 
@@ -170,8 +169,7 @@ entityManager.AddComponentData(plant, new PlantComponent { ... });
 // 添加视图配置
 entityManager.AddComponentData(plant, new ViewPrefabComponent
 {
-    PrefabPath = "Prefabs/Plants/Peashooter_Mesh",
-    RenderType = ViewRenderType.MeshRenderer
+    PrefabPath = "Prefabs/Plants/Peashooter_Mesh"
 });
 
 // 系统会自动处理后续流程
@@ -223,24 +221,19 @@ if (meshSystem != null)
 ```csharp
 config.enableSpineSystem = true;
 config.enableMeshRendererSystem = false;
-config.defaultZombieRenderType = ViewRenderType.Spine;
-config.defaultPlantRenderType = ViewRenderType.Spine;
 ```
 
 ### 中低端设备
 ```csharp
 config.enableSpineSystem = false;
 config.enableMeshRendererSystem = true;
-config.defaultZombieRenderType = ViewRenderType.MeshRenderer;
-config.defaultPlantRenderType = ViewRenderType.MeshRenderer;
 ```
 
 ### 混合模式
 ```csharp
 config.enableSpineSystem = true;
 config.enableMeshRendererSystem = true;
-config.defaultZombieRenderType = ViewRenderType.Spine;
-config.defaultPlantRenderType = ViewRenderType.MeshRenderer; // 植物用简单渲染
+// 实际渲染类型由预制体上的组件决定
 ```
 
 ## 扩展指南

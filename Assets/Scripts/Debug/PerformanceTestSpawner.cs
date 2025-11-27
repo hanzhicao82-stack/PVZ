@@ -21,6 +21,19 @@ namespace PVZ.DOTS.Debug
         [Tooltip("是否在Start时自动开始")]
         public bool autoStartOnPlay = false;
 
+        [Header("视图模型配置")]
+        [Tooltip("是否加载和显示视图模型")]
+        public bool enableViewLoading = true;
+
+        [Tooltip("Mesh预制体路径（Resources相对路径，例如：Prefabs/TestMesh）")]
+        public string meshPrefabPath = "Prefabs/TestMesh";
+
+        [Tooltip("Spine预制体路径（Resources相对路径，例如：Prefabs/TestSpine）")]
+        public string spinePrefabPath = "Prefabs/TestSpine";
+
+        [Tooltip("使用Spine模型（否则使用Mesh模型）")]
+        public bool useSpineModel = true;
+
         [Header("游戏配置")]
         [Tooltip("游戏配置文件")]
         public TextAsset gameConfigJson;
@@ -351,6 +364,17 @@ namespace PVZ.DOTS.Debug
 
                 _entityManager.AddComponentData(plantEntity, LocalTransform.FromPosition(new float3(worldX, 0, worldZ)));
 
+                // 添加视图预制体组件（如果启用）
+                if (enableViewLoading)
+                {
+                    string prefabPath = useSpineModel ? spinePrefabPath : meshPrefabPath;
+                    _entityManager.AddComponentData(plantEntity, new ViewPrefabComponent
+                    {
+                        PrefabPath = prefabPath,
+                        IsViewLoaded = false
+                    });
+                }
+
                 totalPlantsSpawned++;
             }
         }
@@ -396,6 +420,17 @@ namespace PVZ.DOTS.Debug
                 });
 
                 _entityManager.AddComponentData(zombieEntity, LocalTransform.FromPosition(new float3(worldX, 0, worldZ)));
+
+                // 添加视图预制体组件（如果启用）
+                if (enableViewLoading)
+                {
+                    string prefabPath = useSpineModel ? spinePrefabPath : meshPrefabPath;
+                    _entityManager.AddComponentData(zombieEntity, new ViewPrefabComponent
+                    {
+                        PrefabPath = prefabPath,
+                        IsViewLoaded = false
+                    });
+                }
 
                 totalZombiesSpawned++;
             }

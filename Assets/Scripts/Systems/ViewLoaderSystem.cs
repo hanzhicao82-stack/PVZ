@@ -103,68 +103,58 @@ namespace PVZ.DOTS.Systems
                 GameObjectInstance = instance
             };
 
-            // 根据渲染类型设置组件引用
-            switch (viewPrefab.RenderType)
+            // 自动检测渲染类型（根据预制体上的组件）
+            // 优先检测 Spine 组件
+            var spineComponent = instance.GetComponent<Spine.Unity.SkeletonAnimation>();
+            if (spineComponent != null)
             {
-                case ViewRenderType.Spine:
-                    // 尝试获取 Spine 组件
-                    var spineComponent = instance.GetComponent<Spine.Unity.SkeletonAnimation>();
-                    if (spineComponent != null)
-                    {
-                        viewInstance.SpineSkeletonAnimation = spineComponent;
-                        
-                        // 添加 Spine 渲染组件标记
-                        EntityManager.AddComponentData(entity, new SpineRenderComponent
-                        {
-                            GameObjectEntity = entity // 暂时指向自己，之后可以优化
-                        });
+                viewInstance.SpineSkeletonAnimation = spineComponent;
+                
+                // 添加 Spine 渲染组件标记
+                EntityManager.AddComponentData(entity, new SpineRenderComponent
+                {
+                    GameObjectEntity = entity
+                });
 
-                        GameLogger.Log("ViewLoaderSystem", $"加载 Spine 视图: {prefabPath}");
-                    }
-                    else
+                GameLogger.Log("ViewLoaderSystem", $"加载 Spine 视图: {prefabPath}");
+            }
+            else
+            {
+                // 尝试获取 MeshRenderer
+                var meshRenderer = instance.GetComponent<MeshRenderer>();
+                if (meshRenderer != null)
+                {
+                    viewInstance.MeshRendererComponent = meshRenderer;
+                    
+                    // 添加 MeshRenderer 渲染组件标记
+                    EntityManager.AddComponentData(entity, new MeshRenderComponent
                     {
-                        GameLogger.LogWarning("ViewLoaderSystem", 
-                            $"预制体 {prefabPath} 缺少 SkeletonAnimation 组件");
-                    }
-                    break;
+                        GameObjectEntity = entity
+                    });
 
-                case ViewRenderType.MeshRenderer:
-                    // 尝试获取 MeshRenderer
-                    var meshRenderer = instance.GetComponent<MeshRenderer>();
-                    if (meshRenderer != null)
+                    GameLogger.Log("ViewLoaderSystem", $"加载 MeshRenderer 视图: {prefabPath}");
+                }
+                else
+                {
+                    // 尝试 SpriteRenderer 作为备选
+                    var spriteRenderer = instance.GetComponent<SpriteRenderer>();
+                    if (spriteRenderer != null)
                     {
-                        viewInstance.MeshRendererComponent = meshRenderer;
+                        viewInstance.SpriteRendererComponent = spriteRenderer;
                         
-                        // 添加 MeshRenderer 渲染组件标记
                         EntityManager.AddComponentData(entity, new MeshRenderComponent
                         {
                             GameObjectEntity = entity
                         });
 
-                        GameLogger.Log("ViewLoaderSystem", $"加载 MeshRenderer 视图: {prefabPath}");
+                        GameLogger.Log("ViewLoaderSystem", $"加载 SpriteRenderer 视图: {prefabPath}");
                     }
                     else
                     {
-                        // 尝试 SpriteRenderer 作为备选
-                        var spriteRenderer = instance.GetComponent<SpriteRenderer>();
-                        if (spriteRenderer != null)
-                        {
-                            viewInstance.SpriteRendererComponent = spriteRenderer;
-                            
-                            EntityManager.AddComponentData(entity, new MeshRenderComponent
-                            {
-                                GameObjectEntity = entity
-                            });
-
-                            GameLogger.Log("ViewLoaderSystem", $"加载 SpriteRenderer 视图: {prefabPath}");
-                        }
-                        else
-                        {
-                            GameLogger.LogWarning("ViewLoaderSystem", 
-                                $"预制体 {prefabPath} 缺少 MeshRenderer 或 SpriteRenderer 组件");
-                        }
+                        GameLogger.LogWarning("ViewLoaderSystem", 
+                            $"预制体 {prefabPath} 缺少任何可识别的渲染组件 (SkeletonAnimation/MeshRenderer/SpriteRenderer)");
                     }
-                    break;
+                }
             }
 
             // 添加视图实例组件

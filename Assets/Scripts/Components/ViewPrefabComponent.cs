@@ -16,23 +16,9 @@ namespace PVZ.DOTS.Components
         public FixedString128Bytes PrefabPath;
 
         /// <summary>
-        /// 渲染类型（0=Spine, 1=MeshRenderer）
-        /// </summary>
-        public ViewRenderType RenderType;
-
-        /// <summary>
         /// 是否已加载视图
         /// </summary>
         public bool IsViewLoaded;
-    }
-
-    /// <summary>
-    /// 渲染类型枚举
-    /// </summary>
-    public enum ViewRenderType : byte
-    {
-        Spine = 0,
-        MeshRenderer = 1
     }
 
     /// <summary>

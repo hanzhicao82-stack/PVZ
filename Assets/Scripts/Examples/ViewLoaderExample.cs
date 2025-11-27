@@ -45,7 +45,6 @@ namespace PVZ.DOTS.Examples
             entityManager.AddComponentData(zombie, new ViewPrefabComponent
             {
                 PrefabPath = "Prefabs/Zombies/NormalZombie_Spine", // Resources 路径
-                RenderType = ViewRenderType.Spine,
                 IsViewLoaded = false
             });
 
@@ -94,7 +93,6 @@ namespace PVZ.DOTS.Examples
             entityManager.AddComponentData(plant, new ViewPrefabComponent
             {
                 PrefabPath = "Prefabs/Plants/Peashooter_Mesh", // Resources 路径
-                RenderType = ViewRenderType.MeshRenderer,
                 IsViewLoaded = false
             });
 
@@ -152,7 +150,6 @@ namespace PVZ.DOTS.Examples
                 entityManager.AddComponentData(zombie, new ViewPrefabComponent
                 {
                     PrefabPath = "Prefabs/Zombies/NormalZombie_Spine",
-                    RenderType = ViewRenderType.Spine,
                     IsViewLoaded = false
                 });
             }

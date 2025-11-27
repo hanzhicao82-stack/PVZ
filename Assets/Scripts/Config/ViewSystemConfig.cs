@@ -34,13 +34,6 @@ namespace PVZ.DOTS.Config
         [Tooltip("启用 MeshRenderer 渲染系统")]
         public bool enableMeshRendererSystem = true;
 
-        [Header("默认渲染类型")]
-        [Tooltip("僵尸默认使用的渲染类型")]
-        public Components.ViewRenderType defaultZombieRenderType = Components.ViewRenderType.Spine;
-
-        [Tooltip("植物默认使用的渲染类型")]
-        public Components.ViewRenderType defaultPlantRenderType = Components.ViewRenderType.Spine;
-
         [Header("性能设置")]
         [Tooltip("同时更新的最大实体数（0=无限制）")]
         public int maxEntitiesPerFrame = 0;
