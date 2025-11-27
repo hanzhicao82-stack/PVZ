@@ -31,9 +31,6 @@ namespace PVZ.DOTS.Debug
         [Tooltip("Spine预制体路径（Resources相对路径，例如：Prefabs/TestSpine）")]
         public string spinePrefabPath = "Prefabs/TestSpine";
 
-        [Tooltip("使用Spine模型（否则使用Mesh模型）")]
-        public bool useSpineModel = true;
-
         [Header("游戏配置")]
         [Tooltip("游戏配置文件")]
         public TextAsset gameConfigJson;
@@ -367,7 +364,10 @@ namespace PVZ.DOTS.Debug
                 // 添加视图预制体组件（如果启用）
                 if (enableViewLoading)
                 {
-                    string prefabPath = useSpineModel ? spinePrefabPath : meshPrefabPath;
+                    // 根据ViewSystemConfig自动选择预制体类型
+                    var config = Config.ViewSystemConfig.Instance;
+                    string prefabPath = config.enableSpineSystem ? spinePrefabPath : meshPrefabPath;
+                    
                     _entityManager.AddComponentData(plantEntity, new ViewPrefabComponent
                     {
                         PrefabPath = prefabPath,
@@ -424,7 +424,10 @@ namespace PVZ.DOTS.Debug
                 // 添加视图预制体组件（如果启用）
                 if (enableViewLoading)
                 {
-                    string prefabPath = useSpineModel ? spinePrefabPath : meshPrefabPath;
+                    // 根据ViewSystemConfig自动选择预制体类型
+                    var config = Config.ViewSystemConfig.Instance;
+                    string prefabPath = config.enableSpineSystem ? spinePrefabPath : meshPrefabPath;
+                    
                     _entityManager.AddComponentData(zombieEntity, new ViewPrefabComponent
                     {
                         PrefabPath = prefabPath,

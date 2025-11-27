@@ -24,12 +24,9 @@
    - 说明：Spine动画预制体在Resources文件夹下的相对路径
    - 要求：预制体必须包含 `Spine.Unity.SkeletonAnimation` 组件
 
-4. **Use Spine Model** (使用Spine模型)
-   - 类型：`bool`
-   - 默认值：`true`
-   - 说明：选择使用哪种类型的模型
-   - `true` = 使用 Spine 预制体
-   - `false` = 使用 Mesh 预制体
+> **注意**：实际使用哪种预制体由 `ViewSystemConfig` 中的 `enableSpineSystem` 和 `enableMeshRendererSystem` 决定。
+> - 如果 `enableSpineSystem = true`，优先使用 Spine 预制体
+> - 如果 `enableSpineSystem = false`，使用 Mesh 预制体
 
 ### 使用步骤
 
@@ -62,22 +59,31 @@ Assets/
   ✓ Enable View Loading        (勾选以启用)
   Mesh Prefab Path:  "Prefabs/TestMesh"
   Spine Prefab Path: "Prefabs/TestSpine"
-  ✓ Use Spine Model            (勾选使用Spine，取消使用Mesh)
 ```
+
+**预制体类型选择**：在 `Assets/Resources/ViewSystemConfig` 中配置：
+```
+渲染系统选择:
+  ✓ Enable Spine System          (启用Spine渲染，使用Spine预制体)
+  ✓ Enable Mesh Renderer System  (启用Mesh渲染，使用Mesh预制体)
+```
+
+> 如果两个系统都启用，优先使用 Spine 预制体
 
 #### 3. 运行测试
 
 - **测试 Spine 模型**：
-  1. 勾选 `Use Spine Model`
+  1. 在 `ViewSystemConfig` 中勾选 `Enable Spine System`
   2. 确保 `Spine Prefab Path` 正确
   3. 勾选 `Enable View Loading`
   4. 运行场景
 
 - **测试 Mesh 模型**：
-  1. 取消勾选 `Use Spine Model`
-  2. 确保 `Mesh Prefab Path` 正确
-  3. 勾选 `Enable View Loading`
-  4. 运行场景
+  1. 在 `ViewSystemConfig` 中取消勾选 `Enable Spine System`
+  2. 勾选 `Enable Mesh Renderer System`
+  3. 确保 `Mesh Prefab Path` 正确
+  4. 勾选 `Enable View Loading`
+  5. 运行场景
 
 - **测试纯逻辑性能（不加载模型）**：
   1. 取消勾选 `Enable View Loading`
@@ -89,10 +95,11 @@ Assets/
 
 1. **实体创建**：PerformanceTestSpawner 创建植物或僵尸实体
 2. **添加组件**：自动添加 `ViewPrefabComponent` 到实体
-3. **系统加载**：`ViewLoaderSystem` 自动检测并加载预制体
-4. **类型识别**：系统根据预制体上的组件自动识别渲染类型
-5. **标记添加**：自动添加 `SpineRenderComponent` 或 `MeshRenderComponent`
-6. **视图渲染**：相应的渲染系统（SpineViewSystem 或 MeshRendererViewSystem）处理显示
+3. **选择预制体**：根据 `ViewSystemConfig.enableSpineSystem` 选择预制体路径
+4. **系统加载**：`ViewLoaderSystem` 自动检测并加载预制体
+5. **类型识别**：系统根据预制体上的组件自动识别渲染类型
+6. **标记添加**：自动添加 `SpineRenderComponent` 或 `MeshRenderComponent`
+7. **视图渲染**：相应的渲染系统（SpineViewSystem 或 MeshRendererViewSystem）处理显示
 
 ### 代码示例
 
@@ -109,6 +116,7 @@ entityManager.AddComponentData(plantEntity, new GridPositionComponent { ... });
 entityManager.AddComponentData(plantEntity, LocalTransform.FromPosition(...));
 
 // 视图组件（当 enableViewLoading = true 时自动添加）
+// 预制体路径根据 ViewSystemConfig.enableSpineSystem 自动选择
 entityManager.AddComponentData(plantEntity, new ViewPrefabComponent
 {
     PrefabPath = "Prefabs/TestSpine",  // 或 "Prefabs/TestMesh"
@@ -149,8 +157,8 @@ Max Zombies: 250
 1. **预制体路径**：必须是相对于 Resources 文件夹的路径，不需要加 `.prefab` 扩展名
 2. **预制体检查**：确保预制体包含必需的渲染组件（SkeletonAnimation/MeshRenderer/SpriteRenderer）
 3. **性能影响**：大量实体加载视图会显著影响性能，建议根据设备调整数量
-4. **系统启用**：确保 `ViewLoaderSystem`、`SpineViewSystem` 或 `MeshRendererViewSystem` 已启用
-5. **配置文件**：可以在 `ViewSystemConfig` 中全局控制渲染系统的启用状态
+4. **系统启用**：通过 `ViewSystemConfig` 全局控制使用哪种渲染系统
+5. **优先级**：如果两个渲染系统都启用，优先使用 Spine 预制体
 
 ### 调试信息
 
@@ -181,7 +189,7 @@ A: 检查 `Enable View Loading` 是否勾选，查看 Console 是否有错误日
 A: 减少 `Max Plants` 和 `Max Zombies` 数量，或关闭 `Enable View Loading` 只测试逻辑
 
 **Q: 如何切换模型类型？**
-A: 直接勾选或取消勾选 `Use Spine Model` 即可，无需重启
+A: 在 `ViewSystemConfig` 资源文件中切换 `enableSpineSystem` 和 `enableMeshRendererSystem`，无需修改代码
 
 ### 扩展用途
 
