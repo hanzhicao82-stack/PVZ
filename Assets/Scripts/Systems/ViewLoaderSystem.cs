@@ -1,3 +1,5 @@
+using System;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using UnityEngine;
@@ -49,18 +51,30 @@ namespace PVZ.DOTS.Systems
                 }
             }
 
-            // 在主线程中实际加载 GameObject（无法在 Job 中执行）
+            // 收集需要加载的实体，避免在枚举时做结构性修改
+            var loadRequests = new NativeList<ViewLoadTask>(Allocator.Temp);
             foreach (var (viewPrefab, transform, entity) in
                 SystemAPI.Query<RefRO<ViewPrefabComponent>, RefRO<LocalTransform>>()
                 .WithAll<ViewLoadRequestTag>()
                 .WithNone<ViewInstanceComponent>()
                 .WithEntityAccess())
             {
-                LoadViewForEntity(entity, viewPrefab.ValueRO, transform.ValueRO);
-                
-                // 移除加载请求标记
-                ecb.RemoveComponent<ViewLoadRequestTag>(entity);
+                loadRequests.Add(new ViewLoadTask
+                {
+                    Entity = entity,
+                    PrefabPath = viewPrefab.ValueRO.PrefabPath,
+                    Transform = transform.ValueRO
+                });
             }
+
+            // 在枚举结束后执行结构性修改
+            foreach (var request in loadRequests)
+            {
+                LoadViewForEntity(request.Entity, request.PrefabPath, request.Transform);
+                EntityManager.RemoveComponent<ViewLoadRequestTag>(request.Entity);
+            }
+
+            loadRequests.Dispose();
 
             // 更新已加载视图的位置
             foreach (var (transform, entity) in
@@ -86,11 +100,42 @@ namespace PVZ.DOTS.Systems
         /// <summary>
         /// 为实体加载视图模型
         /// </summary>
-        private void LoadViewForEntity(Entity entity, in ViewPrefabComponent viewPrefab, in LocalTransform transform)
+        private struct ViewLoadTask
         {
-            // 从 Resources 加载预制体
-            string prefabPath = viewPrefab.PrefabPath.ToString();
+            public Entity Entity;
+            public FixedString128Bytes PrefabPath;
+            public LocalTransform Transform;
+        }
+
+        private void LoadViewForEntity(Entity entity, FixedString128Bytes prefabPathFixed, in LocalTransform transform)
+        {
+            // 从 Resources 加载预制体（运行时使用）
+            string prefabPath = prefabPathFixed.ToString();
             GameObject prefab = Resources.Load<GameObject>(prefabPath);
+
+#if UNITY_EDITOR
+            // 编辑器下如果未能从 Resources 加载，则尝试通过 AssetDatabase 加载（支持 Assets/Res/Spine 目录）
+            if (prefab == null)
+            {
+                string assetPath = prefabPath;
+                if (!assetPath.StartsWith("Assets/", StringComparison.OrdinalIgnoreCase))
+                {
+                    assetPath = $"Assets/{assetPath}";
+                }
+
+                if (!assetPath.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase))
+                {
+                    assetPath += ".prefab";
+                }
+
+                prefab = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(assetPath);
+
+                if (prefab == null)
+                {
+                    GameLogger.LogWarning("ViewLoaderSystem", $"AssetDatabase 无法加载预制体: {assetPath}");
+                }
+            }
+#endif
 
             if (prefab == null)
             {
@@ -99,7 +144,7 @@ namespace PVZ.DOTS.Systems
             }
 
             // 实例化 GameObject
-            GameObject instance = Object.Instantiate(prefab);
+            GameObject instance = UnityEngine.Object.Instantiate(prefab);
             instance.transform.position = transform.Position;
             instance.transform.rotation = transform.Rotation;
             instance.transform.localScale = new Vector3(transform.Scale, transform.Scale, transform.Scale);
@@ -113,7 +158,7 @@ namespace PVZ.DOTS.Systems
 
             // 自动检测渲染类型（根据预制体上的组件）
             // 优先检测 Spine 组件
-            var spineComponent = instance.GetComponent<Spine.Unity.SkeletonAnimation>();
+            var spineComponent = instance.GetComponentInChildren<Spine.Unity.SkeletonAnimation>();
             if (spineComponent != null)
             {
                 viewInstance.SpineSkeletonAnimation = spineComponent;
@@ -190,7 +235,7 @@ namespace PVZ.DOTS.Systems
                     var viewInstance = EntityManager.GetComponentData<ViewInstanceComponent>(entity);
                     if (viewInstance.GameObjectInstance != null)
                     {
-                        Object.Destroy(viewInstance.GameObjectInstance);
+                        UnityEngine.Object.Destroy(viewInstance.GameObjectInstance);
                     }
                 }
             }

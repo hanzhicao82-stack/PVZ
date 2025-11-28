@@ -28,7 +28,7 @@ namespace PVZ.DOTS.Debug
         [Tooltip("Mesh预制体路径（Resources相对路径，例如：Prefabs/TestMesh）")]
         public string meshPrefabPath = "Prefabs/TestMesh";
 
-        [Tooltip("Spine预制体路径（Resources相对路径，例如：Prefabs/TestSpine）")]
+        [Tooltip("Spine 预制体回退路径（当配置未设置时使用，Resources 相对路径）")]
         public string spinePrefabPath = "Prefabs/TestSpine";
 
         [Header("游戏配置")]
@@ -364,10 +364,9 @@ namespace PVZ.DOTS.Debug
                 // 添加视图预制体组件（如果启用）
                 if (enableViewLoading)
                 {
-                    // 根据ViewSystemConfig自动选择预制体类型
                     var config = Config.ViewSystemConfig.Instance;
-                    string prefabPath = config.enableSpineSystem ? spinePrefabPath : meshPrefabPath;
-                    
+                    string prefabPath = GetPlantViewPrefabPath(plantType, config);
+
                     _entityManager.AddComponentData(plantEntity, new ViewPrefabComponent
                     {
                         PrefabPath = prefabPath,
@@ -424,10 +423,9 @@ namespace PVZ.DOTS.Debug
                 // 添加视图预制体组件（如果启用）
                 if (enableViewLoading)
                 {
-                    // 根据ViewSystemConfig自动选择预制体类型
                     var config = Config.ViewSystemConfig.Instance;
-                    string prefabPath = config.enableSpineSystem ? spinePrefabPath : meshPrefabPath;
-                    
+                    string prefabPath = GetZombieViewPrefabPath(zombieType, config);
+
                     _entityManager.AddComponentData(zombieEntity, new ViewPrefabComponent
                     {
                         PrefabPath = prefabPath,
@@ -437,6 +435,50 @@ namespace PVZ.DOTS.Debug
 
                 totalZombiesSpawned++;
             }
+        }
+
+        private string GetPlantViewPrefabPath(PlantType type, Config.ViewSystemConfig viewConfig)
+        {
+            if (viewConfig.enableSpineSystem)
+            {
+                string configPath = viewConfig.GetSpinePlantPrefabPath(type);
+                if (!string.IsNullOrEmpty(configPath))
+                {
+                    return configPath;
+                }
+
+                if (!string.IsNullOrEmpty(spinePrefabPath))
+                {
+                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体路径，使用回退路径 {spinePrefabPath}。");
+                    return spinePrefabPath;
+                }
+
+                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh 预制体 {meshPrefabPath}。");
+            }
+
+            return meshPrefabPath;
+        }
+
+        private string GetZombieViewPrefabPath(ZombieType type, Config.ViewSystemConfig viewConfig)
+        {
+            if (viewConfig.enableSpineSystem)
+            {
+                string configPath = viewConfig.GetSpineZombiePrefabPath(type);
+                if (!string.IsNullOrEmpty(configPath))
+                {
+                    return configPath;
+                }
+
+                if (!string.IsNullOrEmpty(spinePrefabPath))
+                {
+                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体路径，使用回退路径 {spinePrefabPath}。");
+                    return spinePrefabPath;
+                }
+
+                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh 预制体 {meshPrefabPath}。");
+            }
+
+            return meshPrefabPath;
         }
 
         private void UpdateStatistics()

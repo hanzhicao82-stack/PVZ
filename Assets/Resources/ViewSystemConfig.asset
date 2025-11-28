@@ -16,3 +16,27 @@ MonoBehaviour:
   enableMeshRendererSystem: 0
   maxEntitiesPerFrame: 0
   enableViewUpdateCache: 1
+  spinePlantPrefabs:
+  - plantType: 0
+    prefabPath: Assets/Res/Prefabs/PlantPrefabs/Peashooter
+  - plantType: 1
+    prefabPath: Assets/Res/Prefabs/PlantPrefabs/Sunflower
+  - plantType: 2
+    prefabPath: Assets/Res/Prefabs/PlantPrefabs/WallNut
+  - plantType: 3
+    prefabPath: Assets/Res/Prefabs/PlantPrefabs/CherryBomb
+  - plantType: 4
+    prefabPath: Assets/Res/Prefabs/PlantPrefabs/SnowPea
+  - plantType: 5
+    prefabPath: Assets/Res/Prefabs/PlantPrefabs/PeaShoot
+  spineZombiePrefabs:
+  - zombieType: 0
+    prefabPath: Assets/Res/Prefabs/ZombiePrefabs/NormalZombie
+  - zombieType: 1
+    prefabPath: Assets/Res/Prefabs/ZombiesPrefabs/SuitZombies
+  - zombieType: 2
+    prefabPath: Assets/Res/Prefabs/ZombiePrefabs/BucketHeadZombie
+  - zombieType: 3
+    prefabPath: Assets/Res/Prefabs/ZombiePrefabs/FlagZombie
+  - zombieType: 4
+    prefabPath: Assets/Res/Prefabs/ZombiePrefabs/NewspaperZombie

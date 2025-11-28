@@ -16,7 +16,7 @@ namespace PVZ.DOTS.Systems
         protected override void OnUpdate()
         {
             DeltaTime = SystemAPI.Time.DeltaTime;
-            
+
             // 子类实现具体的更新逻辑
             UpdateViews();
         }
@@ -71,10 +71,10 @@ namespace PVZ.DOTS.Systems
             return state switch
             {
                 Components.AnimationState.Idle => "idle",
-                Components.AnimationState.Walk => "walk",
-                Components.AnimationState.Attack => "attack",
+                Components.AnimationState.Walk => "move",
+                Components.AnimationState.Attack => "atk",
                 Components.AnimationState.Hurt => "hurt",
-                Components.AnimationState.Death => "death",
+                Components.AnimationState.Death => "die",
                 Components.AnimationState.Produce => "produce",
                 _ => "idle"
             };
