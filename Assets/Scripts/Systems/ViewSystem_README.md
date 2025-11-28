@@ -25,7 +25,48 @@
 └──────────┘  └────────────────┘
 ```
 
-## 系统组件
+## 系统启用控制
+
+所有视图相关系统都会根据 `ViewSystemConfig` 自动启用或禁用：
+
+### 自动禁用规则
+当 `enableSpineSystem` 和 `enableMeshRendererSystem` **都为 false** 时，以下系统将自动禁用：
+- ✅ `ViewLoaderSystem` - 不加载预制体
+- ✅ `PlantViewSystem` - 不更新植物视图状态
+- ✅ `ZombieViewSystem` - 不更新僵尸视图状态
+- ✅ `ViewCleanupSystem` - 不清理视图GameObject
+- ✅ `SpineViewSystem` - Spine渲染系统
+- ✅ `MeshRendererViewSystem` - Mesh渲染系统
+
+### 配置示例
+
+**完全禁用视图系统（纯逻辑模式）**：
+```csharp
+config.enableSpineSystem = false;
+config.enableMeshRendererSystem = false;
+// 此时所有视图系统自动禁用，节省性能
+```
+
+**启用 Spine 渲染**：
+```csharp
+config.enableSpineSystem = true;
+config.enableMeshRendererSystem = false;
+// ViewLoaderSystem、PlantViewSystem、ZombieViewSystem、SpineViewSystem 自动启用
+```
+
+**启用 Mesh 渲染**：
+```csharp
+config.enableSpineSystem = false;
+config.enableMeshRendererSystem = true;
+// ViewLoaderSystem、PlantViewSystem、ZombieViewSystem、MeshRendererViewSystem 自动启用
+```
+
+**混合模式**：
+```csharp
+config.enableSpineSystem = true;
+config.enableMeshRendererSystem = true;
+// 所有视图系统启用，预制体类型由组件自动识别
+```
 
 ### 1. ViewSystemConfig (配置)
 **位置**: `Assets/Scripts/Config/ViewSystemConfig.cs`
@@ -204,18 +245,28 @@ if (meshSystem != null)
 - 可以独立启用/禁用不同的渲染系统
 - 支持混合使用多种渲染方式
 - 易于添加新的渲染方式（如 VFX Graph）
+- **完全禁用视图系统，实现纯逻辑运行**
 
 ### 3. 可维护性
 - 代码职责清晰
 - 修改渲染逻辑不影响游戏逻辑
 - 便于单元测试
+- **显式控制系统创建，按需启用**
 
 ### 4. 性能
 - 可以根据设备性能选择渲染方式
 - 支持按需启用系统
 - 查询条件明确，避免无效遍历
+- **禁用视图系统时完全不产生渲染开销**
 
 ## 配置建议
+
+### 纯逻辑模式（无视图）
+```csharp
+config.enableSpineSystem = false;
+config.enableMeshRendererSystem = false;
+// 用于服务器端、单元测试、性能基准测试
+```
 
 ### 高端设备
 ```csharp

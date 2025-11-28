@@ -12,6 +12,19 @@ namespace PVZ.DOTS.Systems
     [UpdateInGroup(typeof(PresentationSystemGroup))]
     public partial class PlantViewSystem : SystemBase
     {
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            
+            // 根据配置决定是否启用
+            var config = Config.ViewSystemConfig.Instance;
+            if (!config.enableSpineSystem && !config.enableMeshRendererSystem)
+            {
+                Enabled = false;
+                UnityEngine.Debug.Log("PlantViewSystem is disabled (no view rendering enabled).");
+            }
+        }
+
         protected override void OnUpdate()
         {
             var deltaTime = SystemAPI.Time.DeltaTime;

@@ -15,14 +15,11 @@ namespace PVZ.DOTS.Systems
         {
             base.OnCreate();
 
-            // 根据配置决定是否启用
-            if (!Config.ViewSystemConfig.Instance.enableMeshRendererSystem)
+            var config = Config.ViewSystemConfig.Instance;
+            if (!config.enableMeshRendererSystem)
             {
                 Enabled = false;
-            }
-            else
-            {
-                UnityEngine.Debug.Log("MeshRendererViewSystem is enabled.");
+                UnityEngine.Debug.Log("MeshRendererViewSystem is disabled (MeshRenderer rendering is not enabled).");
             }
         }
 

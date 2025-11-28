@@ -19,6 +19,14 @@ namespace PVZ.DOTS.Systems
         protected override void OnCreate()
         {
             _ecbSystem = World.GetOrCreateSystemManaged<EndInitializationEntityCommandBufferSystem>();
+            
+            // 根据配置决定是否启用
+            var config = Config.ViewSystemConfig.Instance;
+            if (!config.enableSpineSystem && !config.enableMeshRendererSystem)
+            {
+                Enabled = false;
+                UnityEngine.Debug.Log("ViewLoaderSystem is disabled (no view rendering enabled).");
+            }
         }
 
         protected override void OnUpdate()

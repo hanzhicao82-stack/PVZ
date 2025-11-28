@@ -15,14 +15,11 @@ namespace PVZ.DOTS.Systems
         {
             base.OnCreate();
 
-            // 根据配置决定是否启用
-            if (!Config.ViewSystemConfig.Instance.enableSpineSystem)
+            var config = Config.ViewSystemConfig.Instance;
+            if (!config.enableSpineSystem)
             {
                 Enabled = false;
-            }
-            else
-            {
-                UnityEngine.Debug.Log("SpineViewSystem is enabled.");
+                UnityEngine.Debug.Log("SpineViewSystem is disabled (Spine rendering is not enabled).");
             }
         }
 
