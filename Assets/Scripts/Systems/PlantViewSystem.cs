@@ -31,10 +31,15 @@ namespace PVZ.DOTS.Systems
             var currentTime = (float)SystemAPI.Time.ElapsedTime;
 
             // 更新所有植物的视图状态
-            foreach (var (plant, viewState) in
-                SystemAPI.Query<RefRO<PlantComponent>, RefRW<ViewStateComponent>>())
+            // 根据 AttackStateComponent 的存在来决定是否显示攻击动画
+            foreach (var (plant, viewState, entity) in
+                SystemAPI.Query<RefRO<PlantComponent>, RefRW<ViewStateComponent>>()
+                .WithEntityAccess())
             {
-                UpdatePlantViewState(ref viewState.ValueRW, plant.ValueRO, currentTime);
+                // 检查是否有攻击状态组件
+                bool isAttacking = SystemAPI.HasComponent<AttackStateComponent>(entity);
+                
+                UpdatePlantViewState(ref viewState.ValueRW, plant.ValueRO, isAttacking);
             }
 
             // 处理有血量的植物（如坚果墙）
@@ -52,14 +57,13 @@ namespace PVZ.DOTS.Systems
         private void UpdatePlantViewState(
             ref ViewStateComponent viewState,
             PlantComponent plant,
-            float currentTime)
+            bool isAttacking)
         {
             // 确定当前应该播放的动画
             var targetAnimationState = Components.AnimationState.Idle;
 
-            // 检查是否在攻击
-            float timeSinceLastAttack = currentTime - plant.LastAttackTime;
-            if (timeSinceLastAttack < 0.3f)
+            // 根据攻击状态组件决定动画
+            if (isAttacking)
             {
                 targetAnimationState = Components.AnimationState.Attack;
             }
