@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -30,6 +31,10 @@ namespace PVZ.DOTS.Debug
 
         [Tooltip("Spine 预制体回退路径（当配置未设置时使用，Resources 相对路径）")]
         public string spinePrefabPath = "Prefabs/TestSpine";
+
+        [Header("子弹视图配置")]
+        [Tooltip("植物子弹预制体路径 (Resources/AssetDatabase)")]
+        public string plantProjectilePrefabPath = string.Empty;
 
         [Header("游戏配置")]
         [Tooltip("游戏配置文件")]
@@ -342,7 +347,8 @@ namespace PVZ.DOTS.Debug
                     AttackDamage = 20f,
                     AttackInterval = 1.5f,
                     AttackRange = 10f,
-                    LastAttackTime = 0f
+                    LastAttackTime = 0f,
+                    ProjectilePrefabPath = new FixedString128Bytes(plantProjectilePrefabPath ?? string.Empty)
                 });
 
                 _entityManager.AddComponentData(plantEntity, new HealthComponent

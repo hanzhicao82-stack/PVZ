@@ -1,7 +1,7 @@
-using Unity.Entities;
-using Unity.Transforms;
-using Unity.Mathematics;
 using Unity.Collections;
+using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
 using PVZ.DOTS.Components;
 using PVZ.DOTS.Utils;
 
@@ -13,12 +13,12 @@ namespace PVZ.DOTS.Systems
     /// </summary>
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     [UpdateBefore(typeof(ZombieMovementSystem))]
-    public partial struct ZombieAttackSystem : ISystem
+    public partial class ZombieAttackSystem : AttackSystemBase
     {
         private const float ATTACK_RANGE = 0.8f; // 攻击范围
         private const float ATTACK_RANGE_SQ = ATTACK_RANGE * ATTACK_RANGE;
 
-        public void OnUpdate(ref SystemState state)
+        protected override void OnUpdate()
         {
             // 检查游戏状态
             if (SystemAPI.TryGetSingleton<GameStateComponent>(out var gameState))
@@ -28,7 +28,7 @@ namespace PVZ.DOTS.Systems
             }
 
             float currentTime = (float)SystemAPI.Time.ElapsedTime;
-            EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
+            EntityCommandBuffer ecb = CreateCommandBuffer();
 
             // 构建植物的行索引 - 按行分组植物
             NativeParallelMultiHashMap<int, Entity> plantsByLane = new NativeParallelMultiHashMap<int, Entity>(100, Allocator.Temp);
@@ -57,7 +57,7 @@ namespace PVZ.DOTS.Systems
                     do
                     {
                         // 检查植物是否还存在且有效
-                        if (!state.EntityManager.Exists(plantEntity))
+                        if (!EntityManager.Exists(plantEntity))
                             continue;
 
                         var plantTransform = SystemAPI.GetComponent<LocalTransform>(plantEntity);
@@ -122,8 +122,7 @@ namespace PVZ.DOTS.Systems
             }
 
             plantsByLane.Dispose();
-            ecb.Playback(state.EntityManager);
-            ecb.Dispose();
+            PlaybackAndDispose(ecb);
         }
 
         /// <summary>

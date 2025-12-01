@@ -1,0 +1,41 @@
+
+jianguoxiaozi.png
+size: 448,448
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Yz
+  rotate: true
+  xy: 431, 135
+  size: 56, 15
+  orig: 58, 17
+  offset: 1, 1
+  index: -1
+biaoqing1
+  rotate: false
+  xy: 224, 32
+  size: 205, 159
+  orig: 205, 159
+  offset: 0, 0
+  index: -1
+jianguo
+  rotate: false
+  xy: 224, 193
+  size: 222, 251
+  orig: 222, 251
+  offset: 0, 0
+  index: -1
+pic1
+  rotate: false
+  xy: 2, 53
+  size: 138, 100
+  orig: 138, 117
+  offset: 0, 17
+  index: -1
+pic8
+  rotate: false
+  xy: 2, 155
+  size: 220, 289
+  orig: 220, 289
+  offset: 0, 0
+  index: -1

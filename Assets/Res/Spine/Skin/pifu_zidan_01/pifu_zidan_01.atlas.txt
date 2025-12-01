@@ -1,0 +1,167 @@
+
+pifu_zidan_01.png
+size: 560,560
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dibos00
+  rotate: true
+  xy: 498, 271
+  size: 123, 55
+  orig: 133, 58
+  offset: 7, 1
+  index: -1
+dibos01
+  rotate: false
+  xy: 2, 2
+  size: 139, 59
+  orig: 147, 60
+  offset: 5, 1
+  index: -1
+dibos06
+  rotate: true
+  xy: 498, 396
+  size: 161, 59
+  orig: 168, 60
+  offset: 4, 0
+  index: -1
+huaduo0001
+  rotate: true
+  xy: 340, 110
+  size: 105, 77
+  orig: 131, 123
+  offset: 10, 20
+  index: -1
+huaduo0003
+  rotate: false
+  xy: 340, 36
+  size: 97, 72
+  orig: 131, 123
+  offset: 19, 24
+  index: -1
+huaduo0005
+  rotate: false
+  xy: 242, 45
+  size: 96, 68
+  orig: 131, 123
+  offset: 14, 23
+  index: -1
+huaduo0007
+  rotate: true
+  xy: 419, 121
+  size: 102, 75
+  orig: 131, 123
+  offset: 10, 19
+  index: -1
+s01
+  rotate: false
+  xy: 2, 429
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+s02
+  rotate: false
+  xy: 2, 303
+  size: 124, 124
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+s03
+  rotate: false
+  xy: 132, 437
+  size: 120, 120
+  orig: 128, 128
+  offset: 4, 4
+  index: -1
+s04
+  rotate: false
+  xy: 2, 63
+  size: 120, 116
+  orig: 128, 128
+  offset: 4, 8
+  index: -1
+s05
+  rotate: false
+  xy: 2, 181
+  size: 120, 120
+  orig: 128, 128
+  offset: 4, 4
+  index: -1
+s06
+  rotate: false
+  xy: 258, 319
+  size: 116, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+s07
+  rotate: false
+  xy: 124, 111
+  size: 116, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+s08
+  rotate: false
+  xy: 376, 441
+  size: 120, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+s09
+  rotate: false
+  xy: 254, 437
+  size: 120, 120
+  orig: 128, 128
+  offset: 8, 8
+  index: -1
+s10
+  rotate: false
+  xy: 376, 327
+  size: 120, 112
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+s11
+  rotate: false
+  xy: 254, 217
+  size: 120, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+s12
+  rotate: false
+  xy: 376, 225
+  size: 120, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+s13
+  rotate: false
+  xy: 132, 331
+  size: 124, 104
+  orig: 128, 128
+  offset: 4, 8
+  index: -1
+s14
+  rotate: false
+  xy: 128, 229
+  size: 124, 100
+  orig: 128, 128
+  offset: 4, 12
+  index: -1
+s15
+  rotate: false
+  xy: 143, 9
+  size: 96, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+s16
+  rotate: false
+  xy: 242, 115
+  size: 96, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1

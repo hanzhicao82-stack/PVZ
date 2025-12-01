@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
@@ -26,6 +27,9 @@ namespace PVZ.DOTS.Authoring
         [Header("生命值")]
         public float maxHealth = 100f;
 
+        [Header("子弹资源路径 (Resources 或 AssetDatabase 路径)")]
+        public string projectilePrefabPath = string.Empty;
+
         [Header("阳光生产（仅向日葵）")]
         public bool isSunProducer = false;
         public float sunProductionInterval = 10f;
@@ -45,7 +49,8 @@ namespace PVZ.DOTS.Authoring
                     AttackInterval = authoring.attackInterval,
                     LastAttackTime = 0f,
                     AttackRange = authoring.attackRange,
-                    SunCost = authoring.sunCost
+                    SunCost = authoring.sunCost,
+                    ProjectilePrefabPath = new FixedString128Bytes(authoring.projectilePrefabPath ?? string.Empty)
                 });
 
                 // 添加健康值组件

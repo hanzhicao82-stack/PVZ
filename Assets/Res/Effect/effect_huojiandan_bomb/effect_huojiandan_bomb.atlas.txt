@@ -1,0 +1,286 @@
+
+effect_huojiandan_bomb.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+025500
+  rotate: false
+  xy: 2, 543
+  size: 235, 216
+  orig: 236, 217
+  offset: 1, 0
+  index: -1
+025501
+  rotate: false
+  xy: 2, 543
+  size: 235, 216
+  orig: 236, 217
+  offset: 1, 0
+  index: -1
+025502
+  rotate: false
+  xy: 256, 801
+  size: 235, 216
+  orig: 236, 217
+  offset: 0, 0
+  index: -1
+025503
+  rotate: false
+  xy: 256, 801
+  size: 235, 216
+  orig: 236, 217
+  offset: 0, 0
+  index: -1
+025504
+  rotate: false
+  xy: 2, 325
+  size: 235, 216
+  orig: 236, 217
+  offset: 0, 0
+  index: -1
+025505
+  rotate: false
+  xy: 493, 801
+  size: 235, 216
+  orig: 236, 217
+  offset: 0, 0
+  index: -1
+025506
+  rotate: false
+  xy: 493, 801
+  size: 235, 216
+  orig: 236, 217
+  offset: 0, 0
+  index: -1
+025507
+  rotate: false
+  xy: 2, 107
+  size: 233, 216
+  orig: 236, 217
+  offset: 2, 0
+  index: -1
+025508
+  rotate: false
+  xy: 2, 107
+  size: 233, 216
+  orig: 236, 217
+  offset: 2, 0
+  index: -1
+025509
+  rotate: false
+  xy: 730, 801
+  size: 227, 216
+  orig: 236, 217
+  offset: 8, 0
+  index: -1
+025510
+  rotate: false
+  xy: 730, 801
+  size: 227, 216
+  orig: 236, 217
+  offset: 8, 0
+  index: -1
+025511
+  rotate: false
+  xy: 256, 602
+  size: 198, 197
+  orig: 236, 217
+  offset: 24, 7
+  index: -1
+025512
+  rotate: true
+  xy: 386, 443
+  size: 157, 110
+  orig: 236, 217
+  offset: 38, 64
+  index: -1
+025513
+  rotate: false
+  xy: 2, 6
+  size: 158, 99
+  orig: 236, 217
+  offset: 38, 74
+  index: -1
+025514
+  rotate: false
+  xy: 237, 83
+  size: 158, 93
+  orig: 236, 217
+  offset: 38, 78
+  index: -1
+025515
+  rotate: true
+  xy: 498, 324
+  size: 147, 88
+  orig: 236, 217
+  offset: 44, 78
+  index: -1
+bomb01
+  rotate: false
+  xy: 379, 180
+  size: 125, 128
+  orig: 150, 154
+  offset: 14, 6
+  index: -1
+bomb02
+  rotate: true
+  xy: 239, 312
+  size: 139, 144
+  orig: 150, 154
+  offset: 4, 4
+  index: -1
+bomb03
+  rotate: false
+  xy: 759, 650
+  size: 148, 149
+  orig: 150, 154
+  offset: 0, 2
+  index: -1
+bomb04
+  rotate: false
+  xy: 239, 453
+  size: 145, 147
+  orig: 150, 154
+  offset: 1, 4
+  index: -1
+bomb05
+  rotate: false
+  xy: 456, 645
+  size: 150, 154
+  orig: 150, 154
+  offset: 0, 0
+  index: -1
+bomb06
+  rotate: false
+  xy: 608, 646
+  size: 149, 153
+  orig: 150, 154
+  offset: 1, 0
+  index: -1
+bomb07
+  rotate: false
+  xy: 237, 178
+  size: 140, 132
+  orig: 150, 154
+  offset: 3, 17
+  index: -1
+bomb08
+  rotate: true
+  xy: 385, 310
+  size: 131, 111
+  orig: 150, 154
+  offset: 7, 22
+  index: -1
+bomb09
+  rotate: false
+  xy: 397, 82
+  size: 110, 96
+  orig: 150, 154
+  offset: 24, 23
+  index: -1
+bomb10
+  rotate: false
+  xy: 162, 27
+  size: 50, 78
+  orig: 150, 154
+  offset: 25, 41
+  index: -1
+glow1
+  rotate: false
+  xy: 640, 518
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1
+huan
+  rotate: false
+  xy: 2, 761
+  size: 252, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+ww00000
+  rotate: false
+  xy: 955, 488
+  size: 36, 152
+  orig: 90, 170
+  offset: 37, 0
+  index: -1
+ww00001
+  rotate: true
+  xy: 640, 482
+  size: 34, 123
+  orig: 90, 170
+  offset: 34, 0
+  index: -1
+ww00002
+  rotate: false
+  xy: 909, 642
+  size: 55, 157
+  orig: 90, 170
+  offset: 19, 0
+  index: -1
+ww00003
+  rotate: false
+  xy: 574, 479
+  size: 64, 164
+  orig: 90, 170
+  offset: 14, 0
+  index: -1
+ww00004
+  rotate: false
+  xy: 834, 504
+  size: 62, 144
+  orig: 90, 170
+  offset: 15, 0
+  index: -1
+ww00005
+  rotate: false
+  xy: 959, 862
+  size: 60, 155
+  orig: 90, 170
+  offset: 16, 0
+  index: -1
+ww00006
+  rotate: false
+  xy: 498, 473
+  size: 74, 170
+  orig: 90, 170
+  offset: 9, 0
+  index: -1
+ww00007
+  rotate: false
+  xy: 768, 497
+  size: 64, 151
+  orig: 90, 170
+  offset: 14, 2
+  index: -1
+ww00008
+  rotate: false
+  xy: 588, 315
+  size: 51, 162
+  orig: 90, 170
+  offset: 26, 2
+  index: -1
+ww00009
+  rotate: false
+  xy: 641, 348
+  size: 49, 132
+  orig: 90, 170
+  offset: 25, 0
+  index: -1
+ww00010
+  rotate: false
+  xy: 898, 487
+  size: 55, 153
+  orig: 90, 170
+  offset: 20, 1
+  index: -1
+ww00011
+  rotate: false
+  xy: 506, 188
+  size: 49, 134
+  orig: 90, 170
+  offset: 25, 3
+  index: -1

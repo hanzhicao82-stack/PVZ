@@ -1,0 +1,55 @@
+
+effect_bullet_5step.png
+size: 516,516
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow1
+  rotate: false
+  xy: 2, 86
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1
+pd01
+  rotate: false
+  xy: 2, 214
+  size: 105, 298
+  orig: 105, 298
+  offset: 0, 0
+  index: -1
+pd02
+  rotate: false
+  xy: 109, 214
+  size: 105, 298
+  orig: 105, 298
+  offset: 0, 0
+  index: -1
+pd03
+  rotate: true
+  xy: 216, 407
+  size: 105, 298
+  orig: 105, 298
+  offset: 0, 0
+  index: -1
+pd04
+  rotate: true
+  xy: 216, 300
+  size: 105, 298
+  orig: 105, 298
+  offset: 0, 0
+  index: -1
+pd05
+  rotate: true
+  xy: 216, 193
+  size: 105, 298
+  orig: 105, 298
+  offset: 0, 0
+  index: -1
+pd06
+  rotate: true
+  xy: 130, 86
+  size: 105, 298
+  orig: 105, 298
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,300 @@
+
+jiangshi_3step.png
+size: 792,792
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a
+  rotate: false
+  xy: 2, 320
+  size: 244, 212
+  orig: 244, 212
+  offset: 0, 0
+  index: -1
+f01
+  rotate: false
+  xy: 579, 107
+  size: 102, 115
+  orig: 106, 122
+  offset: 2, 4
+  index: -1
+f02
+  rotate: false
+  xy: 517, 508
+  size: 155, 127
+  orig: 158, 134
+  offset: 2, 4
+  index: -1
+f03
+  rotate: true
+  xy: 164, 89
+  size: 229, 151
+  orig: 233, 158
+  offset: 2, 3
+  index: -1
+f04
+  rotate: true
+  xy: 317, 103
+  size: 226, 145
+  orig: 230, 151
+  offset: 2, 3
+  index: -1
+f05
+  rotate: false
+  xy: 248, 331
+  size: 241, 155
+  orig: 244, 163
+  offset: 2, 5
+  index: -1
+f06
+  rotate: true
+  xy: 2, 67
+  size: 251, 160
+  orig: 255, 167
+  offset: 3, 4
+  index: -1
+f07
+  rotate: false
+  xy: 260, 628
+  size: 254, 147
+  orig: 258, 155
+  offset: 2, 4
+  index: -1
+f08
+  rotate: false
+  xy: 260, 488
+  size: 255, 138
+  orig: 259, 143
+  offset: 2, 2
+  index: -1
+f10
+  rotate: true
+  xy: 464, 110
+  size: 219, 113
+  orig: 223, 120
+  offset: 2, 4
+  index: -1
+guangquan
+  rotate: false
+  xy: 2, 534
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+huomiao0
+  rotate: false
+  xy: 674, 508
+  size: 49, 31
+  orig: 72, 48
+  offset: 2, 9
+  index: -1
+huomiao1
+  rotate: true
+  xy: 710, 381
+  size: 57, 44
+  orig: 72, 48
+  offset: 5, 2
+  index: -1
+huomiao2
+  rotate: false
+  xy: 557, 17
+  size: 52, 39
+  orig: 72, 48
+  offset: 12, 5
+  index: -1
+huomiao3
+  rotate: false
+  xy: 717, 66
+  size: 47, 36
+  orig: 72, 48
+  offset: 18, 6
+  index: -1
+huomiao6
+  rotate: false
+  xy: 759, 474
+  size: 28, 28
+  orig: 72, 48
+  offset: 27, 12
+  index: -1
+pic1
+  rotate: true
+  xy: 100, 9
+  size: 56, 68
+  orig: 56, 68
+  offset: 0, 0
+  index: -1
+pic10
+  rotate: false
+  xy: 725, 504
+  size: 62, 35
+  orig: 62, 35
+  offset: 0, 0
+  index: -1
+pic11
+  rotate: false
+  xy: 489, 29
+  size: 66, 79
+  orig: 66, 79
+  offset: 0, 0
+  index: -1
+pic12
+  rotate: false
+  xy: 710, 440
+  size: 47, 62
+  orig: 47, 62
+  offset: 0, 0
+  index: -1
+pic13
+  rotate: false
+  xy: 423, 17
+  size: 64, 84
+  orig: 64, 84
+  offset: 0, 0
+  index: -1
+pic14
+  rotate: false
+  xy: 683, 104
+  size: 82, 39
+  orig: 82, 39
+  offset: 0, 0
+  index: -1
+pic15
+  rotate: false
+  xy: 671, 62
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+pic16
+  rotate: true
+  xy: 674, 541
+  size: 94, 116
+  orig: 94, 116
+  offset: 0, 0
+  index: -1
+pic17
+  rotate: true
+  xy: 270, 52
+  size: 35, 45
+  orig: 43, 51
+  offset: 1, 6
+  index: -1
+pic17a
+  rotate: true
+  xy: 671, 250
+  size: 121, 112
+  orig: 121, 116
+  offset: 0, 0
+  index: -1
+pic17b
+  rotate: true
+  xy: 767, 198
+  size: 50, 23
+  orig: 50, 23
+  offset: 0, 0
+  index: -1
+pic17c
+  rotate: false
+  xy: 270, 7
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1
+pic17d
+  rotate: false
+  xy: 222, 45
+  size: 46, 42
+  orig: 46, 42
+  offset: 0, 0
+  index: -1
+pic17e
+  rotate: false
+  xy: 260, 777
+  size: 402, 13
+  orig: 402, 13
+  offset: 0, 0
+  index: -1
+pic2
+  rotate: true
+  xy: 491, 350
+  size: 136, 125
+  orig: 136, 125
+  offset: 0, 0
+  index: -1
+pic2a
+  rotate: false
+  xy: 557, 58
+  size: 54, 47
+  orig: 54, 47
+  offset: 0, 0
+  index: -1
+pic3
+  rotate: false
+  xy: 683, 145
+  size: 82, 103
+  orig: 82, 103
+  offset: 0, 0
+  index: -1
+pic4
+  rotate: false
+  xy: 579, 224
+  size: 90, 124
+  orig: 90, 124
+  offset: 0, 0
+  index: -1
+pic4a
+  rotate: false
+  xy: 679, 657
+  size: 90, 133
+  orig: 90, 133
+  offset: 0, 0
+  index: -1
+pic4b
+  rotate: false
+  xy: 618, 373
+  size: 90, 133
+  orig: 90, 133
+  offset: 0, 0
+  index: -1
+pic5
+  rotate: true
+  xy: 516, 637
+  size: 138, 161
+  orig: 150, 161
+  offset: 12, 0
+  index: -1
+pic6
+  rotate: false
+  xy: 170, 36
+  size: 50, 51
+  orig: 50, 53
+  offset: 0, 0
+  index: -1
+pic7
+  rotate: true
+  xy: 2, 12
+  size: 53, 96
+  orig: 53, 96
+  offset: 0, 0
+  index: -1
+pic8
+  rotate: true
+  xy: 317, 2
+  size: 99, 104
+  orig: 99, 104
+  offset: 0, 0
+  index: -1
+pic9
+  rotate: true
+  xy: 613, 62
+  size: 43, 56
+  orig: 43, 56
+  offset: 0, 0
+  index: -1
+yingzi
+  rotate: false
+  xy: 679, 640
+  size: 56, 15
+  orig: 58, 17
+  offset: 1, 1
+  index: -1

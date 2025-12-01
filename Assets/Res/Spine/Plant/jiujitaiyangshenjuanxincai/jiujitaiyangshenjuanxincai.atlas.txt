@@ -1,0 +1,104 @@
+
+jiujitaiyangshenjuanxincai.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+biaoqing
+  rotate: false
+  xy: 1040, 1539
+  size: 207, 131
+  orig: 207, 132
+  offset: 0, 0
+  index: -1
+guanglun
+  rotate: false
+  xy: 2, 601
+  size: 678, 679
+  orig: 680, 681
+  offset: 1, 1
+  index: -1
+guangluntx
+  rotate: false
+  xy: 2, 1282
+  size: 719, 735
+  orig: 721, 737
+  offset: 1, 1
+  index: -1
+xiaojxc
+  rotate: false
+  xy: 1789, 1791
+  size: 230, 226
+  orig: 232, 228
+  offset: 1, 1
+  index: -1
+yezi1
+  rotate: true
+  xy: 1689, 1626
+  size: 163, 233
+  orig: 163, 234
+  offset: 0, 0
+  index: -1
+yezi2
+  rotate: true
+  xy: 2, 2
+  size: 183, 224
+  orig: 183, 224
+  offset: 0, 0
+  index: -1
+yezi3
+  rotate: false
+  xy: 2, 187
+  size: 263, 412
+  orig: 301, 412
+  offset: 0, 0
+  index: -1
+yezi4
+  rotate: false
+  xy: 1040, 1672
+  size: 312, 345
+  orig: 430, 346
+  offset: 0, 0
+  index: -1
+yezi5
+  rotate: false
+  xy: 723, 1620
+  size: 315, 397
+  orig: 319, 398
+  offset: 0, 0
+  index: -1
+yezi6
+  rotate: true
+  xy: 1354, 1589
+  size: 233, 333
+  orig: 234, 334
+  offset: 0, 0
+  index: -1
+yezi7
+  rotate: false
+  xy: 267, 228
+  size: 239, 371
+  orig: 241, 373
+  offset: 1, 1
+  index: -1
+yezi8
+  rotate: false
+  xy: 723, 1300
+  size: 308, 318
+  orig: 310, 320
+  offset: 1, 1
+  index: -1
+yezi9
+  rotate: true
+  xy: 508, 230
+  size: 369, 167
+  orig: 370, 167
+  offset: 0, 0
+  index: -1
+yingzi
+  rotate: false
+  xy: 1354, 1824
+  size: 433, 193
+  orig: 434, 193
+  offset: 0, 0
+  index: -1

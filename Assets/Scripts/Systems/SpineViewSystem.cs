@@ -1,5 +1,5 @@
+using Spine.Unity;
 using Unity.Entities;
-using Unity.Transforms;
 using UnityEngine;
 using PVZ.DOTS.Components;
 
@@ -26,60 +26,74 @@ namespace PVZ.DOTS.Systems
         protected override void UpdateViews()
         {
             // 更新所有使用 Spine 渲染的实体
-            foreach (var (viewState, transform, entity) in
-                SystemAPI.Query<RefRW<ViewStateComponent>, RefRO<LocalTransform>>()
+            foreach (var (viewState, entity) in
+                SystemAPI.Query<RefRW<ViewStateComponent>>()
                 .WithAll<SpineRenderComponent, ViewInstanceComponent>()
                 .WithEntityAccess())
             {
-                if (!EntityManager.HasComponent<ViewInstanceComponent>(entity))
+                if (!SystemAPI.ManagedAPI.HasComponent<ViewInstanceComponent>(entity))
                     continue;
 
-                var viewInstance = EntityManager.GetComponentData<ViewInstanceComponent>(entity);
+                var viewInstance = SystemAPI.ManagedAPI.GetComponent<ViewInstanceComponent>(entity);
+                ref var viewStateRef = ref viewState.ValueRW;
+                var skeleton = viewInstance.SpineSkeletonAnimation;
+
+                if (skeleton == null)
+                    continue;
 
                 // 更新 Spine 动画
-                if (viewInstance.SpineSkeletonAnimation != null && viewState.ValueRO.NeedsAnimationUpdate)
+                if (viewStateRef.NeedsAnimationUpdate)
                 {
-                    UpdateSpineAnimation(viewInstance, ref viewState.ValueRW);
+                    UpdateSpineAnimation(skeleton, ref viewStateRef);
                 }
 
                 // 更新颜色
-                UpdateSpineColor(viewInstance, viewState.ValueRO);
+                UpdateSpineColor(skeleton, ref viewStateRef);
             }
         }
 
         /// <summary>
         /// 更新 Spine 动画
         /// </summary>
-        private void UpdateSpineAnimation(ViewInstanceComponent viewInstance, ref ViewStateComponent viewState)
+        private void UpdateSpineAnimation(SkeletonAnimation skeleton, ref ViewStateComponent viewState)
         {
-            var skeleton = viewInstance.SpineSkeletonAnimation as Spine.Unity.SkeletonAnimation;
-            if (skeleton != null)
+            string animationName = GetAnimationName(viewState.CurrentAnimationState);
+
+            // 根据动画状态决定是否循环
+            bool loop = viewState.CurrentAnimationState != Components.AnimationState.Death
+                     && viewState.CurrentAnimationState != Components.AnimationState.Hurt;
+
+            var current = skeleton.AnimationState.GetCurrent(0);
+            if (current != null && current.Animation != null)
             {
-                string animationName = GetAnimationName(viewState.CurrentAnimationState);
-
-                // 根据动画状态决定是否循环
-                bool loop = viewState.CurrentAnimationState != Components.AnimationState.Death
-                         && viewState.CurrentAnimationState != Components.AnimationState.Hurt;
-
-                skeleton.AnimationState.SetAnimation(0, animationName, loop);
-                viewState.NeedsAnimationUpdate = false;
+                if (current.Animation.Name == animationName && current.Loop == loop)
+                {
+                    viewState.NeedsAnimationUpdate = false;
+                    return;
+                }
             }
+
+            skeleton.AnimationState.SetAnimation(0, animationName, loop);
+            viewState.NeedsAnimationUpdate = false;
         }
 
         /// <summary>
         /// 更新 Spine 颜色
         /// </summary>
-        private void UpdateSpineColor(ViewInstanceComponent viewInstance, ViewStateComponent viewState)
+        private void UpdateSpineColor(SkeletonAnimation skeleton, ref ViewStateComponent viewState)
         {
-            var skeleton = viewInstance.SpineSkeletonAnimation as Spine.Unity.SkeletonAnimation;
-            if (skeleton != null && viewState.ColorTint < 1.0f)
-            {
-                // 设置 Spine 骨骼颜色
-                var color = new Color(viewState.ColorTint, viewState.ColorTint, viewState.ColorTint, 1.0f);
-                skeleton.skeleton.R = color.r;
-                skeleton.skeleton.G = color.g;
-                skeleton.skeleton.B = color.b;
-            }
+            float targetTint = Mathf.Clamp01(viewState.ColorTint);
+
+            if (Mathf.Approximately(viewState.LastAppliedColorTint, targetTint))
+                return;
+
+            var skeletonData = skeleton.skeleton;
+            skeletonData.R = targetTint;
+            skeletonData.G = targetTint;
+            skeletonData.B = targetTint;
+            skeletonData.A = 1.0f;
+
+            viewState.LastAppliedColorTint = targetTint;
         }
     }
 }

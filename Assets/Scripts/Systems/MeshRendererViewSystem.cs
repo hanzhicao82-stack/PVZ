@@ -1,5 +1,4 @@
 using Unity.Entities;
-using Unity.Transforms;
 using UnityEngine;
 using PVZ.DOTS.Components;
 
@@ -26,23 +25,24 @@ namespace PVZ.DOTS.Systems
         protected override void UpdateViews()
         {
             // 更新所有使用 MeshRenderer 渲染的实体
-            foreach (var (viewState, transform, entity) in
-                SystemAPI.Query<RefRW<ViewStateComponent>, RefRO<LocalTransform>>()
+            foreach (var (viewState, entity) in
+                SystemAPI.Query<RefRW<ViewStateComponent>>()
                 .WithAll<MeshRenderComponent, ViewInstanceComponent>()
                 .WithEntityAccess())
             {
-                if (!EntityManager.HasComponent<ViewInstanceComponent>(entity))
+                if (!SystemAPI.ManagedAPI.HasComponent<ViewInstanceComponent>(entity))
                     continue;
 
-                var viewInstance = EntityManager.GetComponentData<ViewInstanceComponent>(entity);
+                var viewInstance = SystemAPI.ManagedAPI.GetComponent<ViewInstanceComponent>(entity);
+                ref var viewStateRef = ref viewState.ValueRW;
 
                 // 更新颜色
-                UpdateMeshColor(viewInstance, viewState.ValueRO);
+                UpdateMeshColor(viewInstance, ref viewStateRef);
 
                 // 如果需要，可以通过纹理偏移实现帧动画
-                if (viewState.ValueRO.NeedsAnimationUpdate)
+                if (viewStateRef.NeedsAnimationUpdate)
                 {
-                    UpdateMeshAnimation(viewInstance, ref viewState.ValueRW);
+                    UpdateMeshAnimation(viewInstance, ref viewStateRef);
                 }
             }
         }
@@ -50,9 +50,14 @@ namespace PVZ.DOTS.Systems
         /// <summary>
         /// 更新 MeshRenderer/SpriteRenderer 颜色
         /// </summary>
-        private void UpdateMeshColor(ViewInstanceComponent viewInstance, ViewStateComponent viewState)
+        private void UpdateMeshColor(ViewInstanceComponent viewInstance, ref ViewStateComponent viewState)
         {
-            Color color = new Color(viewState.ColorTint, viewState.ColorTint, viewState.ColorTint);
+            float targetTint = Mathf.Clamp01(viewState.ColorTint);
+
+            if (Mathf.Approximately(viewState.LastAppliedColorTint, targetTint))
+                return;
+
+            Color color = new Color(targetTint, targetTint, targetTint);
 
             if (viewInstance.MeshRendererComponent != null)
             {
@@ -66,6 +71,8 @@ namespace PVZ.DOTS.Systems
             {
                 viewInstance.SpriteRendererComponent.color = color;
             }
+
+            viewState.LastAppliedColorTint = targetTint;
         }
 
         /// <summary>

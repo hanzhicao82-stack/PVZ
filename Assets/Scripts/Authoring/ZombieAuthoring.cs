@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
@@ -26,6 +27,9 @@ namespace PVZ.DOTS.Authoring
         [Header("所在行")]
         public int lane = 0;
 
+        [Header("子弹资源路径 (Resources 或 AssetDatabase 路径)")]
+        public string projectilePrefabPath = string.Empty;
+
         class Baker : Baker<ZombieAuthoring>
         {
             public override void Bake(ZombieAuthoring authoring)
@@ -40,7 +44,8 @@ namespace PVZ.DOTS.Authoring
                     AttackDamage = authoring.attackDamage,
                     AttackInterval = authoring.attackInterval,
                     LastAttackTime = 0f,
-                    Lane = authoring.lane
+                    Lane = authoring.lane,
+                    ProjectilePrefabPath = new FixedString128Bytes(authoring.projectilePrefabPath ?? string.Empty)
                 });
 
                 // 添加健康值组件

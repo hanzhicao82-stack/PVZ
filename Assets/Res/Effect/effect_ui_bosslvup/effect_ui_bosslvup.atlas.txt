@@ -1,0 +1,244 @@
+
+effect_ui_bosslvup.png
+size: 1096,1096
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dao
+  rotate: false
+  xy: 260, 126
+  size: 95, 132
+  orig: 97, 134
+  offset: 1, 1
+  index: -1
+di
+  rotate: false
+  xy: 2, 807
+  size: 1080, 285
+  orig: 1082, 287
+  offset: 1, 1
+  index: -1
+glow01
+  rotate: false
+  xy: 946, 679
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1
+huohua01
+  rotate: false
+  xy: 2, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+huohua02
+  rotate: false
+  xy: 2, 2
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+huohua03
+  rotate: false
+  xy: 430, 549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+huohua04
+  rotate: false
+  xy: 688, 549
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+line
+  rotate: false
+  xy: 260, 260
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+qiao
+  rotate: false
+  xy: 946, 582
+  size: 119, 95
+  orig: 121, 97
+  offset: 1, 1
+  index: -1
+sg100000
+  rotate: false
+  xy: 562, 345
+  size: 24, 51
+  orig: 210, 55
+  offset: 1, 1
+  index: -1
+sg100001
+  rotate: true
+  xy: 757, 501
+  size: 46, 51
+  orig: 210, 55
+  offset: 1, 1
+  index: -1
+sg100002
+  rotate: false
+  xy: 518, 398
+  size: 67, 52
+  orig: 210, 55
+  offset: 1, 0
+  index: -1
+sg100003
+  rotate: false
+  xy: 357, 148
+  size: 86, 51
+  orig: 210, 55
+  offset: 6, 0
+  index: -1
+sg100004
+  rotate: true
+  xy: 445, 171
+  size: 87, 50
+  orig: 210, 55
+  offset: 28, 0
+  index: -1
+sg100005
+  rotate: false
+  xy: 260, 12
+  size: 85, 51
+  orig: 210, 55
+  offset: 51, 1
+  index: -1
+sg100006
+  rotate: false
+  xy: 357, 96
+  size: 87, 50
+  orig: 210, 55
+  offset: 72, 2
+  index: -1
+sg100007
+  rotate: false
+  xy: 946, 531
+  size: 88, 49
+  orig: 210, 55
+  offset: 94, 4
+  index: -1
+sg100008
+  rotate: true
+  xy: 497, 171
+  size: 87, 50
+  orig: 210, 55
+  offset: 116, 3
+  index: -1
+sg100009
+  rotate: false
+  xy: 518, 452
+  size: 70, 51
+  orig: 210, 55
+  offset: 138, 4
+  index: -1
+sg100010
+  rotate: false
+  xy: 518, 272
+  size: 47, 52
+  orig: 210, 55
+  offset: 162, 3
+  index: -1
+sg200000
+  rotate: false
+  xy: 911, 515
+  size: 28, 32
+  orig: 210, 87
+  offset: 0, 27
+  index: -1
+sg200001
+  rotate: false
+  xy: 810, 505
+  size: 49, 42
+  orig: 210, 87
+  offset: 0, 18
+  index: -1
+sg200002
+  rotate: true
+  xy: 1036, 509
+  size: 71, 58
+  orig: 210, 87
+  offset: 0, 18
+  index: -1
+sg200003
+  rotate: false
+  xy: 260, 65
+  size: 84, 59
+  orig: 210, 87
+  offset: 9, 18
+  index: -1
+sg200004
+  rotate: false
+  xy: 357, 201
+  size: 86, 57
+  orig: 210, 87
+  offset: 30, 19
+  index: -1
+sg200005
+  rotate: false
+  xy: 446, 125
+  size: 84, 44
+  orig: 210, 87
+  offset: 53, 25
+  index: -1
+sg200006
+  rotate: false
+  xy: 604, 506
+  size: 83, 41
+  orig: 210, 87
+  offset: 75, 21
+  index: -1
+sg200007
+  rotate: false
+  xy: 446, 82
+  size: 85, 41
+  orig: 210, 87
+  offset: 96, 21
+  index: -1
+sg200008
+  rotate: false
+  xy: 518, 505
+  size: 84, 42
+  orig: 210, 87
+  offset: 119, 21
+  index: -1
+sg200009
+  rotate: true
+  xy: 518, 326
+  size: 70, 42
+  orig: 210, 87
+  offset: 140, 21
+  index: -1
+sg200010
+  rotate: false
+  xy: 861, 506
+  size: 48, 41
+  orig: 210, 87
+  offset: 162, 22
+  index: -1
+tx
+  rotate: true
+  xy: 689, 505
+  size: 42, 66
+  orig: 44, 68
+  offset: 1, 1
+  index: -1
+zi1
+  rotate: false
+  xy: 2, 518
+  size: 421, 110
+  orig: 423, 112
+  offset: 1, 1
+  index: -1
+zi2
+  rotate: false
+  xy: 2, 630
+  size: 426, 175
+  orig: 428, 177
+  offset: 1, 1
+  index: -1

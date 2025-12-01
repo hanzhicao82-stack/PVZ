@@ -1,0 +1,153 @@
+
+jiangshiluozuo.png
+size: 524,524
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+fx01
+  rotate: false
+  xy: 332, 208
+  size: 81, 106
+  orig: 128, 128
+  offset: 24, 8
+  index: -1
+fx02
+  rotate: false
+  xy: 250, 206
+  size: 80, 108
+  orig: 128, 128
+  offset: 27, 8
+  index: -1
+fx03
+  rotate: false
+  xy: 88, 19
+  size: 79, 109
+  orig: 128, 128
+  offset: 28, 8
+  index: -1
+fx04
+  rotate: true
+  xy: 294, 316
+  size: 79, 112
+  orig: 128, 128
+  offset: 28, 8
+  index: -1
+fx05
+  rotate: false
+  xy: 166, 204
+  size: 82, 112
+  orig: 128, 128
+  offset: 26, 8
+  index: -1
+fx06
+  rotate: false
+  xy: 2, 15
+  size: 84, 113
+  orig: 128, 128
+  offset: 24, 8
+  index: -1
+fx07
+  rotate: true
+  xy: 424, 349
+  size: 90, 96
+  orig: 128, 128
+  offset: 20, 8
+  index: -1
+fx08
+  rotate: false
+  xy: 415, 251
+  size: 90, 96
+  orig: 128, 128
+  offset: 21, 8
+  index: -1
+fx09
+  rotate: false
+  xy: 415, 157
+  size: 93, 92
+  orig: 128, 128
+  offset: 18, 8
+  index: -1
+fx10
+  rotate: true
+  xy: 169, 19
+  size: 77, 92
+  orig: 128, 128
+  offset: 17, 8
+  index: -1
+fx11
+  rotate: false
+  xy: 263, 16
+  size: 86, 92
+  orig: 128, 128
+  offset: 17, 8
+  index: -1
+fx12
+  rotate: false
+  xy: 351, 62
+  size: 90, 93
+  orig: 128, 128
+  offset: 17, 8
+  index: -1
+fx13
+  rotate: false
+  xy: 253, 110
+  size: 86, 94
+  orig: 128, 128
+  offset: 18, 8
+  index: -1
+fx14
+  rotate: false
+  xy: 443, 61
+  size: 75, 94
+  orig: 128, 128
+  offset: 24, 8
+  index: -1
+fx15
+  rotate: true
+  xy: 424, 441
+  size: 79, 98
+  orig: 128, 128
+  offset: 21, 8
+  index: -1
+fx16
+  rotate: false
+  xy: 169, 98
+  size: 82, 104
+  orig: 128, 128
+  offset: 20, 8
+  index: -1
+hand
+  rotate: false
+  xy: 2, 197
+  size: 162, 323
+  orig: 285, 381
+  offset: 0, 56
+  index: -1
+light
+  rotate: false
+  xy: 166, 397
+  size: 256, 123
+  orig: 256, 128
+  offset: 0, 2
+  index: -1
+lizi
+  rotate: false
+  xy: 351, 28
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+tu1
+  rotate: false
+  xy: 2, 130
+  size: 149, 65
+  orig: 151, 67
+  offset: 1, 1
+  index: -1
+tu2
+  rotate: false
+  xy: 166, 318
+  size: 126, 77
+  orig: 128, 79
+  offset: 1, 1
+  index: -1

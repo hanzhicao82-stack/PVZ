@@ -1,0 +1,272 @@
+
+effect_chest.png
+size: 1404,1404
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+a1
+  rotate: false
+  xy: 984, 495
+  size: 331, 160
+  orig: 392, 203
+  offset: 33, 10
+  index: -1
+a2
+  rotate: true
+  xy: 2, 2
+  size: 327, 149
+  orig: 394, 282
+  offset: 34, 65
+  index: -1
+a3
+  rotate: false
+  xy: 711, 921
+  size: 319, 201
+  orig: 319, 201
+  offset: 0, 0
+  index: -1
+a4
+  rotate: true
+  xy: 153, 42
+  size: 287, 81
+  orig: 366, 122
+  offset: 44, 0
+  index: -1
+b1
+  rotate: true
+  xy: 793, 391
+  size: 365, 189
+  orig: 392, 203
+  offset: 11, 2
+  index: -1
+b2
+  rotate: true
+  xy: 2, 331
+  size: 366, 237
+  orig: 394, 282
+  offset: 12, 12
+  index: -1
+b3
+  rotate: false
+  xy: 734, 1201
+  size: 319, 201
+  orig: 319, 201
+  offset: 0, 0
+  index: -1
+b4
+  rotate: false
+  xy: 984, 657
+  size: 360, 111
+  orig: 366, 122
+  offset: 4, 0
+  index: -1
+c1
+  rotate: false
+  xy: 773, 229
+  size: 332, 160
+  orig: 392, 203
+  offset: 33, 10
+  index: -1
+c2
+  rotate: false
+  xy: 875, 770
+  size: 345, 149
+  orig: 394, 282
+  offset: 23, 64
+  index: -1
+c3
+  rotate: false
+  xy: 1055, 1201
+  size: 319, 201
+  orig: 319, 201
+  offset: 0, 0
+  index: -1
+c4
+  rotate: false
+  xy: 984, 412
+  size: 287, 81
+  orig: 366, 122
+  offset: 44, 0
+  index: -1
+d1
+  rotate: true
+  xy: 254, 586
+  size: 366, 190
+  orig: 392, 203
+  offset: 11, 0
+  index: -1
+d2
+  rotate: true
+  xy: 454, 756
+  size: 366, 255
+  orig: 394, 282
+  offset: 12, 12
+  index: -1
+d3
+  rotate: false
+  xy: 1032, 928
+  size: 319, 201
+  orig: 319, 201
+  offset: 0, 0
+  index: -1
+d4
+  rotate: true
+  xy: 649, 158
+  size: 363, 122
+  orig: 366, 122
+  offset: 3, 0
+  index: -1
+e1
+  rotate: false
+  xy: 236, 30
+  size: 338, 160
+  orig: 338, 160
+  offset: 0, 0
+  index: -1
+e2
+  rotate: false
+  xy: 446, 523
+  size: 345, 231
+  orig: 345, 231
+  offset: 0, 0
+  index: -1
+e3
+  rotate: true
+  xy: 446, 202
+  size: 319, 201
+  orig: 319, 201
+  offset: 0, 0
+  index: -1
+e4
+  rotate: true
+  xy: 1273, 206
+  size: 287, 81
+  orig: 366, 122
+  offset: 44, 0
+  index: -1
+gacha009
+  rotate: false
+  xy: 1317, 568
+  size: 80, 87
+  orig: 80, 87
+  offset: 0, 0
+  index: -1
+gacha010
+  rotate: false
+  xy: 2, 699
+  size: 250, 253
+  orig: 256, 256
+  offset: 6, 3
+  index: -1
+gacha011
+  rotate: true
+  xy: 1058, 1139
+  size: 60, 208
+  orig: 60, 208
+  offset: 0, 0
+  index: -1
+gacha012
+  rotate: false
+  xy: 2, 954
+  size: 450, 448
+  orig: 500, 500
+  offset: 26, 26
+  index: -1
+gacha013
+  rotate: false
+  xy: 454, 1124
+  size: 278, 278
+  orig: 278, 278
+  offset: 0, 0
+  index: -1
+gacha019
+  rotate: true
+  xy: 1177, 5
+  size: 80, 87
+  orig: 80, 87
+  offset: 0, 0
+  index: -1
+gachaitem001001301
+  rotate: true
+  xy: 241, 192
+  size: 392, 203
+  orig: 392, 203
+  offset: 0, 0
+  index: -1
+gachaitem0040002
+  rotate: true
+  xy: 935, 9
+  size: 76, 240
+  orig: 76, 250
+  offset: 0, 10
+  index: -1
+gachaitem0040009
+  rotate: false
+  xy: 1268, 1180
+  size: 19, 19
+  orig: 20, 20
+  offset: 1, 0
+  index: -1
+jb01
+  rotate: false
+  xy: 711, 758
+  size: 162, 161
+  orig: 171, 171
+  offset: 6, 6
+  index: -1
+jb02
+  rotate: true
+  xy: 1222, 781
+  size: 145, 161
+  orig: 170, 171
+  offset: 16, 6
+  index: -1
+jb03
+  rotate: false
+  xy: 1269, 43
+  size: 112, 161
+  orig: 171, 171
+  offset: 35, 6
+  index: -1
+jb04
+  rotate: true
+  xy: 734, 1130
+  size: 69, 160
+  orig: 171, 170
+  offset: 56, 5
+  index: -1
+jb05
+  rotate: true
+  xy: 896, 1131
+  size: 68, 160
+  orig: 170, 170
+  offset: 57, 5
+  index: -1
+jb06
+  rotate: true
+  xy: 935, 115
+  size: 112, 160
+  orig: 171, 170
+  offset: 35, 5
+  index: -1
+jb07
+  rotate: true
+  xy: 773, 83
+  size: 144, 160
+  orig: 171, 171
+  offset: 16, 4
+  index: -1
+jb08
+  rotate: true
+  xy: 1107, 249
+  size: 161, 160
+  orig: 170, 171
+  offset: 5, 4
+  index: -1
+jb09
+  rotate: false
+  xy: 1107, 87
+  size: 160, 160
+  orig: 171, 171
+  offset: 3, 4
+  index: -1

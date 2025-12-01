@@ -1,0 +1,62 @@
+
+plant_flowerpot02.png
+size: 668,668
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+diaozhui1
+  rotate: true
+  xy: 2, 2
+  size: 13, 44
+  orig: 15, 46
+  offset: 1, 1
+  index: -1
+diaozhui2
+  rotate: false
+  xy: 634, 589
+  size: 27, 74
+  orig: 27, 74
+  offset: 0, 0
+  index: -1
+huapeng
+  rotate: true
+  xy: 437, 128
+  size: 303, 187
+  orig: 305, 189
+  offset: 1, 1
+  index: -1
+start2
+  rotate: false
+  xy: 363, 367
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tengman1
+  rotate: false
+  xy: 2, 17
+  size: 295, 150
+  orig: 295, 150
+  offset: 0, 0
+  index: -1
+tengman2
+  rotate: false
+  xy: 363, 433
+  size: 269, 230
+  orig: 319, 244
+  offset: 39, 14
+  index: -1
+tx
+  rotate: false
+  xy: 2, 364
+  size: 359, 299
+  orig: 361, 301
+  offset: 1, 1
+  index: -1
+yingzi
+  rotate: false
+  xy: 2, 169
+  size: 433, 193
+  orig: 434, 193
+  offset: 0, 0
+  index: -1

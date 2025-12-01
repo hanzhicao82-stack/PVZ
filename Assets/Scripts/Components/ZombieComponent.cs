@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
@@ -14,6 +15,7 @@ namespace PVZ.DOTS.Components
         public float AttackInterval;
         public float LastAttackTime;
         public int Lane; // 所在行
+        public FixedString128Bytes ProjectilePrefabPath;
     }
 
     /// <summary>

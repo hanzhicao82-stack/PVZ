@@ -1,0 +1,202 @@
+
+pifu_zidan_02.png
+size: 916,916
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+b01
+  rotate: false
+  xy: 721, 312
+  size: 86, 82
+  orig: 128, 128
+  offset: 26, 14
+  index: -1
+b02
+  rotate: true
+  xy: 811, 395
+  size: 96, 100
+  orig: 128, 128
+  offset: 20, 8
+  index: -1
+b03
+  rotate: true
+  xy: 809, 285
+  size: 108, 104
+  orig: 128, 128
+  offset: 16, 12
+  index: -1
+b04
+  rotate: false
+  xy: 603, 164
+  size: 116, 112
+  orig: 128, 128
+  offset: 12, 8
+  index: -1
+b05
+  rotate: false
+  xy: 603, 278
+  size: 116, 116
+  orig: 128, 128
+  offset: 8, 8
+  index: -1
+b06
+  rotate: true
+  xy: 396, 221
+  size: 120, 116
+  orig: 128, 128
+  offset: 8, 8
+  index: -1
+b07
+  rotate: true
+  xy: 454, 33
+  size: 120, 112
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+b08
+  rotate: false
+  xy: 454, 343
+  size: 124, 116
+  orig: 128, 128
+  offset: 4, 12
+  index: -1
+b09
+  rotate: true
+  xy: 795, 171
+  size: 112, 116
+  orig: 128, 128
+  offset: 4, 12
+  index: -1
+b10
+  rotate: true
+  xy: 568, 46
+  size: 116, 112
+  orig: 128, 128
+  offset: 0, 16
+  index: -1
+b11
+  rotate: true
+  xy: 682, 46
+  size: 116, 96
+  orig: 128, 128
+  offset: 0, 32
+  index: -1
+b12
+  rotate: true
+  xy: 721, 198
+  size: 112, 72
+  orig: 128, 128
+  offset: 4, 32
+  index: -1
+b13
+  rotate: false
+  xy: 396, 155
+  size: 112, 64
+  orig: 128, 128
+  offset: 4, 36
+  index: -1
+b14
+  rotate: true
+  xy: 853, 539
+  size: 92, 56
+  orig: 128, 128
+  offset: 20, 44
+  index: -1
+b15
+  rotate: false
+  xy: 853, 493
+  size: 56, 44
+  orig: 128, 128
+  offset: 24, 44
+  index: -1
+b16
+  rotate: false
+  xy: 871, 722
+  size: 28, 44
+  orig: 128, 128
+  offset: 52, 44
+  index: -1
+guang
+  rotate: true
+  xy: 407, 609
+  size: 204, 205
+  orig: 241, 242
+  offset: 18, 18
+  index: -1
+hulu
+  rotate: false
+  xy: 2, 155
+  size: 392, 334
+  orig: 392, 334
+  offset: 0, 0
+  index: -1
+hulu2
+  rotate: false
+  xy: 2, 815
+  size: 615, 96
+  orig: 627, 119
+  offset: 6, 12
+  index: -1
+hulu3
+  rotate: false
+  xy: 2, 491
+  size: 403, 322
+  orig: 431, 334
+  offset: 0, 6
+  index: -1
+l000
+  rotate: true
+  xy: 407, 461
+  size: 146, 185
+  orig: 150, 300
+  offset: 1, 5
+  index: -1
+l001
+  rotate: true
+  xy: 2, 8
+  size: 145, 224
+  orig: 150, 300
+  offset: 2, 7
+  index: -1
+l002
+  rotate: true
+  xy: 619, 768
+  size: 143, 268
+  orig: 150, 300
+  offset: 3, 23
+  index: -1
+l003
+  rotate: true
+  xy: 614, 633
+  size: 133, 255
+  orig: 150, 300
+  offset: 9, 38
+  index: -1
+l004
+  rotate: true
+  xy: 614, 504
+  size: 127, 237
+  orig: 150, 300
+  offset: 11, 61
+  index: -1
+l005
+  rotate: true
+  xy: 228, 29
+  size: 124, 224
+  orig: 150, 300
+  offset: 12, 76
+  index: -1
+l006
+  rotate: true
+  xy: 594, 396
+  size: 106, 215
+  orig: 150, 300
+  offset: 22, 82
+  index: -1
+l007
+  rotate: false
+  xy: 514, 223
+  size: 87, 118
+  orig: 150, 300
+  offset: 26, 178
+  index: -1

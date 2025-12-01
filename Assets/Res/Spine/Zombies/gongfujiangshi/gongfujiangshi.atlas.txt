@@ -1,0 +1,181 @@
+
+gongfujiangshi.png
+size: 320,320
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jiao1L
+  rotate: false
+  xy: 260, 180
+  size: 32, 78
+  orig: 32, 78
+  offset: 0, 0
+  index: -1
+jiao1R
+  rotate: true
+  xy: 69, 5
+  size: 31, 77
+  orig: 31, 77
+  offset: 0, 0
+  index: -1
+jiao2L
+  rotate: false
+  xy: 75, 114
+  size: 55, 65
+  orig: 55, 65
+  offset: 0, 0
+  index: -1
+jiao2R
+  rotate: true
+  xy: 2, 8
+  size: 50, 61
+  orig: 50, 61
+  offset: 0, 0
+  index: -1
+jiao3L
+  rotate: true
+  xy: 235, 104
+  size: 60, 29
+  orig: 60, 29
+  offset: 0, 0
+  index: -1
+jiao3R
+  rotate: true
+  xy: 226, 43
+  size: 59, 39
+  orig: 59, 39
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: true
+  xy: 132, 126
+  size: 192, 57
+  orig: 200, 61
+  offset: 4, 2
+  index: -1
+shen
+  rotate: false
+  xy: 2, 60
+  size: 71, 119
+  orig: 71, 119
+  offset: 0, 0
+  index: -1
+shou1L
+  rotate: false
+  xy: 191, 260
+  size: 69, 58
+  orig: 69, 58
+  offset: 0, 0
+  index: -1
+shou1R
+  rotate: false
+  xy: 191, 175
+  size: 42, 83
+  orig: 42, 83
+  offset: 0, 0
+  index: -1
+shou2L
+  rotate: true
+  xy: 266, 128
+  size: 50, 43
+  orig: 50, 43
+  offset: 0, 0
+  index: -1
+shou2R
+  rotate: true
+  xy: 135, 63
+  size: 61, 44
+  orig: 61, 44
+  offset: 0, 0
+  index: -1
+shou3L
+  rotate: false
+  xy: 262, 265
+  size: 54, 53
+  orig: 54, 53
+  offset: 0, 0
+  index: -1
+shou3L2
+  rotate: false
+  xy: 267, 38
+  size: 40, 36
+  orig: 40, 36
+  offset: 0, 0
+  index: -1
+shou3L3
+  rotate: true
+  xy: 191, 121
+  size: 52, 42
+  orig: 52, 42
+  offset: 0, 0
+  index: -1
+shou3R
+  rotate: false
+  xy: 75, 63
+  size: 58, 49
+  orig: 58, 49
+  offset: 0, 0
+  index: -1
+shou3R2
+  rotate: false
+  xy: 169, 23
+  size: 40, 35
+  orig: 40, 35
+  offset: 0, 0
+  index: -1
+shou3R3
+  rotate: true
+  xy: 181, 60
+  size: 59, 43
+  orig: 59, 43
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 2, 181
+  size: 128, 137
+  orig: 128, 137
+  offset: 0, 0
+  index: -1
+tun
+  rotate: true
+  xy: 267, 76
+  size: 50, 47
+  orig: 50, 47
+  offset: 0, 0
+  index: -1
+wuqi01
+  rotate: true
+  xy: 2, 2
+  size: 4, 65
+  orig: 5, 65
+  offset: 0, 0
+  index: -1
+wuqi02
+  rotate: false
+  xy: 235, 166
+  size: 23, 92
+  orig: 23, 92
+  offset: 0, 0
+  index: -1
+wuqi03
+  rotate: true
+  xy: 75, 38
+  size: 23, 92
+  orig: 23, 92
+  offset: 0, 0
+  index: -1
+yanL
+  rotate: false
+  xy: 260, 174
+  size: 4, 4
+  orig: 4, 4
+  offset: 0, 0
+  index: -1
+yanR
+  rotate: false
+  xy: 65, 53
+  size: 5, 5
+  orig: 5, 5
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,125 @@
+
+mosizujiangshi.png
+size: 512,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Yz
+  rotate: true
+  xy: 341, 342
+  size: 56, 15
+  orig: 58, 17
+  offset: 1, 1
+  index: -1
+jiake1
+  rotate: true
+  xy: 358, 432
+  size: 78, 111
+  orig: 78, 111
+  offset: 0, 0
+  index: -1
+jiake2
+  rotate: true
+  xy: 58, 153
+  size: 59, 95
+  orig: 59, 95
+  offset: 0, 0
+  index: -1
+shen
+  rotate: false
+  xy: 58, 214
+  size: 94, 134
+  orig: 94, 134
+  offset: 0, 0
+  index: -1
+shou1L
+  rotate: false
+  xy: 2, 2
+  size: 76, 121
+  orig: 76, 121
+  offset: 0, 0
+  index: -1
+shou1R
+  rotate: false
+  xy: 274, 400
+  size: 82, 110
+  orig: 82, 110
+  offset: 0, 0
+  index: -1
+shou3L
+  rotate: false
+  xy: 242, 331
+  size: 52, 62
+  orig: 52, 62
+  offset: 0, 0
+  index: -1
+shou3R
+  rotate: false
+  xy: 284, 278
+  size: 52, 47
+  orig: 52, 47
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 158, 395
+  size: 114, 115
+  orig: 114, 115
+  offset: 0, 0
+  index: -1
+tui1L
+  rotate: true
+  xy: 158, 332
+  size: 61, 82
+  orig: 61, 82
+  offset: 0, 0
+  index: -1
+tui1R
+  rotate: false
+  xy: 296, 327
+  size: 43, 71
+  orig: 43, 71
+  offset: 0, 0
+  index: -1
+tui2L
+  rotate: false
+  xy: 154, 250
+  size: 73, 80
+  orig: 73, 80
+  offset: 0, 0
+  index: -1
+tui2R
+  rotate: true
+  xy: 358, 375
+  size: 55, 77
+  orig: 55, 77
+  offset: 0, 0
+  index: -1
+tun1
+  rotate: true
+  xy: 437, 379
+  size: 51, 43
+  orig: 51, 43
+  offset: 0, 0
+  index: -1
+tun2
+  rotate: false
+  xy: 229, 274
+  size: 53, 55
+  orig: 53, 55
+  offset: 0, 0
+  index: -1
+wuqi
+  rotate: true
+  xy: 2, 125
+  size: 223, 54
+  orig: 223, 54
+  offset: 0, 0
+  index: -1
+xia
+  rotate: false
+  xy: 2, 350
+  size: 154, 160
+  orig: 154, 160
+  offset: 0, 0
+  index: -1

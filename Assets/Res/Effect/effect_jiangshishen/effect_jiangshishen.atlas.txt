@@ -1,0 +1,132 @@
+
+effect_jiangshishen.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+damuzhi
+  rotate: false
+  xy: 620, 884
+  size: 239, 288
+  orig: 241, 290
+  offset: 1, 1
+  index: -1
+qitashouzhi
+  rotate: false
+  xy: 1781, 1713
+  size: 252, 318
+  orig: 254, 320
+  offset: 1, 1
+  index: -1
+shenti
+  rotate: false
+  xy: 2, 1174
+  size: 721, 857
+  orig: 858, 857
+  offset: 0, 0
+  index: -1
+shizhi
+  rotate: true
+  xy: 1080, 1431
+  size: 171, 305
+  orig: 173, 307
+  offset: 1, 1
+  index: -1
+shoubi
+  rotate: false
+  xy: 2, 193
+  size: 449, 397
+  orig: 451, 397
+  offset: 0, 0
+  index: -1
+shouzhang
+  rotate: false
+  xy: 1462, 1704
+  size: 317, 327
+  orig: 319, 329
+  offset: 1, 1
+  index: -1
+tou
+  rotate: false
+  xy: 1080, 1604
+  size: 380, 427
+  orig: 380, 427
+  offset: 0, 0
+  index: -1
+toufa
+  rotate: true
+  xy: 453, 293
+  size: 297, 250
+  orig: 297, 250
+  offset: 0, 0
+  index: -1
+tui
+  rotate: false
+  xy: 2, 592
+  size: 616, 580
+  orig: 623, 580
+  offset: 0, 0
+  index: -1
+wumingzhi
+  rotate: true
+  xy: 725, 1179
+  size: 249, 347
+  orig: 251, 349
+  offset: 1, 1
+  index: -1
+xiaba
+  rotate: false
+  xy: 2, 5
+  size: 293, 186
+  orig: 293, 186
+  offset: 0, 0
+  index: -1
+yanqiu
+  rotate: true
+  xy: 861, 855
+  size: 108, 114
+  orig: 110, 116
+  offset: 1, 1
+  index: -1
+youer
+  rotate: false
+  xy: 861, 965
+  size: 183, 212
+  orig: 185, 214
+  offset: 1, 1
+  index: -1
+youyan
+  rotate: false
+  xy: 1611, 1589
+  size: 128, 113
+  orig: 128, 113
+  offset: 0, 0
+  index: -1
+zui
+  rotate: true
+  xy: 620, 623
+  size: 259, 193
+  orig: 259, 193
+  offset: 0, 0
+  index: -1
+zuier
+  rotate: true
+  xy: 297, 11
+  size: 180, 207
+  orig: 182, 209
+  offset: 1, 1
+  index: -1
+zuoshou
+  rotate: false
+  xy: 725, 1430
+  size: 353, 601
+  orig: 355, 603
+  offset: 1, 1
+  index: -1
+zuoyan
+  rotate: false
+  xy: 1462, 1576
+  size: 147, 126
+  orig: 147, 126
+  offset: 0, 0
+  index: -1

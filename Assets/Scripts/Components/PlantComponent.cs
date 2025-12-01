@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 
@@ -14,6 +15,7 @@ namespace PVZ.DOTS.Components
         public float LastAttackTime;
         public float AttackRange;
         public int SunCost;
+        public FixedString128Bytes ProjectilePrefabPath;
     }
 
     /// <summary>

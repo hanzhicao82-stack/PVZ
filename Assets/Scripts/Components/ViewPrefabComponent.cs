@@ -1,5 +1,6 @@
-using Unity.Entities;
+using Spine.Unity;
 using Unity.Collections;
+using Unity.Entities;
 using UnityEngine;
 
 namespace PVZ.DOTS.Components
@@ -35,7 +36,7 @@ namespace PVZ.DOTS.Components
         /// <summary>
         /// Spine 组件引用（如果是 Spine 渲染）
         /// </summary>
-        public object SpineSkeletonAnimation; // 类型为 Spine.Unity.SkeletonAnimation
+        public SkeletonAnimation SpineSkeletonAnimation;
 
         /// <summary>
         /// MeshRenderer 组件引用（如果是 MeshRenderer 渲染）

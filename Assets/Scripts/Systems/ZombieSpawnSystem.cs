@@ -1,7 +1,7 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
-using Unity.Collections;
 using PVZ.DOTS.Components;
 using PVZ.DOTS.Utils;
 
@@ -26,6 +26,7 @@ namespace PVZ.DOTS.Systems
         private float _zombieAttackDamage;
         private float _zombieAttackInterval;
         private float _zombieHealth;
+        private FixedString128Bytes _zombieProjectilePrefabPath;
 
         public void OnCreate(ref SystemState state)
         {
@@ -91,6 +92,7 @@ namespace PVZ.DOTS.Systems
                 
                 if (configLoaded)
                 {
+                    ResolveZombieProjectilePath(ref state);
                     _initialized = true;
                 }
                 else
@@ -128,7 +130,8 @@ namespace PVZ.DOTS.Systems
                 AttackDamage = _zombieAttackDamage,
                 AttackInterval = _zombieAttackInterval,
                 LastAttackTime = 0f,
-                Lane = spawnRow
+                Lane = spawnRow,
+                ProjectilePrefabPath = _zombieProjectilePrefabPath
             });
 
             ecb.AddComponent(zombieEntity, new HealthComponent
@@ -153,6 +156,21 @@ namespace PVZ.DOTS.Systems
 
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
+        }
+
+        private void ResolveZombieProjectilePath(ref SystemState state)
+        {
+            if (SystemAPI.TryGetSingletonBuffer<ZombieConfigElement>(out var zombieConfigs))
+            {
+                foreach (var cfg in zombieConfigs)
+                {
+                    if (cfg.Type == ZombieType.Normal)
+                    {
+                        _zombieProjectilePrefabPath = cfg.ProjectilePrefabPath;
+                        break;
+                    }
+                }
+            }
         }
     }
 }

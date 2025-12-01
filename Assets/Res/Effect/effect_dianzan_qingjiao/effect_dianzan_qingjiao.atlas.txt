@@ -1,0 +1,174 @@
+
+effect_dianzan_qingjiao.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bomb01
+  rotate: false
+  xy: 230, 513
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bomb02
+  rotate: false
+  xy: 386, 638
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bomb03
+  rotate: false
+  xy: 360, 508
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bomb04
+  rotate: false
+  xy: 490, 508
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bomb05
+  rotate: false
+  xy: 230, 391
+  size: 128, 120
+  orig: 128, 128
+  offset: 0, 8
+  index: -1
+bomb06
+  rotate: false
+  xy: 354, 264
+  size: 120, 116
+  orig: 128, 128
+  offset: 4, 12
+  index: -1
+bomb07
+  rotate: false
+  xy: 360, 382
+  size: 128, 124
+  orig: 128, 128
+  offset: 0, 4
+  index: -1
+bomb08
+  rotate: false
+  xy: 228, 265
+  size: 124, 124
+  orig: 128, 128
+  offset: 4, 4
+  index: -1
+f1
+  rotate: false
+  xy: 2, 48
+  size: 220, 147
+  orig: 239, 164
+  offset: 0, 9
+  index: -1
+f2
+  rotate: false
+  xy: 247, 866
+  size: 224, 151
+  orig: 239, 164
+  offset: 0, 5
+  index: -1
+f3
+  rotate: false
+  xy: 473, 873
+  size: 226, 144
+  orig: 239, 164
+  offset: 0, 20
+  index: -1
+f4
+  rotate: false
+  xy: 2, 347
+  size: 224, 146
+  orig: 239, 164
+  offset: 0, 17
+  index: -1
+f5
+  rotate: false
+  xy: 2, 197
+  size: 222, 148
+  orig: 239, 164
+  offset: 0, 16
+  index: -1
+f6
+  rotate: false
+  xy: 2, 642
+  size: 226, 152
+  orig: 239, 164
+  offset: 0, 12
+  index: -1
+f7
+  rotate: false
+  xy: 2, 495
+  size: 226, 145
+  orig: 239, 164
+  offset: 0, 17
+  index: -1
+f8
+  rotate: false
+  xy: 701, 875
+  size: 216, 142
+  orig: 239, 164
+  offset: 0, 20
+  index: -1
+gan2
+  rotate: false
+  xy: 919, 903
+  size: 100, 114
+  orig: 102, 116
+  offset: 1, 1
+  index: -1
+glow1
+  rotate: false
+  xy: 490, 380
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1
+lian2
+  rotate: false
+  xy: 230, 643
+  size: 154, 123
+  orig: 156, 125
+  offset: 1, 1
+  index: -1
+yan5
+  rotate: false
+  xy: 226, 189
+  size: 80, 74
+  orig: 82, 76
+  offset: 1, 1
+  index: -1
+yan6
+  rotate: true
+  xy: 423, 797
+  size: 67, 45
+  orig: 69, 47
+  offset: 1, 1
+  index: -1
+ye1
+  rotate: false
+  xy: 247, 768
+  size: 174, 96
+  orig: 176, 98
+  offset: 1, 1
+  index: -1
+yingtao2
+  rotate: false
+  xy: 2, 796
+  size: 243, 221
+  orig: 245, 223
+  offset: 1, 1
+  index: -1
+zui3
+  rotate: false
+  xy: 2, 10
+  size: 90, 36
+  orig: 92, 38
+  offset: 1, 1
+  index: -1

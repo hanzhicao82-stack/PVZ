@@ -194,19 +194,19 @@ namespace PVZ.DOTS
             var world = state.World;
 
             // 停止所有游戏逻辑相关的系统
-            DisableSystem<Systems.ZombieMovementSystem>(world);
-            DisableSystem<Systems.ZombieAttackSystem>(world);
-            DisableSystem<Systems.ZombieSpawnSystem>(world);
-            DisableSystem<Systems.PlantAttackSystem>(world);
-            DisableSystem<Systems.ProjectileMovementSystem>(world);
-            DisableSystem<Systems.ProjectileHitSystem>(world);
-            DisableSystem<Systems.SunProductionSystem>(world);
+            DisableUnmanagedSystem<Systems.ZombieMovementSystem>(world);
+            DisableManagedSystem<Systems.ZombieAttackSystem>(world);
+            DisableUnmanagedSystem<Systems.ZombieSpawnSystem>(world);
+            DisableManagedSystem<Systems.PlantAttackSystem>(world);
+            DisableUnmanagedSystem<Systems.ProjectileMovementSystem>(world);
+            DisableUnmanagedSystem<Systems.ProjectileHitSystem>(world);
+            DisableUnmanagedSystem<Systems.SunProductionSystem>(world);
         }
 
         /// <summary>
-        /// 禁用指定的系统
+        /// 禁用基于 ISystem 的系统（无管理类型）。
         /// </summary>
-        private void DisableSystem<T>(World world) where T : unmanaged, ISystem
+        private void DisableUnmanagedSystem<T>(World world) where T : unmanaged, ISystem
         {
             var systemHandle = world.GetExistingSystem<T>();
             if (systemHandle != SystemHandle.Null)
@@ -214,6 +214,19 @@ namespace PVZ.DOTS
                 // 在Unity ECS中，通过设置系统的Enabled状态来停用系统
                 ref var systemState = ref world.Unmanaged.ResolveSystemStateRef(systemHandle);
                 systemState.Enabled = false;
+                UnityEngine.Debug.Log($"GameLoopSystem: 已停止系统 {typeof(T).Name}");
+            }
+        }
+
+        /// <summary>
+        /// 禁用派生自 SystemBase 的托管系统。
+        /// </summary>
+        private void DisableManagedSystem<T>(World world) where T : SystemBase
+        {
+            var system = world.GetExistingSystemManaged<T>();
+            if (system != null)
+            {
+                system.Enabled = false;
                 UnityEngine.Debug.Log($"GameLoopSystem: 已停止系统 {typeof(T).Name}");
             }
         }

@@ -1,0 +1,153 @@
+
+effect_jiqiangwandou.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bomb01
+  rotate: true
+  xy: 230, 745
+  size: 125, 128
+  orig: 150, 154
+  offset: 14, 6
+  index: -1
+bomb02
+  rotate: false
+  xy: 306, 238
+  size: 139, 144
+  orig: 150, 154
+  offset: 4, 4
+  index: -1
+bomb03
+  rotate: false
+  xy: 146, 75
+  size: 148, 149
+  orig: 150, 154
+  offset: 0, 2
+  index: -1
+bomb04
+  rotate: false
+  xy: 303, 384
+  size: 145, 147
+  orig: 150, 154
+  offset: 1, 4
+  index: -1
+bomb05
+  rotate: false
+  xy: 151, 377
+  size: 150, 154
+  orig: 150, 154
+  offset: 0, 0
+  index: -1
+bomb06
+  rotate: true
+  xy: 151, 226
+  size: 149, 153
+  orig: 150, 154
+  offset: 1, 0
+  index: -1
+bomb07
+  rotate: false
+  xy: 306, 104
+  size: 140, 132
+  orig: 150, 154
+  offset: 3, 17
+  index: -1
+bomb08
+  rotate: true
+  xy: 908, 886
+  size: 131, 111
+  orig: 150, 154
+  offset: 7, 22
+  index: -1
+bomb09
+  rotate: true
+  xy: 360, 760
+  size: 110, 96
+  orig: 150, 154
+  offset: 24, 23
+  index: -1
+bomb10
+  rotate: true
+  xy: 586, 737
+  size: 50, 78
+  orig: 150, 154
+  offset: 25, 41
+  index: -1
+f1
+  rotate: true
+  xy: 2, 262
+  size: 220, 147
+  orig: 239, 164
+  offset: 0, 9
+  index: -1
+f2
+  rotate: false
+  xy: 2, 712
+  size: 224, 151
+  orig: 239, 164
+  offset: 0, 5
+  index: -1
+f3
+  rotate: true
+  xy: 2, 484
+  size: 226, 144
+  orig: 239, 164
+  offset: 0, 20
+  index: -1
+f4
+  rotate: false
+  xy: 458, 871
+  size: 224, 146
+  orig: 239, 164
+  offset: 0, 17
+  index: -1
+f5
+  rotate: false
+  xy: 684, 869
+  size: 222, 148
+  orig: 239, 164
+  offset: 0, 16
+  index: -1
+f6
+  rotate: false
+  xy: 2, 865
+  size: 226, 152
+  orig: 239, 164
+  offset: 0, 12
+  index: -1
+f7
+  rotate: false
+  xy: 230, 872
+  size: 226, 145
+  orig: 239, 164
+  offset: 0, 17
+  index: -1
+f8
+  rotate: true
+  xy: 2, 44
+  size: 216, 142
+  orig: 239, 164
+  offset: 0, 20
+  index: -1
+glow1
+  rotate: false
+  xy: 458, 743
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1
+huan
+  rotate: false
+  xy: 148, 533
+  size: 177, 177
+  orig: 515, 508
+  offset: 172, 161
+  index: -1
+wandou
+  rotate: false
+  xy: 586, 789
+  size: 80, 80
+  orig: 148, 143
+  offset: 37, 33
+  index: -1

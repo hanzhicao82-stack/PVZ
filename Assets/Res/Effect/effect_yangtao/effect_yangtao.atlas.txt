@@ -1,0 +1,13 @@
+
+effect_yangtao.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+wandou
+  rotate: false
+  xy: 2, 4
+  size: 77, 73
+  orig: 77, 73
+  offset: 0, 0
+  index: -1

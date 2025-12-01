@@ -1,0 +1,230 @@
+
+pifu_zidan_03.png
+size: 656,652
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+31
+  rotate: true
+  xy: 124, 123
+  size: 45, 108
+  orig: 45, 108
+  offset: 0, 0
+  index: -1
+a01
+  rotate: false
+  xy: 2, 521
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+a02
+  rotate: false
+  xy: 2, 395
+  size: 124, 124
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+a03
+  rotate: false
+  xy: 132, 529
+  size: 120, 120
+  orig: 128, 128
+  offset: 4, 4
+  index: -1
+a04
+  rotate: false
+  xy: 2, 155
+  size: 120, 116
+  orig: 128, 128
+  offset: 4, 8
+  index: -1
+a05
+  rotate: false
+  xy: 2, 273
+  size: 120, 120
+  orig: 128, 128
+  offset: 4, 4
+  index: -1
+a06
+  rotate: false
+  xy: 2, 37
+  size: 116, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a07
+  rotate: false
+  xy: 498, 533
+  size: 116, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a08
+  rotate: false
+  xy: 376, 533
+  size: 120, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a09
+  rotate: false
+  xy: 254, 529
+  size: 120, 120
+  orig: 128, 128
+  offset: 8, 8
+  index: -1
+a10
+  rotate: false
+  xy: 124, 276
+  size: 120, 112
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a11
+  rotate: false
+  xy: 283, 427
+  size: 120, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a12
+  rotate: false
+  xy: 531, 431
+  size: 120, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a13
+  rotate: false
+  xy: 124, 170
+  size: 124, 104
+  orig: 128, 128
+  offset: 4, 8
+  index: -1
+a14
+  rotate: false
+  xy: 405, 431
+  size: 124, 100
+  orig: 128, 128
+  offset: 4, 12
+  index: -1
+a15
+  rotate: false
+  xy: 551, 179
+  size: 96, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a16
+  rotate: true
+  xy: 120, 25
+  size: 96, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+p00
+  rotate: true
+  xy: 279, 361
+  size: 64, 148
+  orig: 75, 150
+  offset: 5, 0
+  index: -1
+p01
+  rotate: true
+  xy: 401, 226
+  size: 65, 148
+  orig: 75, 150
+  offset: 5, 0
+  index: -1
+p02
+  rotate: true
+  xy: 397, 293
+  size: 66, 148
+  orig: 75, 150
+  offset: 3, 0
+  index: -1
+p03
+  rotate: true
+  xy: 132, 460
+  size: 67, 149
+  orig: 75, 150
+  offset: 2, 0
+  index: -1
+p04
+  rotate: true
+  xy: 128, 390
+  size: 68, 149
+  orig: 75, 150
+  offset: 2, 0
+  index: -1
+p05
+  rotate: true
+  xy: 429, 361
+  size: 68, 148
+  orig: 75, 150
+  offset: 2, 0
+  index: -1
+p06
+  rotate: true
+  xy: 401, 159
+  size: 65, 148
+  orig: 75, 150
+  offset: 3, 0
+  index: -1
+p07
+  rotate: true
+  xy: 222, 27
+  size: 65, 148
+  orig: 75, 150
+  offset: 4, 0
+  index: -1
+p08
+  rotate: true
+  xy: 385, 92
+  size: 65, 148
+  orig: 75, 150
+  offset: 4, 0
+  index: -1
+p09
+  rotate: true
+  xy: 250, 226
+  size: 65, 149
+  orig: 75, 150
+  offset: 5, 0
+  index: -1
+p10
+  rotate: false
+  xy: 579, 281
+  size: 66, 148
+  orig: 75, 150
+  offset: 5, 0
+  index: -1
+p11
+  rotate: true
+  xy: 246, 293
+  size: 66, 149
+  orig: 75, 150
+  offset: 5, 0
+  index: -1
+p12
+  rotate: true
+  xy: 250, 160
+  size: 64, 149
+  orig: 75, 150
+  offset: 6, 0
+  index: -1
+p13
+  rotate: true
+  xy: 234, 94
+  size: 64, 149
+  orig: 75, 150
+  offset: 5, 0
+  index: -1
+p14
+  rotate: true
+  xy: 372, 26
+  size: 64, 147
+  orig: 75, 150
+  offset: 5, 0
+  index: -1

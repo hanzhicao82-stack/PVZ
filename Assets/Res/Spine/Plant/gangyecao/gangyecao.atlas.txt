@@ -1,0 +1,132 @@
+
+gangyecao.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+01
+  rotate: false
+  xy: 274, 72
+  size: 182, 209
+  orig: 256, 256
+  offset: 41, 17
+  index: -1
+02
+  rotate: false
+  xy: 764, 563
+  size: 222, 222
+  orig: 256, 256
+  offset: 18, 22
+  index: -1
+03
+  rotate: false
+  xy: 764, 358
+  size: 219, 203
+  orig: 256, 256
+  offset: 15, 13
+  index: -1
+04
+  rotate: false
+  xy: 458, 154
+  size: 182, 183
+  orig: 256, 256
+  offset: 32, 26
+  index: -1
+biaoqing1
+  rotate: true
+  xy: 863, 275
+  size: 81, 96
+  orig: 83, 98
+  offset: 1, 1
+  index: -1
+biaoqing2
+  rotate: true
+  xy: 764, 275
+  size: 81, 97
+  orig: 137, 137
+  offset: 55, 1
+  index: -1
+glow1100001
+  rotate: false
+  xy: 274, 2
+  size: 80, 68
+  orig: 128, 128
+  offset: 24, 32
+  index: -1
+glow1100002
+  rotate: false
+  xy: 584, 32
+  size: 112, 120
+  orig: 128, 128
+  offset: 4, 0
+  index: -1
+glow1100003
+  rotate: false
+  xy: 458, 28
+  size: 124, 124
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+glow1100004
+  rotate: true
+  xy: 642, 209
+  size: 128, 116
+  orig: 128, 128
+  offset: 0, 12
+  index: -1
+huan
+  rotate: false
+  xy: 760, 181
+  size: 92, 92
+  orig: 128, 128
+  offset: 18, 18
+  index: -1
+lvye1
+  rotate: false
+  xy: 2, 283
+  size: 351, 339
+  orig: 353, 341
+  offset: 1, 1
+  index: -1
+lvye12
+  rotate: false
+  xy: 2, 624
+  size: 408, 393
+  orig: 408, 393
+  offset: 0, 0
+  index: -1
+lvyetx
+  rotate: false
+  xy: 412, 679
+  size: 350, 338
+  orig: 353, 341
+  offset: 0, 3
+  index: -1
+lvyetx1
+  rotate: false
+  xy: 412, 339
+  size: 350, 338
+  orig: 353, 341
+  offset: 0, 3
+  index: -1
+shengqi
+  rotate: false
+  xy: 355, 570
+  size: 51, 52
+  orig: 51, 52
+  offset: 0, 0
+  index: -1
+tou
+  rotate: false
+  xy: 764, 787
+  size: 223, 230
+  orig: 225, 232
+  offset: 1, 1
+  index: -1
+ziye1
+  rotate: false
+  xy: 2, 25
+  size: 270, 256
+  orig: 272, 258
+  offset: 1, 1
+  index: -1

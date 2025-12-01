@@ -1,0 +1,153 @@
+
+xuangangdiciwang.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+meimao1
+  rotate: true
+  xy: 95, 215
+  size: 102, 75
+  orig: 104, 77
+  offset: 1, 1
+  index: -1
+meimao2
+  rotate: true
+  xy: 437, 766
+  size: 99, 76
+  orig: 101, 78
+  offset: 1, 1
+  index: -1
+shenti1
+  rotate: false
+  xy: 427, 926
+  size: 194, 92
+  orig: 196, 94
+  offset: 1, 1
+  index: -1
+shenti2
+  rotate: false
+  xy: 623, 928
+  size: 169, 90
+  orig: 171, 92
+  offset: 1, 1
+  index: -1
+shenti3
+  rotate: false
+  xy: 2, 319
+  size: 150, 110
+  orig: 152, 112
+  offset: 1, 1
+  index: -1
+shenti4
+  rotate: false
+  xy: 2, 431
+  size: 155, 117
+  orig: 157, 119
+  offset: 1, 1
+  index: -1
+ya1
+  rotate: false
+  xy: 167, 607
+  size: 34, 50
+  orig: 36, 52
+  offset: 1, 1
+  index: -1
+ya2
+  rotate: false
+  xy: 167, 659
+  size: 32, 51
+  orig: 34, 53
+  offset: 1, 1
+  index: -1
+yanjing1
+  rotate: true
+  xy: 963, 949
+  size: 69, 51
+  orig: 71, 53
+  offset: 1, 1
+  index: -1
+yanjing2
+  rotate: false
+  xy: 95, 163
+  size: 67, 50
+  orig: 69, 52
+  offset: 1, 1
+  index: -1
+yingzi
+  rotate: false
+  xy: 2, 863
+  size: 423, 155
+  orig: 425, 157
+  offset: 1, 1
+  index: -1
+youya1
+  rotate: true
+  xy: 794, 932
+  size: 86, 167
+  orig: 88, 169
+  offset: 1, 1
+  index: -1
+youya2
+  rotate: true
+  xy: 427, 867
+  size: 57, 92
+  orig: 59, 94
+  offset: 1, 1
+  index: -1
+youya3
+  rotate: false
+  xy: 2, 550
+  size: 163, 160
+  orig: 165, 162
+  offset: 1, 1
+  index: -1
+zhong1
+  rotate: false
+  xy: 2, 712
+  size: 194, 149
+  orig: 196, 151
+  offset: 1, 1
+  index: -1
+zhong2
+  rotate: true
+  xy: 2, 38
+  size: 114, 100
+  orig: 116, 102
+  offset: 1, 1
+  index: -1
+zhong3
+  rotate: false
+  xy: 2, 2
+  size: 70, 34
+  orig: 72, 36
+  offset: 1, 1
+  index: -1
+zui
+  rotate: true
+  xy: 358, 742
+  size: 119, 77
+  orig: 121, 79
+  offset: 1, 1
+  index: -1
+zuoya1
+  rotate: false
+  xy: 2, 154
+  size: 91, 163
+  orig: 93, 165
+  offset: 1, 1
+  index: -1
+zuoya2
+  rotate: true
+  xy: 521, 869
+  size: 55, 90
+  orig: 57, 92
+  offset: 1, 1
+  index: -1
+zuoya3
+  rotate: false
+  xy: 198, 734
+  size: 158, 127
+  orig: 160, 129
+  offset: 1, 1
+  index: -1

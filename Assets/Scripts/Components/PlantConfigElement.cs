@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 
 namespace PVZ.DOTS.Components
@@ -12,5 +13,6 @@ namespace PVZ.DOTS.Components
         public float Health;
         public float SunProductionInterval;
         public int SunProductionAmount;
+        public FixedString128Bytes ProjectilePrefabPath;
     }
 }

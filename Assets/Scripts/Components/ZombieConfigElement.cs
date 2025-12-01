@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 
 namespace PVZ.DOTS.Components
@@ -9,5 +10,6 @@ namespace PVZ.DOTS.Components
         public float AttackDamage;
         public float AttackInterval;
         public float Health;
+        public FixedString128Bytes ProjectilePrefabPath;
     }
 }

@@ -1,0 +1,97 @@
+
+maoweicao.png
+size: 636,636
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+biaoqing1
+  rotate: false
+  xy: 290, 152
+  size: 124, 65
+  orig: 124, 65
+  offset: 0, 0
+  index: -1
+biaoqing2
+  rotate: true
+  xy: 322, 23
+  size: 127, 84
+  orig: 127, 84
+  offset: 0, 0
+  index: -1
+head
+  rotate: false
+  xy: 2, 146
+  size: 286, 291
+  orig: 301, 311
+  offset: 15, 0
+  index: -1
+jing
+  rotate: false
+  xy: 442, 123
+  size: 155, 149
+  orig: 155, 149
+  offset: 0, 0
+  index: -1
+weiba
+  rotate: false
+  xy: 442, 274
+  size: 170, 178
+  orig: 172, 180
+  offset: 1, 1
+  index: -1
+weiba1
+  rotate: false
+  xy: 437, 454
+  size: 170, 178
+  orig: 172, 180
+  offset: 1, 1
+  index: -1
+yezi1
+  rotate: false
+  xy: 178, 4
+  size: 142, 140
+  orig: 144, 142
+  offset: 1, 1
+  index: -1
+yezi2
+  rotate: true
+  xy: 290, 219
+  size: 218, 150
+  orig: 220, 152
+  offset: 1, 1
+  index: -1
+yezi3
+  rotate: false
+  xy: 2, 32
+  size: 174, 112
+  orig: 176, 114
+  offset: 1, 1
+  index: -1
+yezi4
+  rotate: false
+  xy: 408, 6
+  size: 105, 47
+  orig: 107, 49
+  offset: 1, 1
+  index: -1
+yezi5
+  rotate: true
+  xy: 599, 184
+  size: 88, 35
+  orig: 90, 37
+  offset: 1, 1
+  index: -1
+yezi6
+  rotate: false
+  xy: 408, 55
+  size: 117, 66
+  orig: 119, 68
+  offset: 1, 1
+  index: -1
+yingzi
+  rotate: false
+  xy: 2, 439
+  size: 433, 193
+  orig: 434, 193
+  offset: 0, 0
+  index: -1

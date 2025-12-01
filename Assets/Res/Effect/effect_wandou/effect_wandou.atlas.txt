@@ -1,0 +1,13 @@
+
+effect_wandou.png
+size: 128,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+wandou
+  rotate: false
+  xy: 2, 2
+  size: 92, 91
+  orig: 128, 128
+  offset: 22, 17
+  index: -1

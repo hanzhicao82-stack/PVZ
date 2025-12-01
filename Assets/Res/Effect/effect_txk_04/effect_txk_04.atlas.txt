@@ -1,0 +1,153 @@
+
+effect_txk_04.png
+size: 580,580
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bk
+  rotate: false
+  xy: 374, 24
+  size: 95, 82
+  orig: 95, 82
+  offset: 0, 0
+  index: -1
+dqpp
+  rotate: true
+  xy: 374, 108
+  size: 146, 137
+  orig: 146, 137
+  offset: 0, 0
+  index: -1
+ggyy
+  rotate: false
+  xy: 2, 222
+  size: 175, 356
+  orig: 175, 356
+  offset: 0, 0
+  index: -1
+guangyun
+  rotate: true
+  xy: 230, 31
+  size: 64, 129
+  orig: 64, 129
+  offset: 0, 0
+  index: -1
+heiyin
+  rotate: false
+  xy: 179, 230
+  size: 48, 24
+  orig: 48, 24
+  offset: 0, 0
+  index: -1
+huab6
+  rotate: false
+  xy: 415, 301
+  size: 99, 277
+  orig: 99, 277
+  offset: 0, 0
+  index: -1
+lldxx
+  rotate: true
+  xy: 516, 362
+  size: 110, 46
+  orig: 110, 46
+  offset: 0, 0
+  index: -1
+pd1
+  rotate: false
+  xy: 415, 266
+  size: 73, 33
+  orig: 73, 33
+  offset: 0, 0
+  index: -1
+pd2
+  rotate: false
+  xy: 230, 97
+  size: 142, 157
+  orig: 142, 157
+  offset: 0, 0
+  index: -1
+pd3
+  rotate: false
+  xy: 135, 44
+  size: 93, 176
+  orig: 93, 176
+  offset: 0, 0
+  index: -1
+pj1
+  rotate: false
+  xy: 179, 405
+  size: 234, 173
+  orig: 234, 173
+  offset: 0, 0
+  index: -1
+pj2
+  rotate: true
+  xy: 516, 474
+  size: 104, 55
+  orig: 104, 55
+  offset: 0, 0
+  index: -1
+pj3
+  rotate: true
+  xy: 471, 55
+  size: 51, 45
+  orig: 51, 45
+  offset: 0, 0
+  index: -1
+qp1
+  rotate: false
+  xy: 516, 306
+  size: 54, 54
+  orig: 54, 54
+  offset: 0, 0
+  index: -1
+shui03
+  rotate: false
+  xy: 179, 256
+  size: 234, 147
+  orig: 234, 147
+  offset: 0, 0
+  index: -1
+wk
+  rotate: false
+  xy: 2, 15
+  size: 131, 205
+  orig: 131, 205
+  offset: 0, 0
+  index: -1
+xbj1
+  rotate: false
+  xy: 471, 20
+  size: 42, 33
+  orig: 42, 33
+  offset: 0, 0
+  index: -1
+xbj2
+  rotate: true
+  xy: 135, 13
+  size: 29, 39
+  orig: 29, 39
+  offset: 0, 0
+  index: -1
+xbj3
+  rotate: true
+  xy: 176, 7
+  size: 35, 37
+  orig: 35, 37
+  offset: 0, 0
+  index: -1
+xbj4
+  rotate: false
+  xy: 215, 2
+  size: 28, 27
+  orig: 28, 27
+  offset: 0, 0
+  index: -1
+xbj5
+  rotate: false
+  xy: 490, 276
+  size: 18, 23
+  orig: 18, 23
+  offset: 0, 0
+  index: -1

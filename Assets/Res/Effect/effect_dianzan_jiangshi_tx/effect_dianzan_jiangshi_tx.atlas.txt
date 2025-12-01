@@ -1,0 +1,83 @@
+
+effect_dianzan_jiangshi_tx.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow1
+  rotate: false
+  xy: 531, 672
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1
+zhuazi00000
+  rotate: false
+  xy: 2, 647
+  size: 277, 320
+  orig: 400, 400
+  offset: 76, 62
+  index: -1
+zhuazi00001
+  rotate: false
+  xy: 2, 341
+  size: 263, 304
+  orig: 400, 400
+  offset: 63, 43
+  index: -1
+zhuazi00002
+  rotate: false
+  xy: 281, 680
+  size: 248, 287
+  orig: 400, 400
+  offset: 50, 24
+  index: -1
+zhuazi00003
+  rotate: false
+  xy: 2, 171
+  size: 140, 168
+  orig: 400, 400
+  offset: 121, 90
+  index: -1
+zhuazi00004
+  rotate: false
+  xy: 815, 806
+  size: 140, 161
+  orig: 400, 400
+  offset: 121, 90
+  index: -1
+zhuazi00005
+  rotate: false
+  xy: 531, 800
+  size: 140, 167
+  orig: 400, 400
+  offset: 121, 90
+  index: -1
+zhuazi00006
+  rotate: false
+  xy: 2, 2
+  size: 140, 167
+  orig: 400, 400
+  offset: 121, 90
+  index: -1
+zhuazi00007
+  rotate: false
+  xy: 673, 802
+  size: 140, 165
+  orig: 400, 400
+  offset: 121, 90
+  index: -1
+zhuazi00008
+  rotate: false
+  xy: 144, 24
+  size: 140, 155
+  orig: 400, 400
+  offset: 121, 90
+  index: -1
+zhuazi00009
+  rotate: false
+  xy: 144, 181
+  size: 140, 158
+  orig: 400, 400
+  offset: 121, 90
+  index: -1

@@ -1,0 +1,132 @@
+
+effect_zhiwushen.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+di
+  rotate: false
+  xy: 2, 1270
+  size: 1121, 775
+  orig: 1123, 777
+  offset: 1, 1
+  index: -1
+ding
+  rotate: true
+  xy: 2, 143
+  size: 1125, 698
+  orig: 1125, 789
+  offset: 0, 91
+  index: -1
+shi1
+  rotate: true
+  xy: 2, 2
+  size: 139, 194
+  orig: 141, 196
+  offset: 1, 1
+  index: -1
+shi2
+  rotate: true
+  xy: 198, 41
+  size: 100, 143
+  orig: 102, 145
+  offset: 1, 1
+  index: -1
+shi3
+  rotate: false
+  xy: 343, 27
+  size: 119, 114
+  orig: 121, 116
+  offset: 1, 1
+  index: -1
+shi4
+  rotate: true
+  xy: 464, 31
+  size: 110, 119
+  orig: 112, 121
+  offset: 1, 1
+  index: -1
+shi5
+  rotate: true
+  xy: 1509, 12
+  size: 141, 165
+  orig: 143, 167
+  offset: 1, 1
+  index: -1
+shugan
+  rotate: false
+  xy: 702, 327
+  size: 573, 941
+  orig: 573, 941
+  offset: 0, 0
+  index: -1
+sz1
+  rotate: false
+  xy: 1509, 155
+  size: 167, 208
+  orig: 169, 210
+  offset: 1, 1
+  index: -1
+szy1
+  rotate: true
+  xy: 1277, 365
+  size: 278, 328
+  orig: 280, 330
+  offset: 1, 1
+  index: -1
+szy2
+  rotate: true
+  xy: 1125, 1342
+  size: 280, 484
+  orig: 282, 486
+  offset: 1, 1
+  index: -1
+szy3
+  rotate: true
+  xy: 1319, 69
+  size: 294, 188
+  orig: 296, 190
+  offset: 1, 1
+  index: -1
+szz1
+  rotate: false
+  xy: 1665, 1628
+  size: 326, 417
+  orig: 328, 419
+  offset: 1, 1
+  index: -1
+szz2
+  rotate: false
+  xy: 1277, 879
+  size: 441, 461
+  orig: 443, 463
+  offset: 1, 1
+  index: -1
+you1
+  rotate: false
+  xy: 1125, 1624
+  size: 538, 421
+  orig: 538, 421
+  offset: 0, 0
+  index: -1
+zhong
+  rotate: false
+  xy: 1277, 645
+  size: 383, 232
+  orig: 383, 232
+  offset: 0, 0
+  index: -1
+zuo1
+  rotate: false
+  xy: 1023, 46
+  size: 294, 279
+  orig: 294, 279
+  offset: 0, 0
+  index: -1
+zuo2
+  rotate: false
+  xy: 702, 87
+  size: 319, 238
+  orig: 319, 238
+  offset: 0, 0
+  index: -1

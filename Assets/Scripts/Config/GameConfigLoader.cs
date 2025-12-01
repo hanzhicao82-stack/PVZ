@@ -1,4 +1,5 @@
 using System;
+using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 using PVZ.DOTS.Components;
@@ -56,6 +57,7 @@ namespace PVZ.DOTS.Config
             public float health;
             public float sunProductionInterval;
             public int sunProductionAmount;
+            public string bulletPrefabPath;
         }
 
         [Serializable]
@@ -66,6 +68,7 @@ namespace PVZ.DOTS.Config
             public float attackDamage;
             public float attackInterval;
             public float health;
+            public string bulletPrefabPath;
         }
 
         void Start()  // 改为Start以确保World已初始化
@@ -211,7 +214,8 @@ namespace PVZ.DOTS.Config
                     AttackRange = p.attackRange,
                     Health = p.health,
                     SunProductionInterval = p.sunProductionInterval,
-                    SunProductionAmount = p.sunProductionAmount
+                    SunProductionAmount = p.sunProductionAmount,
+                    ProjectilePrefabPath = new FixedString128Bytes(p.bulletPrefabPath ?? string.Empty)
                 });
             }
 
@@ -238,7 +242,8 @@ namespace PVZ.DOTS.Config
                     MovementSpeed = z.movementSpeed,
                     AttackDamage = z.attackDamage,
                     AttackInterval = z.attackInterval,
-                    Health = z.health
+                    Health = z.health,
+                    ProjectilePrefabPath = new FixedString128Bytes(z.bulletPrefabPath ?? string.Empty)
                 });
             }
 

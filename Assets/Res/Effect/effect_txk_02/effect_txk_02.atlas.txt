@@ -1,0 +1,125 @@
+
+effect_txk_02.png
+size: 1000,1000
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bss
+  rotate: false
+  xy: 241, 9
+  size: 289, 142
+  orig: 289, 142
+  offset: 0, 0
+  index: -1
+bsxia
+  rotate: false
+  xy: 701, 794
+  size: 297, 202
+  orig: 297, 202
+  offset: 0, 0
+  index: -1
+chibang
+  rotate: true
+  xy: 736, 43
+  size: 99, 182
+  orig: 99, 182
+  offset: 0, 0
+  index: -1
+gy
+  rotate: false
+  xy: 736, 323
+  size: 227, 206
+  orig: 227, 206
+  offset: 0, 0
+  index: -1
+lie
+  rotate: false
+  xy: 2, 553
+  size: 347, 443
+  orig: 347, 445
+  offset: 0, 1
+  index: -1
+shen
+  rotate: true
+  xy: 532, 14
+  size: 235, 202
+  orig: 235, 202
+  offset: 0, 0
+  index: -1
+shen2
+  rotate: false
+  xy: 2, 6
+  size: 237, 145
+  orig: 237, 145
+  offset: 0, 0
+  index: -1
+shenpian
+  rotate: false
+  xy: 373, 158
+  size: 80, 91
+  orig: 80, 91
+  offset: 0, 0
+  index: -1
+shi
+  rotate: false
+  xy: 351, 621
+  size: 348, 375
+  orig: 348, 375
+  offset: 0, 0
+  index: -1
+shisui
+  rotate: false
+  xy: 2, 153
+  size: 369, 398
+  orig: 369, 398
+  offset: 0, 0
+  index: -1
+xian
+  rotate: false
+  xy: 373, 251
+  size: 322, 329
+  orig: 322, 329
+  offset: 0, 0
+  index: -1
+xian2
+  rotate: false
+  xy: 701, 531
+  size: 242, 156
+  orig: 242, 156
+  offset: 0, 0
+  index: -1
+xiashen
+  rotate: false
+  xy: 701, 689
+  size: 273, 103
+  orig: 273, 103
+  offset: 0, 0
+  index: -1
+xigaip
+  rotate: true
+  xy: 351, 582
+  size: 37, 68
+  orig: 38, 70
+  offset: 1, 1
+  index: -1
+yachi
+  rotate: true
+  xy: 976, 704
+  size: 88, 17
+  orig: 88, 17
+  offset: 0, 0
+  index: -1
+yanqiu1
+  rotate: false
+  xy: 976, 690
+  size: 13, 12
+  orig: 13, 12
+  offset: 0, 0
+  index: -1
+zuichun
+  rotate: false
+  xy: 736, 144
+  size: 197, 177
+  orig: 197, 177
+  offset: 0, 0
+  index: -1

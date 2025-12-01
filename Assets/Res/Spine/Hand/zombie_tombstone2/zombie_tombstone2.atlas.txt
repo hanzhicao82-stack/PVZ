@@ -1,0 +1,167 @@
+
+zombie_tombstone2.png
+size: 680,680
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+hair
+  rotate: false
+  xy: 451, 411
+  size: 112, 135
+  orig: 115, 135
+  offset: 3, 0
+  index: -1
+head
+  rotate: false
+  xy: 451, 548
+  size: 123, 128
+  orig: 125, 130
+  offset: 1, 1
+  index: -1
+mubei
+  rotate: false
+  xy: 2, 207
+  size: 447, 469
+  orig: 447, 469
+  offset: 0, 0
+  index: -1
+shazi01
+  rotate: false
+  xy: 502, 214
+  size: 49, 73
+  orig: 128, 128
+  offset: 39, 0
+  index: -1
+shazi02
+  rotate: false
+  xy: 451, 209
+  size: 49, 79
+  orig: 128, 128
+  offset: 39, 0
+  index: -1
+shazi03
+  rotate: false
+  xy: 493, 2
+  size: 48, 85
+  orig: 128, 128
+  offset: 39, 0
+  index: -1
+shazi04
+  rotate: false
+  xy: 543, 9
+  size: 49, 91
+  orig: 128, 128
+  offset: 39, 0
+  index: -1
+shazi05
+  rotate: false
+  xy: 594, 6
+  size: 48, 103
+  orig: 128, 128
+  offset: 39, 0
+  index: -1
+shazi06
+  rotate: false
+  xy: 615, 444
+  size: 48, 109
+  orig: 128, 128
+  offset: 39, 0
+  index: -1
+shazi07
+  rotate: false
+  xy: 565, 431
+  size: 48, 115
+  orig: 128, 128
+  offset: 39, 0
+  index: -1
+shazi08
+  rotate: false
+  xy: 451, 290
+  size: 49, 119
+  orig: 128, 128
+  offset: 39, 0
+  index: -1
+shazi09
+  rotate: false
+  xy: 626, 556
+  size: 47, 120
+  orig: 128, 128
+  offset: 40, 1
+  index: -1
+shazi10
+  rotate: false
+  xy: 502, 289
+  size: 47, 120
+  orig: 128, 128
+  offset: 40, 1
+  index: -1
+shazi11
+  rotate: false
+  xy: 576, 555
+  size: 48, 121
+  orig: 128, 128
+  offset: 39, 1
+  index: -1
+shazi12
+  rotate: false
+  xy: 437, 85
+  size: 47, 120
+  orig: 128, 128
+  offset: 40, 1
+  index: -1
+shazi13
+  rotate: false
+  xy: 551, 291
+  size: 47, 118
+  orig: 128, 128
+  offset: 40, 2
+  index: -1
+shazi14
+  rotate: false
+  xy: 486, 89
+  size: 45, 118
+  orig: 128, 128
+  offset: 41, 3
+  index: -1
+shazi15
+  rotate: false
+  xy: 576, 111
+  size: 44, 109
+  orig: 128, 128
+  offset: 42, 11
+  index: -1
+shazi16
+  rotate: false
+  xy: 533, 102
+  size: 41, 110
+  orig: 128, 128
+  offset: 44, 13
+  index: -1
+shoul
+  rotate: false
+  xy: 553, 222
+  size: 58, 67
+  orig: 59, 67
+  offset: 1, 0
+  index: -1
+shour
+  rotate: false
+  xy: 600, 361
+  size: 36, 68
+  orig: 36, 68
+  offset: 0, 0
+  index: -1
+yingzi
+  rotate: false
+  xy: 2, 12
+  size: 433, 193
+  orig: 434, 193
+  offset: 0, 0
+  index: -1
+zhizhu
+  rotate: false
+  xy: 437, 13
+  size: 54, 70
+  orig: 54, 70
+  offset: 0, 0
+  index: -1

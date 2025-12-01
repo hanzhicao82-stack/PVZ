@@ -1,0 +1,188 @@
+
+pifu_zidan_04.png
+size: 764,764
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+41
+  rotate: true
+  xy: 360, 484
+  size: 26, 70
+  orig: 26, 70
+  offset: 0, 0
+  index: -1
+a01
+  rotate: false
+  xy: 230, 484
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+a02
+  rotate: false
+  xy: 588, 487
+  size: 124, 124
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+a03
+  rotate: false
+  xy: 297, 236
+  size: 120, 120
+  orig: 128, 128
+  offset: 4, 4
+  index: -1
+a04
+  rotate: true
+  xy: 419, 239
+  size: 120, 116
+  orig: 128, 128
+  offset: 4, 8
+  index: -1
+a05
+  rotate: false
+  xy: 403, 361
+  size: 120, 120
+  orig: 128, 128
+  offset: 4, 4
+  index: -1
+a06
+  rotate: false
+  xy: 419, 121
+  size: 116, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a07
+  rotate: false
+  xy: 537, 121
+  size: 116, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a08
+  rotate: true
+  xy: 525, 361
+  size: 120, 116
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a09
+  rotate: false
+  xy: 537, 239
+  size: 120, 120
+  orig: 128, 128
+  offset: 8, 8
+  index: -1
+a10
+  rotate: false
+  xy: 297, 122
+  size: 120, 112
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a11
+  rotate: true
+  xy: 659, 239
+  size: 120, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a12
+  rotate: false
+  xy: 296, 20
+  size: 120, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a13
+  rotate: true
+  xy: 297, 358
+  size: 124, 104
+  orig: 128, 128
+  offset: 4, 8
+  index: -1
+a14
+  rotate: true
+  xy: 643, 361
+  size: 124, 100
+  orig: 128, 128
+  offset: 4, 12
+  index: -1
+a15
+  rotate: false
+  xy: 360, 512
+  size: 96, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+a16
+  rotate: false
+  xy: 655, 137
+  size: 96, 100
+  orig: 128, 128
+  offset: 8, 12
+  index: -1
+f1
+  rotate: true
+  xy: 148, 232
+  size: 220, 147
+  orig: 239, 164
+  offset: 0, 9
+  index: -1
+f2
+  rotate: false
+  xy: 2, 454
+  size: 224, 151
+  orig: 239, 164
+  offset: 0, 5
+  index: -1
+f3
+  rotate: true
+  xy: 2, 226
+  size: 226, 144
+  orig: 239, 164
+  offset: 0, 20
+  index: -1
+f4
+  rotate: false
+  xy: 458, 613
+  size: 224, 146
+  orig: 239, 164
+  offset: 0, 17
+  index: -1
+f5
+  rotate: true
+  xy: 2, 2
+  size: 222, 148
+  orig: 239, 164
+  offset: 0, 16
+  index: -1
+f6
+  rotate: false
+  xy: 2, 607
+  size: 226, 152
+  orig: 239, 164
+  offset: 0, 12
+  index: -1
+f7
+  rotate: false
+  xy: 230, 614
+  size: 226, 145
+  orig: 239, 164
+  offset: 0, 17
+  index: -1
+f8
+  rotate: true
+  xy: 152, 14
+  size: 216, 142
+  orig: 239, 164
+  offset: 0, 20
+  index: -1
+glow
+  rotate: false
+  xy: 458, 483
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,167 @@
+
+pifu_wandousheshou_4step_bullet.png
+size: 804,804
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+b00000
+  rotate: true
+  xy: 534, 303
+  size: 160, 155
+  orig: 232, 232
+  offset: 43, 39
+  index: -1
+b00001
+  rotate: false
+  xy: 2, 607
+  size: 191, 192
+  orig: 232, 232
+  offset: 21, 19
+  index: -1
+b00002
+  rotate: true
+  xy: 2, 414
+  size: 191, 188
+  orig: 232, 232
+  offset: 21, 20
+  index: -1
+b00003
+  rotate: true
+  xy: 2, 224
+  size: 188, 182
+  orig: 232, 232
+  offset: 23, 25
+  index: -1
+b00004
+  rotate: true
+  xy: 2, 37
+  size: 185, 177
+  orig: 232, 232
+  offset: 24, 27
+  index: -1
+b00005
+  rotate: false
+  xy: 361, 55
+  size: 174, 176
+  orig: 232, 232
+  offset: 30, 27
+  index: -1
+b00006
+  rotate: false
+  xy: 365, 449
+  size: 163, 177
+  orig: 232, 232
+  offset: 32, 26
+  index: -1
+b00007
+  rotate: false
+  xy: 527, 629
+  size: 151, 170
+  orig: 232, 232
+  offset: 45, 26
+  index: -1
+b00008
+  rotate: false
+  xy: 680, 676
+  size: 120, 123
+  orig: 232, 232
+  offset: 52, 60
+  index: -1
+b00009
+  rotate: true
+  xy: 691, 358
+  size: 115, 77
+  orig: 232, 232
+  offset: 55, 79
+  index: -1
+b00010
+  rotate: false
+  xy: 534, 237
+  size: 109, 64
+  orig: 232, 232
+  offset: 60, 86
+  index: -1
+b00011
+  rotate: true
+  xy: 688, 475
+  size: 63, 57
+  orig: 232, 232
+  offset: 76, 86
+  index: -1
+bixin
+  rotate: true
+  xy: 537, 3
+  size: 144, 133
+  orig: 144, 136
+  offset: 0, 0
+  index: -1
+fbo00000
+  rotate: true
+  xy: 530, 465
+  size: 162, 156
+  orig: 190, 196
+  offset: 18, 17
+  index: -1
+fbo00001
+  rotate: true
+  xy: 195, 628
+  size: 171, 170
+  orig: 190, 196
+  offset: 10, 11
+  index: -1
+fbo00002
+  rotate: true
+  xy: 364, 252
+  size: 175, 168
+  orig: 190, 196
+  offset: 7, 12
+  index: -1
+fbo00003
+  rotate: true
+  xy: 186, 233
+  size: 179, 176
+  orig: 190, 196
+  offset: 4, 7
+  index: -1
+fbo00004
+  rotate: false
+  xy: 181, 39
+  size: 178, 183
+  orig: 190, 196
+  offset: 5, 6
+  index: -1
+fbo00005
+  rotate: false
+  xy: 192, 429
+  size: 171, 176
+  orig: 190, 196
+  offset: 8, 16
+  index: -1
+fbo00006
+  rotate: false
+  xy: 367, 631
+  size: 158, 168
+  orig: 190, 196
+  offset: 14, 13
+  index: -1
+fbo00007
+  rotate: true
+  xy: 645, 149
+  size: 152, 156
+  orig: 190, 196
+  offset: 19, 14
+  index: -1
+fbo00008
+  rotate: true
+  xy: 688, 540
+  size: 134, 90
+  orig: 190, 196
+  offset: 37, 67
+  index: -1
+glow1
+  rotate: false
+  xy: 672, 21
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1

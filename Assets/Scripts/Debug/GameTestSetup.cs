@@ -1,3 +1,4 @@
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
@@ -159,6 +160,11 @@ namespace PVZ.DOTS.Debug
             float health = cfg?.Health ?? 100f;
             float sunProdInterval = cfg?.SunProductionInterval ?? 0f;
             int sunProdAmount = cfg?.SunProductionAmount ?? 0;
+            FixedString128Bytes projectilePrefabPath = default;
+            if (cfg.HasValue)
+            {
+                projectilePrefabPath = cfg.Value.ProjectilePrefabPath;
+            }
 
             _entityManager.AddComponentData(entity, new PlantComponent
             {
@@ -167,7 +173,8 @@ namespace PVZ.DOTS.Debug
                 AttackInterval = attackInterval,
                 LastAttackTime = 0f,
                 AttackRange = attackRange,
-                SunCost = sunCost
+                SunCost = sunCost,
+                ProjectilePrefabPath = projectilePrefabPath
             });
 
             _entityManager.AddComponentData(entity, new HealthComponent
@@ -205,6 +212,11 @@ namespace PVZ.DOTS.Debug
             float attackDamage = cfg?.AttackDamage ?? 10f;
             float attackInterval = cfg?.AttackInterval ?? 1f;
             float health = cfg?.Health ?? 100f;
+            FixedString128Bytes projectilePrefabPath = default;
+            if (cfg.HasValue)
+            {
+                projectilePrefabPath = cfg.Value.ProjectilePrefabPath;
+            }
 
             _entityManager.AddComponentData(entity, new ZombieComponent
             {
@@ -213,7 +225,8 @@ namespace PVZ.DOTS.Debug
                 AttackDamage = attackDamage,
                 AttackInterval = attackInterval,
                 LastAttackTime = 0f,
-                Lane = lane
+                Lane = lane,
+                ProjectilePrefabPath = projectilePrefabPath
             });
 
             _entityManager.AddComponentData(entity, new HealthComponent

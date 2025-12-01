@@ -1,0 +1,83 @@
+
+effect_txk_dajie.png
+size: 548,548
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+chibangl
+  rotate: false
+  xy: 420, 378
+  size: 111, 165
+  orig: 111, 165
+  offset: 0, 0
+  index: -1
+chibangr
+  rotate: false
+  xy: 420, 213
+  size: 112, 163
+  orig: 112, 163
+  offset: 0, 0
+  index: -1
+kuang
+  rotate: false
+  xy: 2, 107
+  size: 416, 436
+  orig: 416, 436
+  offset: 0, 0
+  index: -1
+maoshenbai
+  rotate: false
+  xy: 2, 2
+  size: 129, 103
+  orig: 131, 105
+  offset: 1, 1
+  index: -1
+maoshenhuang
+  rotate: true
+  xy: 420, 78
+  size: 133, 118
+  orig: 135, 120
+  offset: 1, 1
+  index: -1
+maotoubai
+  rotate: false
+  xy: 231, 20
+  size: 94, 85
+  orig: 96, 87
+  offset: 1, 1
+  index: -1
+maotouhuang
+  rotate: false
+  xy: 133, 20
+  size: 96, 85
+  orig: 97, 85
+  offset: 0, 0
+  index: -1
+maoweibai
+  rotate: false
+  xy: 327, 54
+  size: 80, 51
+  orig: 81, 51
+  offset: 0, 0
+  index: -1
+maoweihuang
+  rotate: false
+  xy: 327, 7
+  size: 82, 45
+  orig: 82, 45
+  offset: 0, 0
+  index: -1
+star
+  rotate: true
+  xy: 477, 12
+  size: 64, 63
+  orig: 64, 64
+  offset: 0, 1
+  index: -1
+start2
+  rotate: false
+  xy: 411, 12
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

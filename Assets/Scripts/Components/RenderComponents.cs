@@ -44,6 +44,11 @@ namespace PVZ.DOTS.Components
         /// 当前颜色调制（用于受伤闪烁等效果）
         /// </summary>
         public float ColorTint; // 0-1，1为正常，0为完全变色
+
+        /// <summary>
+        /// 上一次应用到渲染组件的颜色调制
+        /// </summary>
+        public float LastAppliedColorTint;
     }
 
     /// <summary>

@@ -220,7 +220,8 @@ namespace PVZ.DOTS.Systems
                 {
                     CurrentAnimationState = Components.AnimationState.Idle,
                     NeedsAnimationUpdate = true,
-                    ColorTint = 1.0f
+                    ColorTint = 1.0f,
+                    LastAppliedColorTint = 1.0f
                 });
             }
         }

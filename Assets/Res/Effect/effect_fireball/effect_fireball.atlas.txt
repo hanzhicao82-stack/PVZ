@@ -1,0 +1,83 @@
+
+effect_fireball.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+glow1
+  rotate: false
+  xy: 2, 138
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1
+hongquan01
+  rotate: false
+  xy: 256, 715
+  size: 62, 91
+  orig: 179, 132
+  offset: 5, 24
+  index: -1
+hongquan03
+  rotate: false
+  xy: 558, 858
+  size: 161, 101
+  orig: 179, 132
+  offset: 6, 31
+  index: -1
+hongquan05
+  rotate: false
+  xy: 2, 266
+  size: 145, 131
+  orig: 179, 132
+  offset: 28, 0
+  index: -1
+hongquan07
+  rotate: true
+  xy: 2, 2
+  size: 134, 111
+  orig: 179, 132
+  offset: 36, 0
+  index: -1
+hongquan09
+  rotate: false
+  xy: 158, 594
+  size: 85, 107
+  orig: 179, 132
+  offset: 66, 1
+  index: -1
+huan
+  rotate: false
+  xy: 2, 703
+  size: 252, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+tiayang01
+  rotate: false
+  xy: 407, 813
+  size: 149, 146
+  orig: 185, 184
+  offset: 23, 23
+  index: -1
+tiayang05
+  rotate: false
+  xy: 2, 399
+  size: 151, 147
+  orig: 185, 184
+  offset: 22, 19
+  index: -1
+tiayang09
+  rotate: false
+  xy: 256, 808
+  size: 149, 151
+  orig: 185, 184
+  offset: 25, 20
+  index: -1
+tiayang13
+  rotate: false
+  xy: 2, 548
+  size: 154, 153
+  orig: 185, 184
+  offset: 20, 17
+  index: -1

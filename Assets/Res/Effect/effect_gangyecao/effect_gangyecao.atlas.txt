@@ -1,0 +1,97 @@
+
+effect_gangyecao.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+1b00016
+  rotate: true
+  xy: 2, 2
+  size: 104, 97
+  orig: 162, 237
+  offset: 28, 54
+  index: -1
+1b00017
+  rotate: false
+  xy: 653, 847
+  size: 105, 154
+  orig: 162, 237
+  offset: 25, 28
+  index: -1
+1b00018
+  rotate: false
+  xy: 2, 108
+  size: 103, 191
+  orig: 162, 237
+  offset: 22, 17
+  index: -1
+1b00019
+  rotate: false
+  xy: 450, 810
+  size: 106, 191
+  orig: 162, 237
+  offset: 18, 17
+  index: -1
+1b00020
+  rotate: false
+  xy: 558, 812
+  size: 93, 189
+  orig: 162, 237
+  offset: 27, 18
+  index: -1
+1b00021
+  rotate: false
+  xy: 107, 115
+  size: 94, 184
+  orig: 162, 237
+  offset: 26, 22
+  index: -1
+1b00022
+  rotate: false
+  xy: 218, 573
+  size: 47, 179
+  orig: 162, 237
+  offset: 49, 27
+  index: -1
+1b00023
+  rotate: false
+  xy: 203, 487
+  size: 6, 16
+  orig: 162, 237
+  offset: 51, 185
+  index: -1
+glow1
+  rotate: false
+  xy: 760, 875
+  size: 126, 126
+  orig: 128, 128
+  offset: 1, 1
+  index: -1
+h00
+  rotate: false
+  xy: 249, 769
+  size: 199, 232
+  orig: 256, 256
+  offset: 31, 6
+  index: -1
+h01
+  rotate: false
+  xy: 2, 754
+  size: 245, 247
+  orig: 256, 256
+  offset: 9, 7
+  index: -1
+h02
+  rotate: true
+  xy: 2, 505
+  size: 247, 214
+  orig: 256, 256
+  offset: 2, 3
+  index: -1
+h03
+  rotate: false
+  xy: 2, 301
+  size: 199, 202
+  orig: 256, 256
+  offset: 15, 7
+  index: -1

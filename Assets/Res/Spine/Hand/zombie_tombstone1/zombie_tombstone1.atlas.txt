@@ -1,0 +1,90 @@
+
+zombie_tombstone1.png
+size: 600,596
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bf01
+  rotate: false
+  xy: 348, 102
+  size: 96, 56
+  orig: 128, 128
+  offset: 20, 28
+  index: -1
+bf02
+  rotate: false
+  xy: 446, 86
+  size: 84, 72
+  orig: 128, 128
+  offset: 24, 20
+  index: -1
+bf03
+  rotate: true
+  xy: 543, 386
+  size: 100, 44
+  orig: 128, 128
+  offset: 20, 20
+  index: -1
+bf04
+  rotate: true
+  xy: 543, 488
+  size: 105, 48
+  orig: 128, 128
+  offset: 12, 16
+  index: -1
+bf05
+  rotate: false
+  xy: 543, 180
+  size: 48, 56
+  orig: 128, 128
+  offset: 40, 16
+  index: -1
+bf06
+  rotate: false
+  xy: 329, 44
+  size: 56, 56
+  orig: 128, 128
+  offset: 32, 20
+  index: -1
+bf07
+  rotate: true
+  xy: 543, 238
+  size: 68, 52
+  orig: 128, 128
+  offset: 24, 24
+  index: -1
+bf08
+  rotate: true
+  xy: 543, 308
+  size: 76, 44
+  orig: 128, 128
+  offset: 16, 36
+  index: -1
+guishou
+  rotate: false
+  xy: 2, 19
+  size: 206, 94
+  orig: 206, 94
+  offset: 0, 0
+  index: -1
+mubei
+  rotate: false
+  xy: 2, 115
+  size: 344, 478
+  orig: 359, 490
+  offset: 14, 0
+  index: -1
+nanguatou
+  rotate: true
+  xy: 210, 30
+  size: 83, 117
+  orig: 83, 117
+  offset: 0, 0
+  index: -1
+yingzi
+  rotate: true
+  xy: 348, 160
+  size: 433, 193
+  orig: 434, 193
+  offset: 0, 0
+  index: -1
