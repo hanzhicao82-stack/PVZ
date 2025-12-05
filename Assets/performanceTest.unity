@@ -122,67 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &394230379
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2070422957709017823, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_Name
-      value: PeaShoot
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3068964812184616890, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7580987405807934302, guid: 88117f645fd197449a6039841defeb3e, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 88117f645fd197449a6039841defeb3e, type: 3}
 --- !u!1 &775416430
 GameObject:
   m_ObjectHideFlags: 0
@@ -313,12 +252,13 @@ MonoBehaviour:
   enableViewLoading: 1
   meshPrefabPath: Prefabs/TestMesh
   spinePrefabPath: Prefabs/TestSpine
+  plantProjectilePrefabPath: 
   gameConfigJson: {fileID: 4900000, guid: 8ce7af7c336b37246a89230c10e463fb, type: 3}
   levelConfigJson: {fileID: 4900000, guid: a9e5b309d32c7024592607085b605c8c, type: 3}
   testLevelId: 1
   autoSetGamePlaying: 1
   enableAutoPlantSpawn: 1
-  plantSpawnInterval: 0.5
+  plantSpawnInterval: 0.1
   plantsPerBatch: 1
   plantType: 5
   maxPlants: 1000
@@ -487,4 +427,3 @@ SceneRoots:
   - {fileID: 1482434271}
   - {fileID: 775416432}
   - {fileID: 1281041441}
-  - {fileID: 394230379}

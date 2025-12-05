@@ -1,4 +1,3 @@
-using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -6,6 +5,7 @@ using UnityEngine;
 using PVZ.DOTS.Components;
 using PVZ.DOTS.Utils;
 using System;
+
 
 namespace PVZ.DOTS.Debug
 {
@@ -348,7 +348,7 @@ namespace PVZ.DOTS.Debug
                     AttackInterval = 1.5f,
                     AttackRange = 10f,
                     LastAttackTime = 0f,
-                    ProjectilePrefabPath = new FixedString128Bytes(plantProjectilePrefabPath ?? string.Empty)
+                    ProjectilePrefabPath = new Unity.Collections.FixedString128Bytes(plantProjectilePrefabPath ?? string.Empty)
                 });
 
                 _entityManager.AddComponentData(plantEntity, new HealthComponent
@@ -379,6 +379,29 @@ namespace PVZ.DOTS.Debug
                         IsViewLoaded = false
                     });
                 }
+
+                // 添加性能优化组件
+                _entityManager.AddComponentData(plantEntity, new ViewCullingComponent
+                {
+                    IsVisible = true,
+                    CullingRadius = 2f,
+                    LastCheckTime = 0f
+                });
+
+                _entityManager.AddComponentData(plantEntity, new LODComponent
+                {
+                    CurrentLODLevel = 0,
+                    LODDistances = new float3(10f, 20f, 30f), // LOD0->1: 10m, LOD1->2: 20m, LOD2->3: 30m
+                    DistanceSquaredToCamera = 0f
+                });
+
+                _entityManager.AddComponentData(plantEntity, new SpineOptimizationComponent
+                {
+                    EnableAnimationUpdate = true,
+                    AnimationUpdateInterval = 1,
+                    FrameCounter = 0,
+                    EnableMeshUpdate = true
+                });
 
                 totalPlantsSpawned++;
             }
@@ -438,6 +461,29 @@ namespace PVZ.DOTS.Debug
                         IsViewLoaded = false
                     });
                 }
+
+                // 添加性能优化组件
+                _entityManager.AddComponentData(zombieEntity, new ViewCullingComponent
+                {
+                    IsVisible = true,
+                    CullingRadius = 2f,
+                    LastCheckTime = 0f
+                });
+
+                _entityManager.AddComponentData(zombieEntity, new LODComponent
+                {
+                    CurrentLODLevel = 0,
+                    LODDistances = new float3(10f, 20f, 30f), // LOD0->1: 10m, LOD1->2: 20m, LOD2->3: 30m
+                    DistanceSquaredToCamera = 0f
+                });
+
+                _entityManager.AddComponentData(zombieEntity, new SpineOptimizationComponent
+                {
+                    EnableAnimationUpdate = true,
+                    AnimationUpdateInterval = 1,
+                    FrameCounter = 0,
+                    EnableMeshUpdate = true
+                });
 
                 totalZombiesSpawned++;
             }
