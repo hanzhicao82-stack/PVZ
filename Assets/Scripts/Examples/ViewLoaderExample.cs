@@ -83,6 +83,13 @@ namespace PVZ.DOTS.Examples
                 SunCost = 100
             });
 
+            entityManager.AddComponentData(plant, new HealthComponent
+            {
+                MaxHealth = 300f,
+                CurrentHealth = 300f,
+                IsDead = false
+            });
+
             entityManager.AddComponentData(plant, new GridPositionComponent
             {
                 Row = 2,

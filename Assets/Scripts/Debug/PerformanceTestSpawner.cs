@@ -2,6 +2,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
+using UnityEngine.UI;
 using PVZ.DOTS.Components;
 using PVZ.DOTS.Utils;
 using System;
@@ -119,6 +120,8 @@ namespace PVZ.DOTS.Debug
         private bool _initialized = false;
         private PVZ.DOTS.GameLoader _gameLoader;
         private bool _lastGamePlayingState = true; // 记录上一次的游戏状态
+        private Canvas _healthBarCanvas;
+        private Transform _healthBarContainer;
 
         private void Start()
         {
@@ -138,6 +141,9 @@ namespace PVZ.DOTS.Debug
             _lastPlantSpawnTime = Time.time;
             _lastZombieSpawnTime = Time.time;
 
+            // 初始化血条 Canvas
+            InitializeHealthBarCanvas();
+
             // 使用GameLoader加载关卡配置
             LoadLevelConfig();
 
@@ -146,14 +152,14 @@ namespace PVZ.DOTS.Debug
                 enableAutoSpawn = true;
                 GameLogger.Log("PerformanceTest", "性能测试自动启动");
             }
-            
+
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 结束 ===");
         }
 
         private void LoadLevelConfig()
         {
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: LoadLevelConfig 开始 ===");
-            
+
             if (levelConfigJson == null)
             {
                 GameLogger.LogWarning("PerformanceTest", "未设置关卡配置文件，使用默认配置");
@@ -188,7 +194,7 @@ namespace PVZ.DOTS.Debug
                 _gameLoader.OnLevelConfigLoaded += OnLevelConfigLoaded;
 
                 UnityEngine.Debug.Log("PerformanceTestSpawner: 回调已注册，开始加载...");
-                
+
                 // 开始加载
                 _gameLoader.StartLoad();
 
@@ -198,7 +204,7 @@ namespace PVZ.DOTS.Debug
             {
                 UnityEngine.Debug.LogError("PerformanceTestSpawner: GameLoader 组件为 null!");
             }
-            
+
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: LoadLevelConfig 结束 ===");
         }
 
@@ -228,7 +234,7 @@ namespace PVZ.DOTS.Debug
 
             // 检查游戏状态，只在Playing时生成
             bool isPlaying = IsGamePlaying();
-            
+
             // 状态变化时输出日志
             if (isPlaying != _lastGamePlayingState)
             {
@@ -242,7 +248,7 @@ namespace PVZ.DOTS.Debug
                 }
                 _lastGamePlayingState = isPlaying;
             }
-            
+
             if (!isPlaying)
             {
                 return;
@@ -531,6 +537,44 @@ namespace PVZ.DOTS.Debug
             }
 
             return meshPrefabPath;
+        }
+
+        /// <summary>
+        /// 初始化血条 Canvas
+        /// </summary>
+        private void InitializeHealthBarCanvas()
+        {
+
+            _healthBarCanvas = GameObject.FindObjectOfType<Canvas>();
+            _healthBarCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            _healthBarCanvas.sortingOrder = 100; // 确保在最上层
+            var canvasObj = _healthBarCanvas.gameObject;
+
+
+            // 创建血条容器
+            var healthBarContainerObj = new GameObject("HealthBars");
+            healthBarContainerObj.layer = LayerMask.NameToLayer("UI");
+            healthBarContainerObj.transform.SetParent(_healthBarCanvas.transform, false);
+            _healthBarContainer = healthBarContainerObj.transform;
+
+            var containerRect = healthBarContainerObj.AddComponent<RectTransform>();
+            containerRect.anchorMin = Vector2.zero;
+            containerRect.anchorMax = Vector2.one;
+            containerRect.sizeDelta = Vector2.zero;
+            containerRect.anchoredPosition = Vector2.zero;
+            containerRect.localScale = Vector3.one;
+
+            // 设置到 HealthBarManager
+            var healthBarManager = PVZ.DOTS.Systems.HealthBarManager.Instance;
+            if (healthBarManager != null)
+            {
+                healthBarManager.SetCanvas(_healthBarCanvas, healthBarContainerObj.transform);
+                UnityEngine.Debug.Log("[PerformanceTestSpawner] HealthBar Canvas initialized and set to HealthBarManager");
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("[PerformanceTestSpawner] Failed to get HealthBarManager instance!");
+            }
         }
 
         private void UpdateStatistics()

@@ -104,13 +104,17 @@ namespace PVZ.DOTS.Systems
             ecb.AddComponent(projectileEntity, LocalTransform.FromPosition(
                 plantTransform.Position + new float3(0.5f, 0.5f, 0)));
 
-            if (!plant.ProjectilePrefabPath.IsEmpty)
+            // 子弹视图优化：只在配置启用时创建视图
+            // 对于大量子弹场景，建议禁用子弹视图以提升性能
+            var viewConfig = Config.ViewSystemConfig.Instance;
+            if (viewConfig.enableSpineSystem && !plant.ProjectilePrefabPath.IsEmpty)
             {
                 ecb.AddComponent(projectileEntity, new ProjectileViewPrefabComponent
                 {
                     PrefabPath = plant.ProjectilePrefabPath
                 });
             }
+            // 否则子弹将只有逻辑，无视图（性能最优）
         }
 
         private ProjectileType GetProjectileType(PlantType plantType)
