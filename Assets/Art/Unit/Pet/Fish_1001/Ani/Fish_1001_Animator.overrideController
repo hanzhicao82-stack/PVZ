@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Fish_1001_Animator
+  m_Controller: {fileID: 9100000, guid: c55990406d8ba4149b299c7f48f819fd, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: fe1322a858fca6e46ad92cfb5a16e352, type: 2}
+    m_OverrideClip: {fileID: -5903106698827074126, guid: a71aae630b63c1347a38273aca9aca17, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: c300908e15fb03b4081d331bbc12f4cf, type: 2}
+    m_OverrideClip: {fileID: -5903106698827074126, guid: a71aae630b63c1347a38273aca9aca17, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 3d19ab9cbf00d724d9560bc8b9b81d45, type: 2}
+    m_OverrideClip: {fileID: -5903106698827074126, guid: a71aae630b63c1347a38273aca9aca17, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 3d4991263e325434f81153a1401ed56a, type: 2}
+    m_OverrideClip: {fileID: 1788838881951407262, guid: 6cbee46b8d80ca84f9c05be56fd510a2, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 3a07e29fc2a09c64381bb4b351d72bfe, type: 2}
+    m_OverrideClip: {fileID: 9061521659333862600, guid: b569fdda3dff3e34081cf591cf1ce368, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 4519c152a3ce3f2498202e04be950b5b, type: 2}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: b113214bcf5177c48abfde61b58515fe, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 5c81080b18a0d844bb99206d49a42228, type: 2}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: e673235b93313d143a64c3baa680388a, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: a3e49c312890781499234a6be0e274ba, type: 2}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: 6ba77acd04d20414f99ef0eae72c7dd9, type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 6b865fb44fff6e44d8719893ecc6ed81, type: 2}
+    m_OverrideClip: {fileID: 1827226128182048838, guid: 87460365f7522524986d7db8a17c4d33, type: 3}

@@ -1,0 +1,115 @@
+// 动画烘焙 GPU 动画 Shader
+// 使用烘焙的贴图播放动画
+Shader "Custom/BakedAnimationShader"
+{
+    Properties
+    {
+        _MainTex ("Texture", 2D) = "white" {}
+        _PositionMap ("Position Map", 2D) = "black" {}
+        _NormalMap ("Normal Map", 2D) = "bump" {}
+        _AnimationTime ("Animation Time", Float) = 0
+        _FrameRate ("Frame Rate", Float) = 30
+        _TotalFrames ("Total Frames", Int) = 60
+        _VertexCount ("Vertex Count", Int) = 100
+    }
+    
+    SubShader
+    {
+        Tags { "RenderType"="Opaque" }
+        LOD 100
+
+        Pass
+        {
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #include "UnityCG.cginc"
+
+            struct appdata
+            {
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
+                float3 normal : NORMAL;
+                uint vertexID : SV_VertexID; // 使用顶点 ID
+            };
+
+            struct v2f
+            {
+                float2 uv : TEXCOORD0;
+                float4 vertex : SV_POSITION;
+                float3 worldNormal : TEXCOORD1;
+            };
+
+            sampler2D _MainTex;
+            sampler2D _PositionMap;
+            sampler2D _NormalMap;
+            float _AnimationTime;
+            float _FrameRate;
+            int _TotalFrames;
+            int _VertexCount;
+            float4 _PositionMap_TexelSize; // 贴图尺寸信息
+
+            v2f vert (appdata v)
+            {
+                v2f o;
+
+                // 计算当前帧
+                float frame = _AnimationTime * _FrameRate;
+                float frameIndex = floor(frame);
+                float frameFrac = frac(frame);
+                
+                // 确保帧索引在有效范围内
+                frameIndex = fmod(frameIndex, (float)_TotalFrames);
+
+                // 计算下一帧
+                float nextFrameIndex = fmod(frameIndex + 1.0, (float)_TotalFrames);
+
+                // UV 坐标（X = 顶点索引 / (顶点数-1)，Y = 帧索引 / (总帧数-1)）
+                // 使用 max 避免除以 0
+                float vertexU = (float)(v.vertexID) / max(1.0, (float)(_VertexCount - 1));
+                float frameV = frameIndex / max(1.0, (float)(_TotalFrames - 1));
+                float frameVNext = nextFrameIndex / max(1.0, (float)(_TotalFrames - 1));
+                
+                float2 uv = float2(vertexU, frameV);
+                float2 uvNext = float2(vertexU, frameVNext);
+
+                // 从贴图读取位置
+                float3 pos = tex2Dlod(_PositionMap, float4(uv, 0, 0)).xyz;
+                float3 posNext = tex2Dlod(_PositionMap, float4(uvNext, 0, 0)).xyz;
+
+                // 插值
+                float3 finalPos = lerp(pos, posNext, frameFrac);
+
+                // 从贴图读取法线
+                float3 normal = tex2Dlod(_NormalMap, float4(uv, 0, 0)).xyz;
+                float3 normalNext = tex2Dlod(_NormalMap, float4(uvNext, 0, 0)).xyz;
+                
+                // 法线从 [0,1] 转换到 [-1,1]
+                normal = normal * 2.0 - 1.0;
+                normalNext = normalNext * 2.0 - 1.0;
+                
+                float3 finalNormal = normalize(lerp(normal, normalNext, frameFrac));
+
+                // 应用变换
+                o.vertex = UnityObjectToClipPos(float4(finalPos, 1.0));
+                o.worldNormal = UnityObjectToWorldNormal(finalNormal);
+                o.uv = v.uv;
+
+                return o;
+            }
+
+            fixed4 frag (v2f i) : SV_Target
+            {
+                // 简单光照
+                float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
+                float NdotL = max(0, dot(i.worldNormal, lightDir));
+                
+                fixed4 col = tex2D(_MainTex, i.uv);
+                col.rgb *= NdotL * 0.8 + 0.2; // 添加环境光
+                
+                return col;
+            }
+            ENDCG
+        }
+    }
+}

@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Art/Scenes/CheckUpdate.unity
     guid: d5fde5a697fe20e4889cb179dd218411
+  - enabled: 1
+    path: Assets/performanceTest.unity
+    guid: b34cb1acfe83bf448b1d2abd3d5fec6f
   m_configObjects: {}
