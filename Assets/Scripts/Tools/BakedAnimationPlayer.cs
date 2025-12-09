@@ -4,13 +4,26 @@ namespace PVZ.DOTS.Tools
 {
     /// <summary>
     /// GPU 动画播放器 - 使用烘焙的贴图播放动画
+    /// 使用 Graphics.DrawMesh API 直接绘制，不依赖 MeshRenderer
     /// </summary>
-    [RequireComponent(typeof(MeshRenderer))]
     public class BakedAnimationPlayer : MonoBehaviour
     {
         [Header("烘焙数据")]
         [Tooltip("烘焙的动画数据")]
         public AnimationBakeData bakeData;
+
+        [Header("渲染设置")]
+        [Tooltip("使用的材质")]
+        public Material material;
+        
+        [Tooltip("渲染层级")]
+        public int layer = 0;
+        
+        [Tooltip("是否接收阴影")]
+        public bool receiveShadows = true;
+        
+        [Tooltip("阴影投射模式")]
+        public UnityEngine.Rendering.ShadowCastingMode castShadows = UnityEngine.Rendering.ShadowCastingMode.On;
 
         [Header("播放设置")]
         [Tooltip("是否自动播放")]
@@ -33,56 +46,55 @@ namespace PVZ.DOTS.Tools
         [SerializeField]
         private bool isPlaying = false;
 
-        private Material material;
-        private MeshRenderer meshRenderer;
+        private Material runtimeMaterial;
+        private Mesh mesh;
+        private MaterialPropertyBlock propertyBlock;
 
         private void Start()
         {
-            meshRenderer = GetComponent<MeshRenderer>();
-            
-            if (meshRenderer != null)
+            if (bakeData != null)
             {
-                material = meshRenderer.material;
+                // 获取烘焙的 Mesh
+                mesh = bakeData.bakedMesh;
                 
-                if (bakeData != null)
+                if (mesh == null)
                 {
-                    // 设置烘焙后的 Mesh
-                    if (bakeData.bakedMesh != null)
-                    {
-                        var meshFilter = GetComponent<MeshFilter>();
-                        if (meshFilter != null)
-                        {
-                            meshFilter.mesh = bakeData.bakedMesh;
-                            UnityEngine.Debug.Log($"[BakedAnimationPlayer] 已设置烘焙 Mesh: {bakeData.bakedMesh.name}, " +
-                                $"顶点数: {bakeData.bakedMesh.vertexCount}");
-                        }
-                        else
-                        {
-                            UnityEngine.Debug.LogError($"[BakedAnimationPlayer] 找不到 MeshFilter 组件！");
-                        }
-                    }
-                    else
-                    {
-                        UnityEngine.Debug.LogWarning($"[BakedAnimationPlayer] BakeData 中没有烘焙 Mesh！请重新烘焙动画。");
-                    }
-                    
-                    SetupMaterial();
-                    
-                    if (autoPlay)
-                    {
-                        Play();
-                    }
+                    UnityEngine.Debug.LogError($"[BakedAnimationPlayer] BakeData 中没有烘焙 Mesh！");
+                    return;
+                }
+                
+                // 创建运行时材质实例
+                if (material != null)
+                {
+                    runtimeMaterial = new Material(material);
                 }
                 else
                 {
-                    UnityEngine.Debug.LogWarning($"[BakedAnimationPlayer] {gameObject.name}: BakeData 未设置！");
+                    UnityEngine.Debug.LogError($"[BakedAnimationPlayer] 材质未设置！");
+                    return;
                 }
+                
+                // 创建 MaterialPropertyBlock 用于设置动画参数
+                propertyBlock = new MaterialPropertyBlock();
+                
+                SetupMaterial();
+                
+                UnityEngine.Debug.Log($"[BakedAnimationPlayer] 初始化完成: Mesh={mesh.name}, 顶点数={mesh.vertexCount}");
+                
+                if (autoPlay)
+                {
+                    Play();
+                }
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning($"[BakedAnimationPlayer] {gameObject.name}: BakeData 未设置！");
             }
         }
 
         private void Update()
         {
-            if (isPlaying && bakeData != null && material != null)
+            if (isPlaying && bakeData != null && runtimeMaterial != null)
             {
                 currentTime += Time.deltaTime * playbackSpeed;
 
@@ -100,16 +112,47 @@ namespace PVZ.DOTS.Tools
                     }
                 }
 
-                // 更新 Shader 参数
-                currentFrame = Mathf.FloorToInt(currentTime * bakeData.frameRate) % bakeData.totalFrames;
-                material.SetFloat("_AnimationTime", currentTime);
+                // 更新动画时间
+                UpdateAnimation();
+            }
+            
+            // 每帧绘制 Mesh
+            if (mesh != null && runtimeMaterial != null)
+            {
+                Graphics.DrawMesh(
+                    mesh,
+                    transform.localToWorldMatrix,
+                    runtimeMaterial,
+                    layer,
+                    null,
+                    0,
+                    propertyBlock,
+                    castShadows,
+                    receiveShadows
+                );
+            }
+        }
+        
+        private void OnDestroy()
+        {
+            // 清理运行时材质
+            if (runtimeMaterial != null)
+            {
+                Destroy(runtimeMaterial);
+            }
+        }
+
+        private void UpdateAnimation()
+        {
+            // 更新 Shader 参数（使用 MaterialPropertyBlock 避免材质实例化）
+            currentFrame = Mathf.FloorToInt(currentTime * bakeData.frameRate) % bakeData.totalFrames;
+            propertyBlock.SetFloat("_AnimationTime", currentTime);
                 
-                // 调试输出（每秒输出一次）
-                if (Time.frameCount % 60 == 0)
-                {
-                    UnityEngine.Debug.Log($"[BakedAnimationPlayer] Time={currentTime:F2}, Frame={currentFrame}, " +
-                        $"FrameRate={bakeData.frameRate}, TotalFrames={bakeData.totalFrames}");
-                }
+            // 调试输出（每秒输出一次）
+            if (Time.frameCount % 60 == 0)
+            {
+                UnityEngine.Debug.Log($"[BakedAnimationPlayer] Time={currentTime:F2}, Frame={currentFrame}, " +
+                    $"FrameRate={bakeData.frameRate}, TotalFrames={bakeData.totalFrames}");
             }
         }
 
@@ -118,7 +161,7 @@ namespace PVZ.DOTS.Tools
         /// </summary>
         private void SetupMaterial()
         {
-            if (material == null || bakeData == null)
+            if (runtimeMaterial == null || bakeData == null)
                 return;
 
             // 设置贴图
@@ -127,7 +170,7 @@ namespace PVZ.DOTS.Tools
                 // 确保贴图使用正确的过滤模式
                 bakeData.positionMap.filterMode = FilterMode.Bilinear;
                 bakeData.positionMap.wrapMode = TextureWrapMode.Clamp;
-                material.SetTexture("_PositionMap", bakeData.positionMap);
+                runtimeMaterial.SetTexture("_PositionMap", bakeData.positionMap);
                 
                 // 检查贴图是否可读
                 try
@@ -150,7 +193,7 @@ namespace PVZ.DOTS.Tools
             {
                 bakeData.normalMap.filterMode = FilterMode.Bilinear;
                 bakeData.normalMap.wrapMode = TextureWrapMode.Clamp;
-                material.SetTexture("_NormalMap", bakeData.normalMap);
+                runtimeMaterial.SetTexture("_NormalMap", bakeData.normalMap);
             }
             else
             {
@@ -158,9 +201,9 @@ namespace PVZ.DOTS.Tools
             }
 
             // 设置动画参数
-            material.SetFloat("_FrameRate", bakeData.frameRate);
-            material.SetInt("_TotalFrames", bakeData.totalFrames);
-            material.SetInt("_VertexCount", bakeData.vertexCount);
+            runtimeMaterial.SetFloat("_FrameRate", bakeData.frameRate);
+            runtimeMaterial.SetInt("_TotalFrames", bakeData.totalFrames);
+            runtimeMaterial.SetInt("_VertexCount", bakeData.vertexCount);
             
             UnityEngine.Debug.Log($"[BakedAnimationPlayer] Setup Complete: " +
                 $"FrameRate={bakeData.frameRate}, TotalFrames={bakeData.totalFrames}, " +
@@ -193,9 +236,9 @@ namespace PVZ.DOTS.Tools
             currentTime = 0f;
             currentFrame = 0;
             
-            if (material != null)
+            if (propertyBlock != null)
             {
-                material.SetFloat("_AnimationTime", 0f);
+                propertyBlock.SetFloat("_AnimationTime", 0f);
             }
         }
 
@@ -231,18 +274,9 @@ namespace PVZ.DOTS.Tools
         private void OnValidate()
         {
             // 编辑器中实时预览
-            if (Application.isPlaying && material != null && bakeData != null)
+            if (Application.isPlaying && runtimeMaterial != null && bakeData != null)
             {
                 SetupMaterial();
-            }
-        }
-
-        private void OnDestroy()
-        {
-            // 清理材质实例
-            if (material != null && Application.isPlaying)
-            {
-                Destroy(material);
             }
         }
     }
