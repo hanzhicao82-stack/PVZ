@@ -23,6 +23,7 @@ Shader "Custom/BakedAnimationShader"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_instancing
             #include "UnityCG.cginc"
 
             struct appdata
@@ -31,6 +32,7 @@ Shader "Custom/BakedAnimationShader"
                 float2 uv : TEXCOORD0;
                 float3 normal : NORMAL;
                 uint vertexID : SV_VertexID; // 使用顶点 ID
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             struct v2f
@@ -38,42 +40,55 @@ Shader "Custom/BakedAnimationShader"
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
                 float3 worldNormal : TEXCOORD1;
+                UNITY_VERTEX_INPUT_INSTANCE_ID
             };
 
             sampler2D _MainTex;
             sampler2D _PositionMap;
             sampler2D _NormalMap;
-            float _AnimationTime;
-            float _FrameRate;
-            int _TotalFrames;
-            int _VertexCount;
+            
+            UNITY_INSTANCING_BUFFER_START(Props)
+                UNITY_DEFINE_INSTANCED_PROP(float, _AnimationTime)
+                UNITY_DEFINE_INSTANCED_PROP(float, _FrameRate)
+                UNITY_DEFINE_INSTANCED_PROP(int, _TotalFrames)
+                UNITY_DEFINE_INSTANCED_PROP(int, _VertexCount)
+            UNITY_INSTANCING_BUFFER_END(Props)
 
             v2f vert (appdata v)
             {
                 v2f o;
+                
+                UNITY_SETUP_INSTANCE_ID(v);
+                UNITY_TRANSFER_INSTANCE_ID(v, o);
+
+                // 获取实例化参数
+                float animTime = UNITY_ACCESS_INSTANCED_PROP(Props, _AnimationTime);
+                float frameRate = UNITY_ACCESS_INSTANCED_PROP(Props, _FrameRate);
+                int totalFrames = UNITY_ACCESS_INSTANCED_PROP(Props, _TotalFrames);
+                int vertexCount = UNITY_ACCESS_INSTANCED_PROP(Props, _VertexCount);
 
                 // 计算当前帧
-                float frame = _AnimationTime * _FrameRate;
+                float frame = animTime * frameRate;
                 float frameIndex = floor(frame);
                 float frameFrac = frac(frame);
                 
                 // 确保帧索引在有效范围内
-                frameIndex = fmod(frameIndex, (float)_TotalFrames);
+                frameIndex = fmod(frameIndex, (float)totalFrames);
 
                 // 计算下一帧
-                float nextFrameIndex = fmod(frameIndex + 1.0, (float)_TotalFrames);
+                float nextFrameIndex = fmod(frameIndex + 1.0, (float)totalFrames);
 
                 // UV 坐标：直接使用顶点 ID，每个 Mesh 都有独立贴图
                 // 确保 vertexID 在有效范围内
-                uint safeVertexID = min(v.vertexID, (uint)(_VertexCount - 1));
+                uint safeVertexID = min(v.vertexID, (uint)(vertexCount - 1));
                 
                 // 添加半个像素偏移以正确采样像素中心
-                float pixelOffsetU = 0.5 / (float)_VertexCount;
-                float pixelOffsetV = 0.5 / (float)_TotalFrames;
+                float pixelOffsetU = 0.5 / (float)vertexCount;
+                float pixelOffsetV = 0.5 / (float)totalFrames;
                 
-                float vertexU = ((float)safeVertexID + 0.5) / (float)_VertexCount;
-                float frameV = (frameIndex + 0.5) / (float)_TotalFrames;
-                float frameVNext = (nextFrameIndex + 0.5) / (float)_TotalFrames;
+                float vertexU = ((float)safeVertexID + 0.5) / (float)vertexCount;
+                float frameV = (frameIndex + 0.5) / (float)totalFrames;
+                float frameVNext = (nextFrameIndex + 0.5) / (float)totalFrames;
                 
                 // 钳制 UV 到 [0, 1] 范围
                 float2 uv = float2(saturate(vertexU), saturate(frameV));
@@ -112,6 +127,8 @@ Shader "Custom/BakedAnimationShader"
 
             fixed4 frag (v2f i) : SV_Target
             {
+                UNITY_SETUP_INSTANCE_ID(i);
+                
                 // 简单光照
                 float3 lightDir = normalize(_WorldSpaceLightPos0.xyz);
                 float NdotL = max(0, dot(i.worldNormal, lightDir));
