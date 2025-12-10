@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0680be7246948184fb1f45914324059e, type: 3}
+  m_Name: 3120_BakeData
+  m_EditorClassIdentifier: 
+  animationName: Ani_Fish_3120_Run_01
+  frameRate: 30
+  totalFrames: 36
+  clipLength: 1.2
+  textureWidth: 8039
+  textureHeight: 36
+  meshDataArray:
+  - meshName: Fish_3120_Clothes_01
+    vertexCount: 8039
+    positionMap: {fileID: 2800000, guid: f4c2186d13f2c01469c6906b2a73d309, type: 3}
+    normalMap: {fileID: 2800000, guid: aaaed80c5eeef2e4f9861be42ae59c94, type: 3}
+    bakedMesh: {fileID: 4300000, guid: b26fbc7eae4848a44ad1394ad8a31427, type: 2}
+    mainTexture: {fileID: 2800000, guid: 9223502375c9ab7429baba55628b3765, type: 3}
+  - meshName: Fish_3120_Clothes_02
+    vertexCount: 1260
+    positionMap: {fileID: 2800000, guid: 7f221897701452c4a80b751bc9b3fa01, type: 3}
+    normalMap: {fileID: 2800000, guid: c6c926321af4de347b19af9a33eb2799, type: 3}
+    bakedMesh: {fileID: 4300000, guid: 4d6b4eccc9f69194db3a2dd983b3a192, type: 2}
+    mainTexture: {fileID: 2800000, guid: 939e0fb1fa6fd3445af65d7c8546c846, type: 3}
+  - meshName: Fish_3120_Clothes_03
+    vertexCount: 1123
+    positionMap: {fileID: 2800000, guid: 1c51d168361ae13439a075415d3900e3, type: 3}
+    normalMap: {fileID: 2800000, guid: ad394c7f87947af449bc633827fc15c0, type: 3}
+    bakedMesh: {fileID: 4300000, guid: c389a22b825806c42b0556b9d6d620b9, type: 2}
+    mainTexture: {fileID: 2800000, guid: 939e0fb1fa6fd3445af65d7c8546c846, type: 3}
+  - meshName: Fish_3120_Clothes_04
+    vertexCount: 2092
+    positionMap: {fileID: 2800000, guid: 186b61eff83740246aa650ea46165bbe, type: 3}
+    normalMap: {fileID: 2800000, guid: 0270c5253e768ed4c9ffa2a5a2999651, type: 3}
+    bakedMesh: {fileID: 4300000, guid: 8be88624fabb46d4c91fa143db824f03, type: 2}
+    mainTexture: {fileID: 2800000, guid: 9223502375c9ab7429baba55628b3765, type: 3}
+  - meshName: Fish_3120_Clothes_05
+    vertexCount: 266
+    positionMap: {fileID: 2800000, guid: cfa3b8e4201d32d4397356b54d31c9b4, type: 3}
+    normalMap: {fileID: 2800000, guid: b93b56a3cfa5df14da88c896669317d0, type: 3}
+    bakedMesh: {fileID: 4300000, guid: daca10fff3a5b16439847ee42b7dae02, type: 2}
+    mainTexture: {fileID: 2800000, guid: 939e0fb1fa6fd3445af65d7c8546c846, type: 3}
+  - meshName: Fish_3120_Clothes_06
+    vertexCount: 88
+    positionMap: {fileID: 2800000, guid: cad8dc387fd19a84aa4eb51c807b6c88, type: 3}
+    normalMap: {fileID: 2800000, guid: a30642809449baf4ab722d012cddeab6, type: 3}
+    bakedMesh: {fileID: 4300000, guid: 93a5246086bcc754bb1a390de16d9b90, type: 2}
+    mainTexture: {fileID: 2800000, guid: 939e0fb1fa6fd3445af65d7c8546c846, type: 3}
+  - meshName: Fish_3120_Hair_01
+    vertexCount: 1506
+    positionMap: {fileID: 2800000, guid: 7e577d5c56867ae4d85fcab1f084b44d, type: 3}
+    normalMap: {fileID: 2800000, guid: 2e92ae4d06a5e8246b69cd5fe7f2fea9, type: 3}
+    bakedMesh: {fileID: 4300000, guid: 1dd07cd798145064b9e8c16e5146378d, type: 2}
+    mainTexture: {fileID: 2800000, guid: b03ec321e607fdb469292b4ac31cf095, type: 3}
+  - meshName: Fish_3120_Head_01
+    vertexCount: 641
+    positionMap: {fileID: 2800000, guid: 99f01b74a36591d4dbf91d51c59a5b1b, type: 3}
+    normalMap: {fileID: 2800000, guid: f6c7f9c4f3487004585ec512632e37e7, type: 3}
+    bakedMesh: {fileID: 4300000, guid: f896c4ea7da9e0e42b5ca99d9f0bc853, type: 2}
+    mainTexture: {fileID: 2800000, guid: 3a233b90c48c2b440bafb2dd6e4c84e1, type: 3}
+  vertexCount: 8039
+  positionMap: {fileID: 2800000, guid: f4c2186d13f2c01469c6906b2a73d309, type: 3}
+  normalMap: {fileID: 2800000, guid: aaaed80c5eeef2e4f9861be42ae59c94, type: 3}
+  bakedMesh: {fileID: 4300000, guid: b26fbc7eae4848a44ad1394ad8a31427, type: 2}

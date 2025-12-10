@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0680be7246948184fb1f45914324059e, type: 3}
+  m_Name: 3112_BakeData
+  m_EditorClassIdentifier: 
+  animationName: Ani_Fish_1001_Run_04
+  frameRate: 30
+  totalFrames: 20
+  clipLength: 0.6666667
+  textureWidth: 5336
+  textureHeight: 20
+  meshDataArray:
+  - meshName: Fish_3112_01
+    vertexCount: 5336
+    positionMap: {fileID: 2800000, guid: 745d4adf8c14aaa44bdff632dd3fa390, type: 3}
+    normalMap: {fileID: 2800000, guid: 94753b96250a88b46903e76ebbe53bbd, type: 3}
+    bakedMesh: {fileID: 4300000, guid: d004271ae7be85248a459fc49b585cf9, type: 2}
+    mainTexture: {fileID: 2800000, guid: c920735d254ef2e42ba9649ed546ec60, type: 3}
+  - meshName: Fish_3112_02
+    vertexCount: 8437
+    positionMap: {fileID: 2800000, guid: 6000c3b7ca5fc544cb6b2c4360c4d6cb, type: 3}
+    normalMap: {fileID: 2800000, guid: 1c96cc33c6b8db24abcfa62850d6c2ed, type: 3}
+    bakedMesh: {fileID: 4300000, guid: 9d922dabbe32c0f42abed454be211e6a, type: 2}
+    mainTexture: {fileID: 2800000, guid: 180bd68b3e60a034eb609492c5d7309b, type: 3}
+  - meshName: Fish_3112_03
+    vertexCount: 17
+    positionMap: {fileID: 2800000, guid: 3e1f7c19bc224e24ca708308d57d764c, type: 3}
+    normalMap: {fileID: 2800000, guid: 505504a0907b027428c2ce1a29558767, type: 3}
+    bakedMesh: {fileID: 4300000, guid: c54d71ee12b6b5e4db38c525b44fac27, type: 2}
+    mainTexture: {fileID: 2800000, guid: bc16b0293e5bfe44f8b51212d8eb8c23, type: 3}
+  vertexCount: 5336
+  positionMap: {fileID: 2800000, guid: 745d4adf8c14aaa44bdff632dd3fa390, type: 3}
+  normalMap: {fileID: 2800000, guid: 94753b96250a88b46903e76ebbe53bbd, type: 3}
+  bakedMesh: {fileID: 4300000, guid: d004271ae7be85248a459fc49b585cf9, type: 2}

@@ -62,7 +62,7 @@ namespace PVZ.DOTS.Tools
 
             // === 输出设置 ===
             EditorGUILayout.LabelField("输出设置", EditorStyles.boldLabel);
-            
+
             EditorGUILayout.BeginHorizontal();
             outputPath = EditorGUILayout.TextField("输出路径", outputPath);
             if (GUILayout.Button("浏览", GUILayout.Width(60)))
@@ -89,7 +89,7 @@ namespace PVZ.DOTS.Tools
 
             // === 烘焙按钮 ===
             GUI.enabled = targetPrefab != null && animationClip != null;
-            
+
             if (GUILayout.Button("烘焙动画到贴图", GUILayout.Height(40)))
             {
                 BakeAnimation();
@@ -119,7 +119,7 @@ namespace PVZ.DOTS.Tools
         {
             var meshFilter = targetPrefab.GetComponentInChildren<MeshFilter>();
             var skinnedMesh = targetPrefab.GetComponentInChildren<SkinnedMeshRenderer>();
-            
+
             Mesh mesh = null;
             if (skinnedMesh != null)
                 mesh = skinnedMesh.sharedMesh;
@@ -146,12 +146,13 @@ namespace PVZ.DOTS.Tools
 
             try
             {
-                // 1. 实例化预制体到场景中（而不是临时对象）
+                // 1. 实例化预制体到场景中
                 var instance = Instantiate(targetPrefab);
                 instance.name = "TempAnimationBaker";
-                
-                var skinnedMesh = instance.GetComponentInChildren<SkinnedMeshRenderer>();
-                if (skinnedMesh == null)
+
+                // 查找所有 SkinnedMeshRenderer
+                var skinnedMeshes = instance.GetComponentsInChildren<SkinnedMeshRenderer>();
+                if (skinnedMeshes == null || skinnedMeshes.Length == 0)
                 {
                     DestroyImmediate(instance);
                     EditorUtility.ClearProgressBar();
@@ -159,17 +160,13 @@ namespace PVZ.DOTS.Tools
                     return;
                 }
 
-                Mesh bakedMesh = new Mesh();
-                int vertexCount = skinnedMesh.sharedMesh.vertexCount;
                 float clipLength = animationClip.length;
                 int totalFrames = Mathf.CeilToInt(clipLength * frameRate);
-                
+
                 // 查找 Animator 所在的节点
                 Animator existingAnimator = instance.GetComponentInChildren<Animator>();
                 GameObject animatorObject = existingAnimator != null ? existingAnimator.gameObject : instance;
-                
-                UnityEngine.Debug.Log($"[AnimationBaker] Animator 位于: {GetTransformPath(animatorObject.transform, instance.transform)}");
-                
+
                 // 移除所有现有的动画组件
                 var animators = instance.GetComponentsInChildren<Animator>();
                 foreach (var anim in animators)
@@ -181,68 +178,54 @@ namespace PVZ.DOTS.Tools
                 {
                     DestroyImmediate(anim);
                 }
-                
+
                 // 在 Animator 所在的节点添加 Animation 组件
                 Animation animation = animatorObject.AddComponent<Animation>();
                 animation.playAutomatically = false;
                 animation.AddClip(animationClip, animationClip.name);
                 animation.clip = animationClip;
-                
-                UnityEngine.Debug.Log($"[AnimationBaker] 在节点 '{animatorObject.name}' 添加 Animation 组件");
-                
-                // 诊断：检查 AnimationClip 的曲线绑定
+
+                // 验证 AnimationClip 有效性
                 EditorCurveBinding[] curveBindings = AnimationUtility.GetCurveBindings(animationClip);
-                UnityEngine.Debug.Log($"[AnimationBaker] AnimationClip 诊断:");
-                UnityEngine.Debug.Log($"  - 曲线数量: {curveBindings.Length}");
-                if (curveBindings.Length > 0)
+                if (curveBindings.Length == 0)
                 {
-                    UnityEngine.Debug.Log($"  - 前3个曲线: ");
-                    for (int i = 0; i < Mathf.Min(3, curveBindings.Length); i++)
-                    {
-                        var binding = curveBindings[i];
-                        UnityEngine.Debug.Log($"    [{i}] Path={binding.path}, Property={binding.propertyName}, Type={binding.type}");
-                    }
-                }
-                else
-                {
-                    UnityEngine.Debug.LogError("[AnimationBaker] AnimationClip 没有任何动画曲线！这可能不是一个有效的动画片段。");
+                    UnityEngine.Debug.LogError("[AnimationBaker] AnimationClip 没有任何动画曲线！");
                     DestroyImmediate(instance);
                     EditorUtility.ClearProgressBar();
                     return;
                 }
-                
-                // 检查骨骼层级
-                UnityEngine.Debug.Log($"[AnimationBaker] SkinnedMeshRenderer 诊断:");
-                UnityEngine.Debug.Log($"  - 骨骼数量: {(skinnedMesh.bones != null ? skinnedMesh.bones.Length : 0)}");
-                UnityEngine.Debug.Log($"  - RootBone: {(skinnedMesh.rootBone != null ? skinnedMesh.rootBone.name : "null")}");
-                if (skinnedMesh.bones != null && skinnedMesh.bones.Length > 0)
+
+                // 计算总顶点数（所有mesh的顶点数之和）
+                int totalVertexCount = 0;
+                foreach (var sm in skinnedMeshes)
                 {
-                    UnityEngine.Debug.Log($"  - 前3根骨骼: ");
-                    for (int i = 0; i < Mathf.Min(3, skinnedMesh.bones.Length); i++)
-                    {
-                        if (skinnedMesh.bones[i] != null)
-                        {
-                            Transform bone = skinnedMesh.bones[i];
-                            UnityEngine.Debug.Log($"    [{i}] {bone.name} (Path: {GetTransformPath(bone, instance.transform)})");
-                        }
-                    }
+                    totalVertexCount += sm.sharedMesh.vertexCount;
                 }
 
-                // 2. 自动设置正确的贴图尺寸（必须等于数据尺寸）
-                int actualWidth = vertexCount;
-                int actualHeight = totalFrames;
+                // 为每个Mesh创建独立的贴图和数据
+                MeshBakeData[] meshDataArray = new MeshBakeData[skinnedMeshes.Length];
                 
-                UnityEngine.Debug.Log($"[AnimationBaker] 使用贴图尺寸: {actualWidth}x{actualHeight} (顶点数x帧数)");
-                
-                // 创建贴图
-                Texture2D positionMap = new Texture2D(actualWidth, actualHeight, TextureFormat.RGBAFloat, false);
-                Texture2D normalMap = new Texture2D(actualWidth, actualHeight, TextureFormat.RGBAFloat, false);
-
-                // 保存第一帧的烘焙 Mesh 作为基础网格
-                Mesh savedBakedMesh = null;
-                
-                // 调试：记录第一帧和最后一帧的位置差异
-                Vector3[] firstFrameVertices = null;
+                for (int meshIndex = 0; meshIndex < skinnedMeshes.Length; meshIndex++)
+                {
+                    var sm = skinnedMeshes[meshIndex];
+                    int vertexCount = sm.sharedMesh.vertexCount;
+                    
+                    // 获取原始材质的主贴图
+                    Texture2D mainTex = null;
+                    if (sm.sharedMaterial != null)
+                    {
+                        mainTex = sm.sharedMaterial.mainTexture as Texture2D;
+                    }
+                    
+                    meshDataArray[meshIndex] = new MeshBakeData
+                    {
+                        meshName = sm.gameObject.name,
+                        vertexCount = vertexCount,
+                        positionMap = new Texture2D(vertexCount, totalFrames, TextureFormat.RGBAFloat, false),
+                        normalMap = new Texture2D(vertexCount, totalFrames, TextureFormat.RGBAFloat, false),
+                        mainTexture = mainTex
+                    };
+                }
 
                 try
                 {
@@ -253,7 +236,7 @@ namespace PVZ.DOTS.Tools
                         EditorUtility.DisplayProgressBar("烘焙动画", $"处理帧 {frame + 1}/{totalFrames}", progress);
 
                         float time = (frame / (float)frameRate) % clipLength;
-                        
+
                         // 使用 Animation 组件采样
                         var animState = animation[animationClip.name];
                         if (animState != null)
@@ -261,112 +244,106 @@ namespace PVZ.DOTS.Tools
                             animState.enabled = true;
                             animState.weight = 1.0f;
                             animState.time = time;
-                            animation.Sample(); // 强制采样
+                            animation.Sample();
                         }
-                        
-                        // 同时使用 SampleAnimation 双保险（注意：需要在正确的根节点上调用）
-                        animationClip.SampleAnimation(animatorObject, time);
-                        
-                        // 强制更新整个骨骼层级
-                        if (skinnedMesh.rootBone != null)
-                        {
-                            RecursiveUpdateTransforms(skinnedMesh.rootBone);
-                        }
-                    
-                        // 强制更新 SkinnedMeshRenderer
-                        skinnedMesh.updateWhenOffscreen = true;
-                        skinnedMesh.forceMatrixRecalculationPerRender = true;
-                        
-                        // 调试：检查骨骼位置（每5帧输出一次）
-                        Transform[] bones = skinnedMesh.bones;
-                        if (frame % 5 == 0 || frame == totalFrames - 1)
-                        {
-                            Vector3 firstBonePos = bones != null && bones.Length > 0 && bones[0] != null ? bones[0].localPosition : Vector3.zero;
-                            Quaternion firstBoneRot = bones != null && bones.Length > 0 && bones[0] != null ? bones[0].localRotation : Quaternion.identity;
-                            UnityEngine.Debug.Log($"[AnimationBaker] 帧{frame}/{totalFrames-1} Time={time:F3}s 骨骼[0]: Pos={firstBonePos} Rot={firstBoneRot.eulerAngles}");
-                        }
-                        
-                        // 烘焙网格
-                        skinnedMesh.BakeMesh(bakedMesh);
 
-                        // 保存第一帧的烘焙 Mesh
-                        if (frame == 0)
-                    {
-                        savedBakedMesh = new Mesh();
-                        savedBakedMesh.vertices = bakedMesh.vertices;
-                        savedBakedMesh.normals = bakedMesh.normals;
-                        savedBakedMesh.triangles = bakedMesh.triangles;
-                        savedBakedMesh.uv = bakedMesh.uv;
-                        savedBakedMesh.tangents = bakedMesh.tangents;
-                        savedBakedMesh.RecalculateBounds();
-                        savedBakedMesh.name = $"{outputName}_BakedMesh";
-                        
-                        // 保存第一帧顶点位置用于比较
-                        firstFrameVertices = (Vector3[])bakedMesh.vertices.Clone();
-                    }
-                    
-                    // 最后一帧时检查位置变化
-                    if (frame == totalFrames - 1 && firstFrameVertices != null)
-                    {
-                        Vector3[] lastFrameVertices = bakedMesh.vertices;
-                        float maxDiff = 0f;
-                        int maxDiffVertex = 0;
-                        
-                        for (int v = 0; v < Mathf.Min(vertexCount, firstFrameVertices.Length, lastFrameVertices.Length); v++)
+                        // 同时使用 SampleAnimation 双保险
+                        animationClip.SampleAnimation(animatorObject, time);
+
+                        // 处理所有 SkinnedMeshRenderer
+                        for (int meshIndex = 0; meshIndex < skinnedMeshes.Length; meshIndex++)
                         {
-                            float diff = Vector3.Distance(firstFrameVertices[v], lastFrameVertices[v]);
-                            if (diff > maxDiff)
+                            var skinnedMesh = skinnedMeshes[meshIndex];
+                            var meshData = meshDataArray[meshIndex];
+                            
+                            // 强制更新整个骨骼层级
+                            if (skinnedMesh.rootBone != null)
                             {
-                                maxDiff = diff;
-                                maxDiffVertex = v;
+                                RecursiveUpdateTransforms(skinnedMesh.rootBone);
+                            }
+
+                            // 强制更新 SkinnedMeshRenderer
+                            skinnedMesh.updateWhenOffscreen = true;
+                            skinnedMesh.forceMatrixRecalculationPerRender = true;
+
+                            // 烘焙网格
+                            Mesh bakedMesh = new Mesh();
+                            skinnedMesh.BakeMesh(bakedMesh);
+
+                            // 保存第一帧的烘焙 Mesh（使用原始 sharedMesh 的拓扑结构）
+                            if (frame == 0)
+                            {
+                                meshData.bakedMesh = new Mesh();
+                                // 使用原始 Mesh 的拓扑、UV 等数据
+                                meshData.bakedMesh.vertices = skinnedMesh.sharedMesh.vertices; // 使用原始顶点位置
+                                meshData.bakedMesh.normals = skinnedMesh.sharedMesh.normals;
+                                meshData.bakedMesh.triangles = skinnedMesh.sharedMesh.triangles;
+                                meshData.bakedMesh.uv = skinnedMesh.sharedMesh.uv;
+                                meshData.bakedMesh.tangents = skinnedMesh.sharedMesh.tangents;
+                                meshData.bakedMesh.boneWeights = skinnedMesh.sharedMesh.boneWeights; // 保留骨骼权重信息（调试用）
+                                meshData.bakedMesh.RecalculateBounds();
+                                meshData.bakedMesh.name = $"{outputName}_BakedMesh_{meshIndex}";
+                                
+                                UnityEngine.Debug.Log($"[AnimationBaker] Mesh {meshIndex} ({skinnedMesh.gameObject.name}): 顶点数={meshData.vertexCount}, 三角形数={meshData.bakedMesh.triangles.Length / 3}");
+                            }
+
+                            // 写入贴图
+                            Vector3[] vertices = bakedMesh.vertices;
+                            Vector3[] normals = bakedMesh.normals;
+
+                            // 安全检查：确保顶点数匹配
+                            if (vertices.Length != meshData.vertexCount)
+                            {
+                                UnityEngine.Debug.LogError($"[AnimationBaker] Mesh {meshIndex} 帧{frame} 顶点数不匹配！期望: {meshData.vertexCount}, 实际: {vertices.Length}");
+                                continue;
+                            }
+                            
+                            // 第一帧时验证数据
+                            if (frame == 0)
+                            {
+                                // 检查是否有异常的顶点位置
+                                for (int v = 0; v < vertices.Length; v++)
+                                {
+                                    if (float.IsNaN(vertices[v].x) || float.IsInfinity(vertices[v].x) ||
+                                        float.IsNaN(vertices[v].y) || float.IsInfinity(vertices[v].y) ||
+                                        float.IsNaN(vertices[v].z) || float.IsInfinity(vertices[v].z))
+                                    {
+                                        UnityEngine.Debug.LogError($"[AnimationBaker] Mesh {meshIndex} 顶点{v} 位置异常: {vertices[v]}");
+                                    }
+                                }
+                            }
+
+                            for (int v = 0; v < meshData.vertexCount; v++)
+                            {
+                                // 位置贴图（RGB = XYZ）
+                                Vector3 pos = vertices[v];
+                                meshData.positionMap.SetPixel(v, frame, new Color(pos.x, pos.y, pos.z, 1f));
+
+                                // 法线贴图（RGB = XYZ）
+                                Vector3 normal = normals[v];
+                                meshData.normalMap.SetPixel(v, frame, new Color(
+                                    normal.x * 0.5f + 0.5f,
+                                    normal.y * 0.5f + 0.5f,
+                                    normal.z * 0.5f + 0.5f,
+                                    1f
+                                ));
                             }
                         }
-                        
-                        UnityEngine.Debug.Log($"[AnimationBaker] 动画检测: 最大顶点位置变化 = {maxDiff:F4} (顶点 {maxDiffVertex})");
-                        
-                        if (maxDiff < 0.001f)
-                        {
-                            UnityEngine.Debug.LogWarning($"[AnimationBaker] 警告：动画几乎没有顶点位置变化！请检查：\n" +
-                                "1. AnimationClip 是否包含骨骼动画\n" +
-                                "2. 预制体的骨骼绑定是否正确\n" +
-                                "3. 是否选择了正确的动画片段");
-                        }
-                    }
-
-                    // 写入贴图
-                    Vector3[] vertices = bakedMesh.vertices;
-                    Vector3[] normals = bakedMesh.normals;
-
-                    for (int v = 0; v < vertexCount; v++)
-                    {
-                        if (frame < totalFrames)
-                        {
-                            // 位置贴图（RGB = XYZ）
-                            Vector3 pos = vertices[v];
-                            positionMap.SetPixel(v, frame, new Color(pos.x, pos.y, pos.z, 1f));
-
-                            // 法线贴图（RGB = XYZ）
-                            Vector3 normal = normals[v];
-                            normalMap.SetPixel(v, frame, new Color(
-                                normal.x * 0.5f + 0.5f,
-                                normal.y * 0.5f + 0.5f,
-                                normal.z * 0.5f + 0.5f,
-                                1f
-                            ));
-                        }
                     }
                 }
-                }
-                
+
                 finally
                 {
                     // 清理临时对象
                     DestroyImmediate(instance);
                 }
 
-                // 4. 应用并保存贴图
-                positionMap.Apply();
-                normalMap.Apply();
+                // 4. 应用并保存所有贴图
+                for (int i = 0; i < meshDataArray.Length; i++)
+                {
+                    meshDataArray[i].positionMap.Apply();
+                    meshDataArray[i].normalMap.Apply();
+                }
 
                 // 确保输出目录存在
                 if (!Directory.Exists(outputPath))
@@ -374,61 +351,94 @@ namespace PVZ.DOTS.Tools
                     Directory.CreateDirectory(outputPath);
                 }
 
-                // 保存为 EXR 格式（支持浮点数）
-                string posMapPath = $"{outputPath}{outputName}_PositionMap.exr";
-                string normalMapPath = $"{outputPath}{outputName}_NormalMap.exr";
-
-                byte[] posBytes = positionMap.EncodeToEXR(Texture2D.EXRFlags.OutputAsFloat);
-                byte[] normalBytes = normalMap.EncodeToEXR(Texture2D.EXRFlags.OutputAsFloat);
-
-                File.WriteAllBytes(posMapPath, posBytes);
-                File.WriteAllBytes(normalMapPath, normalBytes);
-
-                // 5. 保存烘焙后的 Mesh
-                string meshPath = $"{outputPath}{outputName}_BakedMesh.asset";
-                AssetDatabase.CreateAsset(savedBakedMesh, meshPath);
+                // 5. 保存所有贴图和 Mesh
+                for (int i = 0; i < meshDataArray.Length; i++)
+                {
+                    var meshData = meshDataArray[i];
+                    
+                    // 保存贴图
+                    string posMapPath = $"{outputPath}{outputName}_{i}_PositionMap.exr";
+                    string normalMapPath = $"{outputPath}{outputName}_{i}_NormalMap.exr";
+                    
+                    byte[] posBytes = meshData.positionMap.EncodeToEXR(Texture2D.EXRFlags.OutputAsFloat);
+                    byte[] normalBytes = meshData.normalMap.EncodeToEXR(Texture2D.EXRFlags.OutputAsFloat);
+                    
+                    File.WriteAllBytes(posMapPath, posBytes);
+                    File.WriteAllBytes(normalMapPath, normalBytes);
+                    
+                    // 保存 Mesh
+                    string meshPath = $"{outputPath}{outputName}_{i}_BakedMesh.asset";
+                    AssetDatabase.CreateAsset(meshData.bakedMesh, meshPath);
+                }
 
                 // 6. 创建配置数据
                 AnimationBakeData bakeData = ScriptableObject.CreateInstance<AnimationBakeData>();
                 bakeData.animationName = animationClip.name;
                 bakeData.frameRate = frameRate;
                 bakeData.totalFrames = totalFrames;
-                bakeData.vertexCount = vertexCount;
                 bakeData.clipLength = clipLength;
-                bakeData.textureWidth = vertexCount;  // 实际使用的宽度
-                bakeData.textureHeight = totalFrames; // 实际使用的高度
+                bakeData.textureWidth = meshDataArray.Length > 0 ? meshDataArray[0].vertexCount : 0;
+                bakeData.textureHeight = totalFrames;
+                bakeData.meshDataArray = meshDataArray;
+                
+                // 兼容性：第一个mesh作为主mesh
+                if (meshDataArray.Length > 0)
+                {
+                    bakeData.vertexCount = meshDataArray[0].vertexCount;
+                    bakeData.bakedMesh = meshDataArray[0].bakedMesh;
+                }
 
                 string dataPath = $"{outputPath}{outputName}_BakeData.asset";
                 AssetDatabase.CreateAsset(bakeData, dataPath);
 
-                // 7. 清理和刷新
-                DestroyImmediate(instance);
+                // 7. 刷新
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
 
-                // 7. 配置贴图导入设置
-                ConfigureTextureImport(posMapPath);
-                ConfigureTextureImport(normalMapPath);
+                // 8. 配置所有贴图导入设置
+                for (int i = 0; i < meshDataArray.Length; i++)
+                {
+                    string posMapPath = $"{outputPath}{outputName}_{i}_PositionMap.exr";
+                    string normalMapPath = $"{outputPath}{outputName}_{i}_NormalMap.exr";
+                    ConfigureTextureImport(posMapPath);
+                    ConfigureTextureImport(normalMapPath);
+                }
                 AssetDatabase.Refresh();
 
-                // 8. 重新加载 BakeData 并保存贴图引用
+                // 9. 重新加载 BakeData 并保存所有引用
                 AnimationBakeData loadedBakeData = AssetDatabase.LoadAssetAtPath<AnimationBakeData>(dataPath);
                 if (loadedBakeData != null)
                 {
-                    loadedBakeData.positionMap = AssetDatabase.LoadAssetAtPath<Texture2D>(posMapPath);
-                    loadedBakeData.normalMap = AssetDatabase.LoadAssetAtPath<Texture2D>(normalMapPath);
-                    loadedBakeData.bakedMesh = AssetDatabase.LoadAssetAtPath<Mesh>(meshPath);
+                    for (int i = 0; i < meshDataArray.Length; i++)
+                    {
+                        string posMapPath = $"{outputPath}{outputName}_{i}_PositionMap.exr";
+                        string normalMapPath = $"{outputPath}{outputName}_{i}_NormalMap.exr";
+                        string meshPath = $"{outputPath}{outputName}_{i}_BakedMesh.asset";
+                        
+                        loadedBakeData.meshDataArray[i].positionMap = AssetDatabase.LoadAssetAtPath<Texture2D>(posMapPath);
+                        loadedBakeData.meshDataArray[i].normalMap = AssetDatabase.LoadAssetAtPath<Texture2D>(normalMapPath);
+                        loadedBakeData.meshDataArray[i].bakedMesh = AssetDatabase.LoadAssetAtPath<Mesh>(meshPath);
+                    }
+                    
+                    // 兼容性：设置第一个mesh的引用
+                    if (loadedBakeData.meshDataArray.Length > 0)
+                    {
+                        loadedBakeData.positionMap = loadedBakeData.meshDataArray[0].positionMap;
+                        loadedBakeData.normalMap = loadedBakeData.meshDataArray[0].normalMap;
+                        loadedBakeData.bakedMesh = loadedBakeData.meshDataArray[0].bakedMesh;
+                    }
+                    
                     EditorUtility.SetDirty(loadedBakeData);
                     AssetDatabase.SaveAssets();
                 }
 
                 EditorUtility.ClearProgressBar();
-                EditorUtility.DisplayDialog("成功", 
+                EditorUtility.DisplayDialog("成功",
                     $"动画烘焙完成！\n\n" +
+                    $"烘焙了 {skinnedMeshes.Length} 个Mesh\n" +
+                    $"总顶点数: {totalVertexCount}\n\n" +
                     $"输出文件：\n" +
-                    $"- {posMapPath}\n" +
-                    $"- {normalMapPath}\n" +
-                    $"- {dataPath}", 
+                    $"- {dataPath}",
                     "确定");
 
                 // 选中输出文件夹
@@ -459,28 +469,9 @@ namespace PVZ.DOTS.Tools
                 importer.npotScale = TextureImporterNPOTScale.None; // 不缩放非2次幂贴图
                 importer.maxTextureSize = 8192; // 最大尺寸
                 importer.SaveAndReimport();
-                
-                UnityEngine.Debug.Log($"[AnimationBaker] 配置贴图导入设置: {path}");
             }
         }
-        
-        // 辅助方法：获取 Transform 的完整路径
-        private string GetTransformPath(Transform transform, Transform root)
-        {
-            if (transform == root) return "";
-            
-            string path = transform.name;
-            Transform current = transform.parent;
-            
-            while (current != null && current != root)
-            {
-                path = current.name + "/" + path;
-                current = current.parent;
-            }
-            
-            return path;
-        }
-        
+
         // 辅助方法：递归更新所有子 Transform
         private void RecursiveUpdateTransforms(Transform root)
         {
@@ -488,31 +479,12 @@ namespace PVZ.DOTS.Tools
             root.localPosition = root.localPosition;
             root.localRotation = root.localRotation;
             root.localScale = root.localScale;
-            
+
             // 递归更新所有子物体
             for (int i = 0; i < root.childCount; i++)
             {
                 RecursiveUpdateTransforms(root.GetChild(i));
             }
         }
-    }
-
-    /// <summary>
-    /// 动画烘焙数据配置
-    /// </summary>
-    public class AnimationBakeData : ScriptableObject
-    {
-        public string animationName;
-        public int frameRate;
-        public int totalFrames;
-        public int vertexCount;
-        public float clipLength;
-        public int textureWidth;
-        public int textureHeight;
-
-        [Header("资源引用")]
-        public Texture2D positionMap;
-        public Texture2D normalMap;
-        public Mesh bakedMesh;
     }
 }

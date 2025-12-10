@@ -47,7 +47,6 @@ Shader "Custom/BakedAnimationShader"
             float _FrameRate;
             int _TotalFrames;
             int _VertexCount;
-            float4 _PositionMap_TexelSize; // 贴图尺寸信息
 
             v2f vert (appdata v)
             {
@@ -64,14 +63,21 @@ Shader "Custom/BakedAnimationShader"
                 // 计算下一帧
                 float nextFrameIndex = fmod(frameIndex + 1.0, (float)_TotalFrames);
 
-                // UV 坐标（X = 顶点索引 / (顶点数-1)，Y = 帧索引 / (总帧数-1)）
-                // 使用 max 避免除以 0
-                float vertexU = (float)(v.vertexID) / max(1.0, (float)(_VertexCount - 1));
-                float frameV = frameIndex / max(1.0, (float)(_TotalFrames - 1));
-                float frameVNext = nextFrameIndex / max(1.0, (float)(_TotalFrames - 1));
+                // UV 坐标：直接使用顶点 ID，每个 Mesh 都有独立贴图
+                // 确保 vertexID 在有效范围内
+                uint safeVertexID = min(v.vertexID, (uint)(_VertexCount - 1));
                 
-                float2 uv = float2(vertexU, frameV);
-                float2 uvNext = float2(vertexU, frameVNext);
+                // 添加半个像素偏移以正确采样像素中心
+                float pixelOffsetU = 0.5 / (float)_VertexCount;
+                float pixelOffsetV = 0.5 / (float)_TotalFrames;
+                
+                float vertexU = ((float)safeVertexID + 0.5) / (float)_VertexCount;
+                float frameV = (frameIndex + 0.5) / (float)_TotalFrames;
+                float frameVNext = (nextFrameIndex + 0.5) / (float)_TotalFrames;
+                
+                // 钳制 UV 到 [0, 1] 范围
+                float2 uv = float2(saturate(vertexU), saturate(frameV));
+                float2 uvNext = float2(saturate(vertexU), saturate(frameVNext));
 
                 // 从贴图读取位置
                 float3 pos = tex2Dlod(_PositionMap, float4(uv, 0, 0)).xyz;
@@ -79,6 +85,12 @@ Shader "Custom/BakedAnimationShader"
 
                 // 插值
                 float3 finalPos = lerp(pos, posNext, frameFrac);
+                
+                // 调试：如果位置异常，使用原始顶点位置
+                if (any(isnan(finalPos)) || any(isinf(finalPos)))
+                {
+                    finalPos = v.vertex.xyz;
+                }
 
                 // 从贴图读取法线
                 float3 normal = tex2Dlod(_NormalMap, float4(uv, 0, 0)).xyz;
