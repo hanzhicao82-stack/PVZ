@@ -1,13 +1,12 @@
 using Unity.Entities;
 using Common;
-using Game.TowerDefense;
 
 namespace PVZ
 {
     /// <summary>
     /// PVZ游戏循环系统 - 实现具体的僵尸检查逻辑
     /// </summary>
-    public partial class PVZGameLoopSystem : GameLoopSystemBase
+    public partial class PVZGameLoopSystem : Common.GameLoopSystemBase
     {
         protected override bool CheckDefeatCondition(ref RefRW<GameStateComponent> gameState)
         {
@@ -52,18 +51,20 @@ namespace PVZ
             return remainingZombies == 0;
         }
 
-        protected override void OnEnterVictory()
+        protected override void HandleStateChange(GameState previousState, GameState newState)
         {
-            base.OnEnterVictory();
-            UnityEngine.Debug.Log("PVZGameLoopSystem: 成功坚守阵地！");
-            StopAllGameplaySystems();
-        }
+            base.HandleStateChange(previousState, newState);
 
-        protected override void OnEnterDefeat()
-        {
-            base.OnEnterDefeat();
-            UnityEngine.Debug.Log("PVZGameLoopSystem: 僵尸突破了防线！");
-            StopAllGameplaySystems();
+            if (newState == GameState.Victory)
+            {
+                UnityEngine.Debug.Log("PVZGameLoopSystem: 成功坚守阵地！");
+                StopAllGameplaySystems();
+            }
+            else if (newState == GameState.Defeat)
+            {
+                UnityEngine.Debug.Log("PVZGameLoopSystem: 僵尸突破了防线！");
+                StopAllGameplaySystems();
+            }
         }
 
         /// <summary>

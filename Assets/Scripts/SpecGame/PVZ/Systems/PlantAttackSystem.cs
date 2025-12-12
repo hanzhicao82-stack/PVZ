@@ -8,13 +8,13 @@ using Game.TowerDefense;
 namespace PVZ
 {
     /// <summary>
-    /// 植物攻击系统 - 处理植物攻击逻辑，包括检测目标、触发攻击状态、发射子�?
-    /// 通过 AttackStateComponent 与视图系统解耦，视图系统根据攻击状态显示动�?
+    /// 植物攻击系统 - 处理植物攻击逻辑，包括检测目标、触发攻击状态、发射子弹
+    /// 通过 AttackStateComponent 与视图系统解耦，视图系统根据攻击状态显示动画
     /// </summary>
     [UpdateInGroup(typeof(SimulationSystemGroup))]
-    public partial class PlantAttackSystem : AttackSystemBase
+    public partial class PlantAttackSystem : Common.AttackSystemBase
     {
-        protected override void OnUpdate()
+        protected override void ExecuteAttack()
         {
             float currentTime = (float)SystemAPI.Time.ElapsedTime;
             EntityCommandBuffer ecb = CreateCommandBuffer();

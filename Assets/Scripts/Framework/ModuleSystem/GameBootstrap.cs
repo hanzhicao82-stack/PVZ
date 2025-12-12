@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.Entities;
+using Common;
 using UnityEngine;
 
 namespace Framework
@@ -9,8 +10,10 @@ namespace Framework
     /// 游戏启动�?- 模块化启动入�?
     /// 负责加载配置、初始化模块、创建ECS World
     /// </summary>
+    [DefaultExecutionOrder(-1000)]
     public class GameBootstrap : MonoBehaviour
     {
+        public static event Action OnGameStateSingletonCreated;
         [Header("配置")]
         [Tooltip("游戏模块配置文件")]
         public TextAsset gameConfigJson;
@@ -48,7 +51,7 @@ namespace Framework
             Instance = this;
 
             UnityEngine.Debug.Log("====== GameBootstrap 启动 ======");
-            
+
             if (autoInitialize)
             {
                 Initialize();
@@ -74,6 +77,9 @@ namespace Framework
                 // 4. 注册所有模�?
                 RegisterAllModules();
 
+                // 4.5 确保 GameStateComponent 单例由 Bootstrap 创建，供系统依赖
+                EnsureGameStateSingleton();
+
                 // 5. 初始化模�?
                 _moduleRegistry.InitializeAllModules();
 
@@ -82,6 +88,40 @@ namespace Framework
             catch (Exception ex)
             {
                 UnityEngine.Debug.LogError($"游戏初始化失�? {ex.Message}\n{ex.StackTrace}");
+            }
+        }
+
+        private void EnsureGameStateSingleton()
+        {
+            try
+            {
+                if (_gameWorld == null)
+                    return;
+
+                var em = _gameWorld.EntityManager;
+                var query = em.CreateEntityQuery(typeof(GameStateComponent));
+                if (query.CalculateEntityCount() == 0)
+                {
+                    var e = em.CreateEntity();
+                    var data = new GameStateComponent
+                    {
+                        CurrentState = GameState.Playing,
+                        RemainingTime = 0f,
+                        TotalGameTime = 0f,
+                        CurrentWave = 0,
+                        TotalWaves = 0,
+                        ZombiesKilled = 0,
+                        ZombiesReachedEnd = 0
+                    };
+                    em.AddComponentData(e, data);
+
+                    UnityEngine.Debug.Log("GameBootstrap: 已创建 GameStateComponent 单例 (Preparing)");
+                }
+                query.Dispose();
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"EnsureGameStateSingleton 错误: {ex.Message}");
             }
         }
 
@@ -134,7 +174,7 @@ namespace Framework
         private void CreateModuleRegistry()
         {
             _moduleRegistry = new ModuleRegistry();
-            
+
             // 设置全局配置参数
             foreach (var param in _gameConfig.globalParameters)
             {
@@ -149,15 +189,18 @@ namespace Framework
         {
             // 使用默认World或创建自定义World
             _gameWorld = World.DefaultGameObjectInjectionWorld;
-            
+
             if (_gameWorld == null)
             {
                 UnityEngine.Debug.Log("创建新的ECS World");
                 _gameWorld = new World("GameWorld");
             }
 
+            // 始终设置默认 World，确保 MonoBehaviour 与系统使用同一个 World
+            World.DefaultGameObjectInjectionWorld = _gameWorld;
+
             _moduleRegistry.SetWorld(_gameWorld);
-            UnityEngine.Debug.Log($"ECS World 已设�? {_gameWorld.Name}");
+            UnityEngine.Debug.Log($"ECS World 已设定为 {_gameWorld.Name}");
         }
 
         /// <summary>
@@ -165,9 +208,9 @@ namespace Framework
         /// </summary>
         private void RegisterAllModules()
         {
-            UnityEngine.Debug.Log("====== 开始注册模�?======");
+                UnityEngine.Debug.Log("====== 开始注册模�?======");
 
-            // 注册所有启用的模块
+                // 注册所有启用的模块
             foreach (var moduleConfig in _gameConfig.modules)
             {
                 if (!moduleConfig.enabled)
@@ -200,9 +243,9 @@ namespace Framework
                 }
 
                 var module = Activator.CreateInstance(moduleType) as IGameModule;
-                
+
                 // TODO: 应用自定义参�?
-                
+
                 return module;
             }
             catch (Exception ex)
@@ -224,7 +267,7 @@ namespace Framework
         {
             UnityEngine.Debug.Log("====== GameBootstrap 关闭 ======");
             _moduleRegistry?.ShutdownAllModules();
-            
+
             // 清理单例
             if (Instance == this)
             {

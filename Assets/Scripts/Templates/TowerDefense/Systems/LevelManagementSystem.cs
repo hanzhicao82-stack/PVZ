@@ -5,80 +5,66 @@ using Framework;
 namespace PVZ
 {
     /// <summary>
-    /// 关卡管理系统 - 根据关卡配置管理波次和僵尸生�?
+    /// 关卡管理系统 - 根据关卡配置管理波次和僵尸生成，继承自通用 LevelManagementSystemBase
     /// </summary>
     [UpdateInGroup(typeof(SimulationSystemGroup))]
-    public partial struct LevelManagementSystem : ISystem
+    public partial class LevelManagementSystem : LevelManagementSystemBase
     {
-        private bool _initialized;
-        private int _currentWave;
-        private float _lastWaveTime;
-        
-        public void OnCreate(ref SystemState state)
+        protected override void InitializeLevel()
         {
-            state.RequireForUpdate<LevelConfigComponent>();
-            _initialized = false;
-            _currentWave = 0;
-            _lastWaveTime = 0f;
+            // 获取关卡配置
+            if (SystemAPI.TryGetSingleton<LevelConfigComponent>(out var levelConfig))
+            {
+                GameLogger.Log("LevelManagementSystem", 
+                    $"初始化关卡管理：LevelId={levelConfig.LevelId} Type={levelConfig.Type} " +
+                    $"Difficulty={levelConfig.Difficulty} TotalWaves={levelConfig.TotalWaves}");
+            }
         }
 
-        public void OnUpdate(ref SystemState state)
+        protected override void UpdateLevel(float currentTime)
         {
-            // 检查游戏状�?
-            if (!SystemAPI.TryGetSingleton<GameStateComponent>(out var gameState))
-                return;
-
-            if (gameState.CurrentState != GameState.Playing)
-                return;
-
             // 获取关卡配置
             if (!SystemAPI.TryGetSingleton<LevelConfigComponent>(out var levelConfig))
                 return;
 
-            if (!_initialized)
-            {
-                GameLogger.Log("LevelManagementSystem", $"初始化关卡管�?LevelId={levelConfig.LevelId} Type={levelConfig.Type} " +
-                    $"Difficulty={levelConfig.Difficulty} TotalWaves={levelConfig.TotalWaves}");
-                _initialized = true;
-            }
-
-            float currentTime = (float)SystemAPI.Time.ElapsedTime;
-
             // 检查是否需要开始新波次
-            // 简单实现：�?0秒一波，或根据配置调�?
-            float waveInterval = 30f; // 可以从配置读�?
-            
-            if (currentTime - _lastWaveTime >= waveInterval && _currentWave < levelConfig.TotalWaves)
+            if (ShouldStartNewWave(currentTime) && CurrentWave < levelConfig.TotalWaves)
             {
-                _currentWave++;
-                _lastWaveTime = currentTime;
+                CurrentWave++;
+                LastWaveTime = currentTime;
 
-                // 更新游戏状态中的波�?
+                // 更新游戏状态中的波次
                 if (SystemAPI.TryGetSingletonRW<GameStateComponent>(out var gameStateRW))
                 {
-                    gameStateRW.ValueRW.CurrentWave = _currentWave;
-                    GameLogger.Log("LevelManagementSystem", $"开始第 {_currentWave}/{levelConfig.TotalWaves} 波");
+                    gameStateRW.ValueRW.CurrentWave = CurrentWave;
+                    GameLogger.Log("LevelManagementSystem", $"开始第 {CurrentWave}/{levelConfig.TotalWaves} 波");
                 }
 
-                // 触发波次开始事件（可以在这里生成特定波次的僵尸�?
-                SpawnWaveZombies(ref state, _currentWave, levelConfig);
+                // 触发波次开始事件
+                SpawnWaveZombies(CurrentWave, levelConfig);
             }
         }
 
-        private void SpawnWaveZombies(ref SystemState state, int waveNumber, LevelConfigComponent levelConfig)
+        protected override float GetWaveInterval()
         {
-            // 查找关卡配置实体并读取波次配�?
+            // 可以从配置读取，这里使用默认值
+            return 30f;
+        }
+
+        private void SpawnWaveZombies(int waveNumber, LevelConfigComponent levelConfig)
+        {
+            // 查找关卡配置实体并读取波次配置
             var query = SystemAPI.QueryBuilder().WithAll<LevelConfigComponent>().Build();
             if (query.IsEmpty)
                 return;
 
             var levelEntity = query.GetSingletonEntity();
-            if (!state.EntityManager.HasBuffer<WaveConfigElement>(levelEntity))
+            if (!EntityManager.HasBuffer<WaveConfigElement>(levelEntity))
             {
                 return;
             }
 
-            var waveBuffer = state.EntityManager.GetBuffer<WaveConfigElement>(levelEntity);
+            var waveBuffer = EntityManager.GetBuffer<WaveConfigElement>(levelEntity);
 
             int zombieCount = 0;
             foreach (var wave in waveBuffer)

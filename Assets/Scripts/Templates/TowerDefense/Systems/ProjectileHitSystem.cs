@@ -2,7 +2,6 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using Common;
 using Framework;
 using PVZ;
@@ -10,8 +9,8 @@ using PVZ;
 namespace Game.TowerDefense
 {
     /// <summary>
-    /// 子弹击中系统 - 处理子弹碰撞和伤害计�?
-    /// 优化：使用行分组减少碰撞检测次�?
+    /// 子弹击中系统 - 处理子弹碰撞和伤害计算
+    /// 优化：使用行分组减少碰撞检测次数
     /// </summary>
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     [UpdateAfter(typeof(ProjectileMovementSystem))]
@@ -24,8 +23,9 @@ namespace Game.TowerDefense
         {
             EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.Temp);
 
-            // 构建僵尸的行索引 - 只需要遍历一次僵�?
-            NativeParallelMultiHashMap<int, Entity> zombiesByLane = new NativeParallelMultiHashMap<int, Entity>(100, Allocator.Temp);
+            // 构建僵尸的行索引 - 只需要遍历一次僵尸
+            NativeParallelMultiHashMap<int, Entity> zombiesByLane = 
+                new NativeParallelMultiHashMap<int, Entity>(100, Allocator.Temp);
             
             foreach (var (gridPos, zombieEntity) in 
                 SystemAPI.Query<RefRO<GridPositionComponent>>()
@@ -50,14 +50,14 @@ namespace Game.TowerDefense
 
                     do
                     {
-                        // 检查僵尸是否还存在且有�?
+                        // 检查僵尸是否还存在且有效
                         if (!state.EntityManager.Exists(zombieEntity))
                             continue;
 
                         var zombieTransform = SystemAPI.GetComponent<LocalTransform>(zombieEntity);
                         
-                        // 使用平方距离避免开方运�?
-                        float distanceSq = math.distancesq(projectilePos.xz, zombieTransform.Position.xz);
+                        // 使用平方距离避免开方运算
+                        float distanceSq = math.distancesq(projectilePos, zombieTransform.Position);
 
                         if (distanceSq < COLLISION_RADIUS_SQ)
                         {
@@ -74,11 +74,11 @@ namespace Game.TowerDefense
                             }
                             else
                             {
-                                // 更新健康�?
+                                // 更新健康值
                                 SystemAPI.SetComponent(zombieEntity, health);
                             }
                             
-                            // 销毁子�?
+                            // 销毁子弹
                             ecb.DestroyEntity(projectileEntity);
                             hitTarget = true;
                             break;

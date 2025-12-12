@@ -14,26 +14,18 @@ namespace PVZ
     /// </summary>
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     [UpdateBefore(typeof(ZombieMovementSystem))]
-    public partial class ZombieAttackSystem : AttackSystemBase
+    public partial class ZombieAttackSystem : Common.AttackSystemBase
     {
         private const float ATTACK_RANGE = 0.8f; // 攻击范围
         private const float ATTACK_RANGE_SQ = ATTACK_RANGE * ATTACK_RANGE;
 
-        protected override void OnUpdate()
+        protected override void ExecuteAttack()
         {
-            // 检查游戏状�?
-            if (SystemAPI.TryGetSingleton<GameStateComponent>(out var gameState))
-            {
-                if (gameState.CurrentState != GameState.Playing)
-                    return;
-            }
-
             float currentTime = (float)SystemAPI.Time.ElapsedTime;
             EntityCommandBuffer ecb = CreateCommandBuffer();
 
             // 构建植物的行索引 - 按行分组植物
             NativeParallelMultiHashMap<int, Entity> plantsByLane = new NativeParallelMultiHashMap<int, Entity>(100, Allocator.Temp);
-            
             foreach (var (gridPos, plantEntity) in 
                 SystemAPI.Query<RefRO<GridPositionComponent>>()
                 .WithAll<PlantComponent>()
@@ -57,13 +49,11 @@ namespace PVZ
 
                     do
                     {
-                        // 检查植物是否还存在且有�?
+                        // 检查植物是否还存在且有效
                         if (!EntityManager.Exists(plantEntity))
                             continue;
 
                         var plantTransform = SystemAPI.GetComponent<LocalTransform>(plantEntity);
-                        
-                        // 使用平方距离避免开方运�?
                         float distanceSq = math.distancesq(zombiePos.xz, plantTransform.Position.xz);
 
                         // 如果僵尸在攻击范围内
@@ -71,13 +61,12 @@ namespace PVZ
                         {
                             isAttacking = true;
 
-                            // 检查攻击冷却时�?
+                            // 检查攻击冷却时间
                             if (currentTime - zombie.ValueRO.LastAttackTime >= zombie.ValueRO.AttackInterval)
                             {
                                 // 获取植物健康组件并造成伤害
                                 var health = SystemAPI.GetComponent<HealthComponent>(plantEntity);
                                 health.CurrentHealth -= zombie.ValueRO.AttackDamage;
-                                
                                 GameLogger.Log("ZombieAttackSystem", $"僵尸攻击植物 Lane={lane} 伤害={zombie.ValueRO.AttackDamage}");
 
                                 // 如果植物死亡
@@ -85,15 +74,15 @@ namespace PVZ
                                 {
                                     health.IsDead = true;
                                     ecb.DestroyEntity(plantEntity);
-                                    GameLogger.Log("ZombieAttackSystem", $"植物被摧�?Lane={lane}");
+                                    GameLogger.Log("ZombieAttackSystem", $"植物被摧毁 Lane={lane}");
                                 }
                                 else
                                 {
-                                    // 更新植物健康�?
+                                    // 更新植物健康
                                     SystemAPI.SetComponent(plantEntity, health);
                                 }
 
-                                // 更新僵尸最后攻击时�?
+                                // 更新僵尸最后攻击时间
                                 zombie.ValueRW.LastAttackTime = currentTime;
                             }
 
@@ -104,17 +93,14 @@ namespace PVZ
                     while (plantsByLane.TryGetNextValue(out plantEntity, ref iterator));
                 }
 
-                // 如果僵尸正在攻击，设置移动速度�?，否则恢复正常速度
-                // 通过临时修改速度来实现停止移�?
+                // 如果僵尸正在攻击，设置移动速度为0，否则恢复正常速度
                 if (isAttacking)
                 {
-                    // 僵尸攻击时停止移�?
                     zombie.ValueRW.MovementSpeed = 0f;
                 }
                 else
                 {
                     // 僵尸没有攻击目标时恢复移动速度
-                    // 根据僵尸类型设置默认速度
                     if (zombie.ValueRO.MovementSpeed == 0f)
                     {
                         zombie.ValueRW.MovementSpeed = GetDefaultSpeed(zombie.ValueRO.Type);

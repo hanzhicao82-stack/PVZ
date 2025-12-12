@@ -8,10 +8,10 @@ using Framework;
 namespace Game.TowerDefense
 {
     /// <summary>
-    /// 子弹视图系统 - 管理子弹 GameObject 的创建与同步�?
+    /// 子弹视图系统 - 管理子弹 GameObject 的创建与同步，继承自通用 ProjectileViewSystemBase
     /// </summary>
     [UpdateInGroup(typeof(PresentationSystemGroup))]
-    public partial class ProjectileViewSystem : SystemBase
+    public partial class ProjectileViewSystem : ProjectileViewSystemBase
     {
         private struct ViewRequest
         {
@@ -20,7 +20,7 @@ namespace Game.TowerDefense
             public LocalTransform Transform;
         }
 
-        protected override void OnUpdate()
+        protected override void CreateViews()
         {
             var requests = new NativeList<ViewRequest>(Allocator.Temp);
 
@@ -43,7 +43,7 @@ namespace Game.TowerDefense
             foreach (var request in requests)
             {
                 string path = request.PrefabPath.ToString();
-                var instance = ProjectileViewPool.Acquire(path);
+                var instance = AcquireViewInstance(path);
                 if (instance == null)
                     continue;
 
@@ -65,7 +65,10 @@ namespace Game.TowerDefense
             }
 
             requests.Dispose();
+        }
 
+        protected override void UpdateViewPositions()
+        {
             foreach (var (transform, entity) in
                      SystemAPI.Query<RefRO<LocalTransform>>()
                          .WithAll<ProjectileViewComponent>()
@@ -88,6 +91,16 @@ namespace Game.TowerDefense
                     view.Instance.SetActive(true);
                 }
             }
+        }
+
+        protected override GameObject AcquireViewInstance(string prefabPath)
+        {
+            return ProjectileViewPool.Acquire(prefabPath);
+        }
+
+        protected override void ReleaseViewInstance(string prefabPath, GameObject instance)
+        {
+            ProjectileViewPool.Release(prefabPath, instance);
         }
     }
 }

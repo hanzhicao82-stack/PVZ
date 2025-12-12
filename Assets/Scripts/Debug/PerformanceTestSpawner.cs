@@ -12,7 +12,7 @@ namespace Debug
 {
     /// <summary>
     /// 性能测试生成器 - 自动生成植物和僵尸用于性能测试
-    /// 完整模拟游戏流程，包括关卡加载和游戏状态管�?
+    /// 完整模拟游戏流程，包括关卡加载和游戏状态管理
     /// </summary>
     public class PerformanceTestSpawner : MonoBehaviour
     {
@@ -34,7 +34,7 @@ namespace Debug
         public string spinePrefabPath = "Res/Prefabs/TestSpine";
 
         [Header("子弹视图配置")]
-        [Tooltip("植物子弹预制体路�?(Resources/AssetDatabase)")]
+        [Tooltip("植物子弹预制体路径（Resources/AssetDatabase）")]
         public string plantProjectilePrefabPath = string.Empty;
 
         [Header("游戏配置")]
@@ -119,14 +119,14 @@ namespace Debug
         private float _cellSize;
         private bool _initialized = false;
         // private global::Game.GameLoader _gameLoader; // DEPRECATED: GameLoader removed in refactoring
-        private bool _lastGamePlayingState = true; // 记录上一次的游戏状�?
-        private bool _loggedMissingGameState = false; // 记录是否已输出过缺�?GameStateComponent 的日志
+        private bool _lastGamePlayingState = true; // 记录上一次的游戏状态
+        private bool _loggedMissingGameState = false; // 记录是否已输出过缺少 GameStateComponent 的日志
         private Canvas _healthBarCanvas;
         private Transform _healthBarContainer;
 
         private void Start()
         {
-            UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 开�?===");
+            UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 开始===");
             
             // 初始化 GameBootstrap（如果还不存在）
             InitializeGameBootstrap();
@@ -145,7 +145,7 @@ namespace Debug
             _lastPlantSpawnTime = Time.time;
             _lastZombieSpawnTime = Time.time;
 
-            // 初始化血�?Canvas
+            // 初始化血条 Canvas
             InitializeHealthBarCanvas();
 
             // 新架构：直接初始化，不需要 GameLoader
@@ -166,7 +166,7 @@ namespace Debug
         /// </summary>
         private void InitializeGameBootstrap()
         {
-            // 检查是否已存�?GameBootstrap
+            // 检查是否已存在 GameBootstrap
             var existingBootstrap = FindObjectOfType<Framework.GameBootstrap>();
             if (existingBootstrap != null)
             {
@@ -180,17 +180,17 @@ namespace Debug
                 return;
             }
 
-            UnityEngine.Debug.Log("PerformanceTestSpawner: 开始初始�?GameBootstrap...");
+            UnityEngine.Debug.Log("PerformanceTestSpawner: 开始初始化 GameBootstrap...");
 
             // 创建 GameBootstrap
             GameObject bootstrapObj = new GameObject("GameBootstrap (PerformanceTest)");
             var bootstrap = bootstrapObj.AddComponent<Framework.GameBootstrap>();
             
-            // 加载性能测试配�?
+            // 加载性能测试配置
             if (gameConfigJson != null)
             {
                 bootstrap.gameConfigJson = gameConfigJson;
-                UnityEngine.Debug.Log($"PerformanceTestSpawner: 使用配置文�?{gameConfigJson.name}");
+                UnityEngine.Debug.Log($"PerformanceTestSpawner: 使用配置文件 {gameConfigJson.name}");
             }
             else
             {
@@ -244,16 +244,16 @@ namespace Debug
                 _gameLoader.OnLoadComplete += OnLoadComplete;
                 _gameLoader.OnLevelConfigLoaded += OnLevelConfigLoaded;
 
-                UnityEngine.Debug.Log("PerformanceTestSpawner: 回调已注册，开始加�?..");
+                UnityEngine.Debug.Log("PerformanceTestSpawner: 回调已注册，开始加载..");
 
-                // 开始加�?
+                // 开始加载
                 _gameLoader.StartLoad();
 
                 GameLogger.Log("PerformanceTest", $"使用GameLoader加载关卡 {testLevelId}");
             }
             else
             {
-                UnityEngine.Debug.LogError("PerformanceTestSpawner: GameLoader 组件�?null!");
+                    UnityEngine.Debug.LogError("PerformanceTestSpawner: GameLoader 组件为 null!");
             }
 
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: LoadLevelConfig 结束 ===");
@@ -268,7 +268,7 @@ namespace Debug
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: OnLoadComplete 回调触发 ===");
             GameLogger.Log("PerformanceTest", "关卡加载完成");
             global::Game.GameStateManager.Instance.SetGameStatePlaying();
-            UnityEngine.Debug.Log("PerformanceTestSpawner: 游戏状态已设置�?Playing");
+            UnityEngine.Debug.Log("PerformanceTestSpawner: 游戏状态已设置为 Playing");
             */
         }
 
@@ -279,8 +279,8 @@ namespace Debug
             _columnCount = levelConfig.ColumnCount;
             _cellSize = levelConfig.CellWidth;
             _initialized = true;
-            GameLogger.Log("PerformanceTest", $"关卡配置已加载：{_rowCount}�?× {_columnCount}列，格子大小={_cellSize}");
-            UnityEngine.Debug.Log($"PerformanceTestSpawner: _initialized = true, �?{_rowCount}, �?{_columnCount}");
+            GameLogger.Log("PerformanceTest", $"关卡配置已加载：{_rowCount} 行× {_columnCount} 列，格子大小={_cellSize}");
+            UnityEngine.Debug.Log($"PerformanceTestSpawner: _initialized = true, 行{_rowCount}, 列{_columnCount}");
         }
 
         private void Update()
@@ -288,7 +288,7 @@ namespace Debug
             if (!enableAutoSpawn || _entityManager == null)
                 return;
 
-            // 检查游戏状态，只在Playing时生�?
+            // 检查游戏状态，只在 Playing 时生成实体
             bool isPlaying = IsGamePlaying();
 
             // 状态变化时输出日志
@@ -310,7 +310,7 @@ namespace Debug
                 return;
             }
 
-            // 初始化地图配�?
+            // 初始化地图配置
             if (!_initialized)
             {
                 InitializeMapConfig();
@@ -319,7 +319,7 @@ namespace Debug
             // 更新统计信息
             UpdateStatistics();
 
-            // 自动生成植物（性能测试专用�?
+            // 自动生成植物（性能测试专用）
             if (enableAutoPlantSpawn && (maxPlants == 0 || currentPlantCount < maxPlants))
             {
                 if (Time.time - _lastPlantSpawnTime >= plantSpawnInterval)
@@ -329,7 +329,7 @@ namespace Debug
                 }
             }
 
-            // 额外生成僵尸（性能测试，不影响关卡正常僵尸生成�?
+            // 额外生成僵尸（性能测试，不影响关卡正常僵尸生成）
             if (enableExtraZombieSpawn && (maxZombies == 0 || currentZombieCount < maxZombies))
             {
                 if (Time.time - _lastZombieSpawnTime >= zombieSpawnInterval)
@@ -348,7 +348,7 @@ namespace Debug
                 return;
             }
 
-            // 从关卡配置读�?
+            // 从关卡配置读取
             var query = _entityManager.CreateEntityQuery(typeof(LevelConfigComponent));
 
             if (query.TryGetSingleton<LevelConfigComponent>(out var levelConfig))
@@ -357,8 +357,8 @@ namespace Debug
                 _columnCount = levelConfig.ColumnCount;
                 _cellSize = levelConfig.CellWidth;
                 _initialized = true;
-                GameLogger.Log("PerformanceTest", $"使用关卡配置：{_rowCount}�?× {_columnCount}列，格子大小={_cellSize}");
-                UnityEngine.Debug.Log($"PerformanceTestSpawner: 从 LevelConfigComponent 读取配�?- �?{_rowCount}, �?{_columnCount}, 格子大小={_cellSize}");
+                GameLogger.Log("PerformanceTest", $"使用关卡配置：{_rowCount} 行× {_columnCount} 列，格子大小={_cellSize}");
+                UnityEngine.Debug.Log($"PerformanceTestSpawner: 从 LevelConfigComponent 读取配置 - 行{_rowCount}, 列{_columnCount}, 格子大小={_cellSize}");
             }
             else
             {
@@ -367,15 +367,15 @@ namespace Debug
                 _columnCount = 9;
                 _cellSize = 1.0f;
                 _initialized = true;
-                GameLogger.LogWarning("PerformanceTest", "未找到 LevelConfigComponent，使用默认配置：5�?× 9列");
-                UnityEngine.Debug.Log("PerformanceTestSpawner: 使用默认地图配�?- �?5, �?9, 格子大小=1.0");
+                GameLogger.LogWarning("PerformanceTest", "未找到 LevelConfigComponent，使用默认配置：5 行 × 9 列");
+                UnityEngine.Debug.Log("PerformanceTestSpawner: 使用默认地图配置 - 行5, 列9, 格子大小=1.0");
             }
 
             query.Dispose();
         }
 
         /// <summary>
-        /// 检查游戏是否在Playing状�?
+        /// 检查游戏是否在 Playing 状态
         /// </summary>
         private bool IsGamePlaying()
         {
@@ -392,11 +392,11 @@ namespace Debug
             }
             else
             {
-                // 如果没有 GameStateComponent（测试场景），默认为 Playing 状�?
+                // 如果没有 GameStateComponent（测试场景），默认为 Playing 状态
                 isPlaying = true;
                 if (!_loggedMissingGameState)
                 {
-                    UnityEngine.Debug.Log("PerformanceTestSpawner: 未找�?GameStateComponent，默认为 Playing 状�?允许生成实体)");
+                    UnityEngine.Debug.Log("PerformanceTestSpawner: 未找到 GameStateComponent，默认为 Playing 状态 (允许生成实体)");
                     _loggedMissingGameState = true;
                 }
             }
@@ -413,7 +413,7 @@ namespace Debug
                 int row = _random.NextInt(0, _rowCount);
                 int column = _random.NextInt(0, Mathf.FloorToInt(_columnCount / 2));
 
-                // 计算世界坐标（左下角为原�?,0,0�?
+                // 计算世界坐标（左下角为原点，0,0）
                 float worldX = column * _cellSize;
                 float worldZ = row * _cellSize;
 
@@ -447,7 +447,7 @@ namespace Debug
 
                 _entityManager.AddComponentData(plantEntity, LocalTransform.FromPosition(new float3(worldX, 0, worldZ)));
 
-                // 添加视图预制体组件（如果启用�?
+                // 添加视图预制体组件（如果启用）
                 if (enableViewLoading)
                 {
                     var config = ViewSystemConfig.Instance;
@@ -493,9 +493,9 @@ namespace Debug
         {
             for (int i = 0; i < zombiesPerBatch; i++)
             {
-                // 随机选择�?
+                // 随机选择行
                 int row = _random.NextInt(0, _rowCount);
-                // 僵尸从地图右侧外部生�?
+                // 僵尸从地图右侧外部生成
                 int column = _columnCount;
 
                 // 计算世界坐标
@@ -531,7 +531,7 @@ namespace Debug
 
                 _entityManager.AddComponentData(zombieEntity, LocalTransform.FromPosition(new float3(worldX, 0, worldZ)));
 
-                // 添加视图预制体组件（如果启用�?
+                // 添加视图预制体组件（如果启用）
                 if (enableViewLoading)
                 {
                     var config = ViewSystemConfig.Instance;
@@ -620,7 +620,7 @@ namespace Debug
         }
 
         /// <summary>
-        /// 初始化血�?Canvas
+        /// 初始化血条 Canvas
         /// </summary>
         private void InitializeHealthBarCanvas()
         {
@@ -631,7 +631,7 @@ namespace Debug
             var canvasObj = _healthBarCanvas.gameObject;
 
 
-            // 创建血条容�?
+            // 创建血条容器
             var healthBarContainerObj = new GameObject("HealthBars");
             healthBarContainerObj.layer = LayerMask.NameToLayer("UI");
             healthBarContainerObj.transform.SetParent(_healthBarCanvas.transform, false);
@@ -644,7 +644,7 @@ namespace Debug
             containerRect.anchoredPosition = Vector2.zero;
             containerRect.localScale = Vector3.one;
 
-            // 设置�?HealthBarManager
+            // 设置 HealthBarManager
             var healthBarManager = HealthBarManager.Instance;
             if (healthBarManager != null)
             {
@@ -698,7 +698,7 @@ namespace Debug
                 GUILayout.Label($"地图: {_rowCount}行×{_columnCount}列(格子:{_cellSize})", new GUIStyle(GUI.skin.label) { fontSize = 10 });
             }
 
-            // 显示生成状�?
+            // 显示生成状态
             GUILayout.Label($"状态: {(enableAutoSpawn ? "运行中" : "已暂停")}", new GUIStyle(GUI.skin.label) { fontSize = 10 });
             GUILayout.Label($"关卡: Level {testLevelId}", new GUIStyle(GUI.skin.label) { fontSize = 10 });
             if (enableAutoSpawn)

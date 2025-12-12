@@ -70,9 +70,13 @@ namespace PVZ
             public string bulletPrefabPath;
         }
 
-        void Start()  // 改为Start以确保World已初始化
+        private bool _isSubscribedToBootstrap = false;
+        private GameStateComponent _pendingGameState;
+        private bool _hasPendingGameState = false;
+
+        void Awake()  // 改为 Awake 以尽早初始化（保证在系统 Update 之前）
         {
-            UnityEngine.Debug.Log("GameConfigLoader: Start() 开始执�?..");
+            UnityEngine.Debug.Log("GameConfigLoader: Awake() 开始执行...");
             string json = null;
             if (configJson != null)
             {
@@ -248,20 +252,9 @@ namespace PVZ
 
             // UnityEngine.Debug.Log($"GameConfigLoader: 配置加载完成。植�?{plantBuffer.Length} 僵尸:{zombieBuffer.Length}");
 
-            // 创建或更�?GameStateComponent (单局游戏状�?
-            Entity gameStateEntity;
-            if (entityManager.CreateEntityQuery(typeof(GameStateComponent)).CalculateEntityCount() > 0)
-            {
-                gameStateEntity = entityManager.CreateEntityQuery(typeof(GameStateComponent)).GetSingletonEntity();
-            }
-            else
-            {
-                gameStateEntity = entityManager.CreateEntity();
-            }
-
             var gameStateData = new GameStateComponent
             {
-                CurrentState = GameState.Playing,  // 自动开始游�?
+                CurrentState = GameState.Playing,  // 自动开始游戏
                 RemainingTime = root.gameSettings?.gameDuration ?? 180f,
                 TotalGameTime = root.gameSettings?.gameDuration ?? 180f,
                 CurrentWave = 0,
@@ -270,12 +263,74 @@ namespace PVZ
                 ZombiesReachedEnd = 0
             };
 
-            if (entityManager.HasComponent<GameStateComponent>(gameStateEntity))
-                entityManager.SetComponentData(gameStateEntity, gameStateData);
-            else
-                entityManager.AddComponentData(gameStateEntity, gameStateData);
+            // 尝试立即应用游戏状态到已存在的 GameStateComponent 单例；若不存在，则订阅 Bootstrap 事件以便稍后应用
+            TryApplyOrDeferGameState(entityManager, gameStateData);
+        }
 
-            UnityEngine.Debug.Log($"GameConfigLoader: 游戏状态初始化完成。状�?{gameStateData.CurrentState} 时长:{gameStateData.TotalGameTime}�?波次:{gameStateData.TotalWaves}");
+        private void TryApplyOrDeferGameState(EntityManager entityManager, GameStateComponent gameStateData)
+        {
+            var gsQuery = entityManager.CreateEntityQuery(typeof(GameStateComponent));
+            if (gsQuery.CalculateEntityCount() == 0)
+            {
+                UnityEngine.Debug.LogWarning("GameConfigLoader: 未找到 GameStateComponent 单例，延迟初始化并订阅 GameBootstrap.OnGameStateSingletonCreated");
+                _pendingGameState = gameStateData;
+                _hasPendingGameState = true;
+                if (!_isSubscribedToBootstrap)
+                {
+                    Framework.GameBootstrap.OnGameStateSingletonCreated += OnGameStateSingletonCreated;
+                    _isSubscribedToBootstrap = true;
+                }
+            }
+            else
+            {
+                var gameStateEntity = gsQuery.GetSingletonEntity();
+                if (entityManager.HasComponent<GameStateComponent>(gameStateEntity))
+                    entityManager.SetComponentData(gameStateEntity, gameStateData);
+                else
+                    entityManager.AddComponentData(gameStateEntity, gameStateData);
+
+                UnityEngine.Debug.Log($"GameConfigLoader: 游戏状态初始化完成。状态={gameStateData.CurrentState} 时长:{gameStateData.TotalGameTime} 波次:{gameStateData.TotalWaves}");
+            }
+            gsQuery.Dispose();
+        }
+
+        private void OnGameStateSingletonCreated()
+        {
+            try
+            {
+                if (!_hasPendingGameState)
+                    return;
+
+                var world = World.DefaultGameObjectInjectionWorld;
+                if (world == null)
+                {
+                    UnityEngine.Debug.LogError("GameConfigLoader: 收到 GameState 创建事件，但没有可用的 World");
+                    return;
+                }
+                var em = world.EntityManager;
+                // 再次尝试应用
+                TryApplyOrDeferGameState(em, _pendingGameState);
+                // 已应用后清理和退订
+                _hasPendingGameState = false;
+                if (_isSubscribedToBootstrap)
+                {
+                    Framework.GameBootstrap.OnGameStateSingletonCreated -= OnGameStateSingletonCreated;
+                    _isSubscribedToBootstrap = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                UnityEngine.Debug.LogError($"GameConfigLoader.OnGameStateSingletonCreated 错误: {ex.Message}");
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_isSubscribedToBootstrap)
+            {
+                Framework.GameBootstrap.OnGameStateSingletonCreated -= OnGameStateSingletonCreated;
+                _isSubscribedToBootstrap = false;
+            }
         }
     }
 }
