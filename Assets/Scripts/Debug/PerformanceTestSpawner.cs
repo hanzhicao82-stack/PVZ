@@ -30,8 +30,8 @@ namespace Debug
         [Tooltip("Mesh预制体路径（Resources相对路径，例如：Prefabs/TestMesh)")]
         public string meshPrefabPath = "Prefabs/TestMesh";
 
-        [Tooltip("Spine 预制体回退路径（当配置未设置时使用，Resources 相对路径")]
-        public string spinePrefabPath = "Prefabs/TestSpine";
+        [Tooltip("Spine 预制体回退路径（编辑器下使用 AssetDatabase，运行时使用 Resources）")]
+        public string spinePrefabPath = "Res/Prefabs/TestSpine";
 
         [Header("子弹视图配置")]
         [Tooltip("植物子弹预制体路�?(Resources/AssetDatabase)")]
@@ -118,23 +118,27 @@ namespace Debug
         private int _columnCount;
         private float _cellSize;
         private bool _initialized = false;
-        private GameLoader _gameLoader;
+        // private global::Game.GameLoader _gameLoader; // DEPRECATED: GameLoader removed in refactoring
         private bool _lastGamePlayingState = true; // 记录上一次的游戏状�?
+        private bool _loggedMissingGameState = false; // 记录是否已输出过缺�?GameStateComponent 的日志
         private Canvas _healthBarCanvas;
         private Transform _healthBarContainer;
 
         private void Start()
         {
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 开�?===");
+            
+            // 初始化 GameBootstrap（如果还不存在）
+            InitializeGameBootstrap();
+            
             var world = World.DefaultGameObjectInjectionWorld;
             if (world != null)
             {
                 _entityManager = world.EntityManager;
-
             }
             else
             {
-
+                UnityEngine.Debug.LogError("PerformanceTestSpawner: 无法获取 DefaultGameObjectInjectionWorld!");
             }
 
             _random = new Unity.Mathematics.Random((uint)System.DateTime.Now.Ticks);
@@ -144,8 +148,9 @@ namespace Debug
             // 初始化血�?Canvas
             InitializeHealthBarCanvas();
 
-            // 使用GameLoader加载关卡配置
-            LoadLevelConfig();
+            // 新架构：直接初始化，不需要 GameLoader
+            // 地图配置会在 Update 的 InitializeMapConfig() 中从 LevelConfigComponent 获取
+            UnityEngine.Debug.Log("PerformanceTestSpawner: 等待模块系统初始化 LevelConfigComponent 和 GameStateComponent");
 
             if (autoStartOnPlay)
             {
@@ -156,9 +161,57 @@ namespace Debug
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 结束 ===");
         }
 
+        /// <summary>
+        /// 初始化 GameBootstrap 模块系统
+        /// </summary>
+        private void InitializeGameBootstrap()
+        {
+            // 检查是否已存�?GameBootstrap
+            var existingBootstrap = FindObjectOfType<Framework.GameBootstrap>();
+            if (existingBootstrap != null)
+            {
+                UnityEngine.Debug.Log("PerformanceTestSpawner: GameBootstrap 已存在，跳过初始化");
+                
+                // 输出已加载的模块信息
+                if (existingBootstrap.Context != null)
+                {
+                    UnityEngine.Debug.Log("PerformanceTestSpawner: ModuleContext 已就绪");
+                }
+                return;
+            }
+
+            UnityEngine.Debug.Log("PerformanceTestSpawner: 开始初始�?GameBootstrap...");
+
+            // 创建 GameBootstrap
+            GameObject bootstrapObj = new GameObject("GameBootstrap (PerformanceTest)");
+            var bootstrap = bootstrapObj.AddComponent<Framework.GameBootstrap>();
+            
+            // 加载性能测试配�?
+            if (gameConfigJson != null)
+            {
+                bootstrap.gameConfigJson = gameConfigJson;
+                UnityEngine.Debug.Log($"PerformanceTestSpawner: 使用配置文�?{gameConfigJson.name}");
+            }
+            else
+            {
+                UnityEngine.Debug.LogWarning("PerformanceTestSpawner: 未设置 gameConfigJson，将使用默认配置或模块系统可能无法正常工作！");
+            }
+            
+            bootstrap.autoInitialize = true;
+            bootstrap.verboseLogging = true;
+            
+            DontDestroyOnLoad(bootstrapObj);
+            
+            UnityEngine.Debug.Log("PerformanceTestSpawner: GameBootstrap 已创建，模块系统启动中...");
+        }
+
         private void LoadLevelConfig()
         {
-
+            // DEPRECATED: GameLoader and GameStateManager were removed in refactoring
+            // This method is disabled for now
+            UnityEngine.Debug.LogWarning("PerformanceTestSpawner.LoadLevelConfig: Disabled - GameLoader removed in refactoring");
+            
+            /* 
             if (levelConfigJson == null)
             {
                 GameLogger.LogWarning("PerformanceTest", "未设置关卡配置文件，使用默认配置");
@@ -173,12 +226,12 @@ namespace Debug
             {
                 UnityEngine.Debug.Log("PerformanceTestSpawner: 未找到GameLoader，创建新的");
                 loaderObj = new GameObject("GameLoader");
-                _gameLoader = loaderObj.AddComponent<GameLoader>();
+                _gameLoader = loaderObj.AddComponent<global::Game.GameLoader>();
             }
             else
             {
                 UnityEngine.Debug.Log("PerformanceTestSpawner: 找到已存在的 GameLoader");
-                _gameLoader = loaderObj.GetComponent<GameLoader>();
+                _gameLoader = loaderObj.GetComponent<global::Game.GameLoader>();
             }
 
             if (_gameLoader != null)
@@ -204,14 +257,19 @@ namespace Debug
             }
 
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: LoadLevelConfig 结束 ===");
+            */
         }
 
         private void OnLoadComplete()
         {
+            // DEPRECATED: GameStateManager removed in refactoring
+            UnityEngine.Debug.LogWarning("PerformanceTestSpawner.OnLoadComplete: Disabled - GameStateManager removed");
+            /*
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: OnLoadComplete 回调触发 ===");
             GameLogger.Log("PerformanceTest", "关卡加载完成");
-            GameStateManager.Instance.SetGameStatePlaying();
+            global::Game.GameStateManager.Instance.SetGameStatePlaying();
             UnityEngine.Debug.Log("PerformanceTestSpawner: 游戏状态已设置�?Playing");
+            */
         }
 
         private void OnLevelConfigLoaded(LevelConfigComponent levelConfig)
@@ -300,10 +358,17 @@ namespace Debug
                 _cellSize = levelConfig.CellWidth;
                 _initialized = true;
                 GameLogger.Log("PerformanceTest", $"使用关卡配置：{_rowCount}�?× {_columnCount}列，格子大小={_cellSize}");
+                UnityEngine.Debug.Log($"PerformanceTestSpawner: 从 LevelConfigComponent 读取配�?- �?{_rowCount}, �?{_columnCount}, 格子大小={_cellSize}");
             }
             else
             {
-                GameLogger.LogWarning("PerformanceTest", "未找到关卡配置，等待加载");
+                // 使用默认配置
+                _rowCount = 5;
+                _columnCount = 9;
+                _cellSize = 1.0f;
+                _initialized = true;
+                GameLogger.LogWarning("PerformanceTest", "未找到 LevelConfigComponent，使用默认配置：5�?× 9列");
+                UnityEngine.Debug.Log("PerformanceTestSpawner: 使用默认地图配�?- �?5, �?9, 格子大小=1.0");
             }
 
             query.Dispose();
@@ -323,6 +388,17 @@ namespace Debug
             if (query.TryGetSingleton<GameStateComponent>(out var gameState))
             {
                 isPlaying = gameState.CurrentState == GameState.Playing;
+                _loggedMissingGameState = false; // 重置标志
+            }
+            else
+            {
+                // 如果没有 GameStateComponent（测试场景），默认为 Playing 状�?
+                isPlaying = true;
+                if (!_loggedMissingGameState)
+                {
+                    UnityEngine.Debug.Log("PerformanceTestSpawner: 未找�?GameStateComponent，默认为 Playing 状�?允许生成实体)");
+                    _loggedMissingGameState = true;
+                }
             }
 
             query.Dispose();
@@ -376,6 +452,8 @@ namespace Debug
                 {
                     var config = ViewSystemConfig.Instance;
                     string prefabPath = GetPlantViewPrefabPath(plantType, config);
+
+                    UnityEngine.Debug.Log($"PerformanceTestSpawner: 为植物 {plantEntity.Index} 添加视图 - 路径: {prefabPath}, Spine启用: {config.enableSpineSystem}");
 
                     _entityManager.AddComponentData(plantEntity, new ViewPrefabComponent
                     {
@@ -459,6 +537,8 @@ namespace Debug
                     var config = ViewSystemConfig.Instance;
                     string prefabPath = GetZombieViewPrefabPath(zombieType, config);
 
+                    UnityEngine.Debug.Log($"PerformanceTestSpawner: 为僵尸 {zombieEntity.Index} 添加视图 - 路径: {prefabPath}, Spine启用: {config.enableSpineSystem}");
+
                     _entityManager.AddComponentData(zombieEntity, new ViewPrefabComponent
                     {
                         PrefabPath = prefabPath,
@@ -500,16 +580,17 @@ namespace Debug
                 string configPath = viewConfig.GetSpinePlantPrefabPath(type);
                 if (!string.IsNullOrEmpty(configPath))
                 {
+                    UnityEngine.Debug.Log($"[PerformanceTestSpawner] 使用 ViewSystemConfig 中的植物路径: {configPath}");
                     return configPath;
                 }
 
                 if (!string.IsNullOrEmpty(spinePrefabPath))
                 {
-                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体路径，使用回退路径 {spinePrefabPath}");
+                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体，使用回退路径: {spinePrefabPath}");
                     return spinePrefabPath;
                 }
 
-                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh 预制体 {meshPrefabPath}");
+                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh: {meshPrefabPath}");
             }
 
             return meshPrefabPath;
@@ -522,16 +603,17 @@ namespace Debug
                 string configPath = viewConfig.GetSpineZombiePrefabPath(type);
                 if (!string.IsNullOrEmpty(configPath))
                 {
+                    UnityEngine.Debug.Log($"[PerformanceTestSpawner] 使用 ViewSystemConfig 中的僵尸路径: {configPath}");
                     return configPath;
                 }
 
                 if (!string.IsNullOrEmpty(spinePrefabPath))
                 {
-                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体路径，使用回退路径 {spinePrefabPath}");
+                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体，使用回退路径: {spinePrefabPath}");
                     return spinePrefabPath;
                 }
 
-                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh 预制体 {meshPrefabPath}");
+                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh: {meshPrefabPath}");
             }
 
             return meshPrefabPath;

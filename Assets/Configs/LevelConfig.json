@@ -44,8 +44,8 @@
       "type": "Day",
       "difficulty": "Normal",
       "mapConfig": {
-        "rowCount": 50,
-        "columnCount": 20,
+        "rowCount": 100,
+        "columnCount": 100,
         "cellWidth": 1.5,
         "cellHeight": 2.0
       },

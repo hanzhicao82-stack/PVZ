@@ -18,6 +18,9 @@ namespace Game.TowerDefense
         {
             UnityEngine.Debug.Log("GameLoopSystemBase: OnCreate 被调用 - 系统已创建");
             
+            // Require GameStateComponent to exist before this system runs
+            RequireForUpdate<GameStateComponent>();
+            
             m_LoggedInitialState = false;
             m_LastLogTime = 0f;
             m_PreviousState = GameState.Preparing;
