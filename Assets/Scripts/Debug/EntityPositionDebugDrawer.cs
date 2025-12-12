@@ -1,13 +1,15 @@
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using UnityEngine;
-using PVZ.DOTS.Components;
+using Common;
+using PVZ;
+using Game.TowerDefense;
 
-namespace PVZ.DOTS.Debug
+namespace Debug
 {
     /// <summary>
-    /// 实体位置和网格坐标调试工具
+    /// 实体位置和网格坐标调试工�?
     /// 绘制植物和僵尸在地图上的位置
     /// </summary>
     public class EntityPositionDebugDrawer : MonoBehaviour
@@ -71,7 +73,7 @@ namespace PVZ.DOTS.Debug
                 DrawZombies();
             }
 
-            // 绘制抛射物
+            // 绘制抛射�?
             if (showProjectiles)
             {
                 DrawProjectiles();
@@ -123,7 +125,7 @@ namespace PVZ.DOTS.Debug
                 // 绘制僵尸位置
                 Gizmos.DrawWireCube(transform.Position, new Vector3(zombieSize, zombieSize * 2, zombieSize));
                 
-                // 绘制移动方向指示器
+                // 绘制移动方向指示�?
                 float3 forward = new float3(-1, 0, 0) * zombieSize * 1.5f;
                 Gizmos.DrawLine(transform.Position, transform.Position + forward);
 
@@ -153,7 +155,7 @@ namespace PVZ.DOTS.Debug
                 var transform = entityManager.GetComponentData<LocalTransform>(entity);
                 var projectile = entityManager.GetComponentData<ProjectileComponent>(entity);
 
-                // 绘制抛射物
+                // 绘制抛射�?
                 Gizmos.DrawSphere(transform.Position, projectileSize);
                 
                 // 绘制移动轨迹指示
@@ -188,7 +190,7 @@ namespace PVZ.DOTS.Debug
             GUILayout.Box("实体统计");
             GUILayout.Label($"植物: {plantCount}");
             GUILayout.Label($"僵尸: {zombieCount}");
-            GUILayout.Label($"抛射物: {projectileCount}");
+            GUILayout.Label($"抛射�? {projectileCount}");
             GUILayout.EndArea();
         }
     }

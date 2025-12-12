@@ -1,15 +1,15 @@
-using Unity.Collections;
+﻿using Unity.Collections;
 using Unity.Entities;
 using Unity.Transforms;
-using Unity.Mathematics;
 using UnityEngine;
-using PVZ.DOTS.Components;
-using System; // 为可空值类型支持
+using Common;
+using PVZ;
+using Game.TowerDefense;
 
-namespace PVZ.DOTS.Debug
+namespace Debug
 {
     /// <summary>
-    /// 游戏测试设置 - 快速生成测试场景
+    /// 游戏测试设置 - 快速生成测试场�?
     /// </summary>
     public class GameTestSetup : MonoBehaviour
     {
@@ -46,7 +46,7 @@ namespace PVZ.DOTS.Debug
         {
             if (World.DefaultGameObjectInjectionWorld == null || _entityManager == null)
             {
-                UnityEngine.Debug.LogError("EntityManager 未初始化！");
+                UnityEngine.Debug.LogError("EntityManager 未初始化");
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace PVZ.DOTS.Debug
                 SpawnTestZombies();
             }
 
-            UnityEngine.Debug.Log("测试场景设置完成！");
+            UnityEngine.Debug.Log("测试场景设置完成");
         }
 
         [ContextMenu("清除所有实体")]
@@ -83,7 +83,7 @@ namespace PVZ.DOTS.Debug
             var projectileQuery = _entityManager.CreateEntityQuery(typeof(ProjectileComponent));
             _entityManager.DestroyEntity(projectileQuery);
 
-            UnityEngine.Debug.Log("所有实体已清除！");
+            UnityEngine.Debug.Log("所有实体已清除");
         }
 
         [ContextMenu("生成测试植物")]
@@ -98,7 +98,7 @@ namespace PVZ.DOTS.Debug
                 SpawnPlant(PlantType.Peashooter, row, column, position);
             }
 
-            UnityEngine.Debug.Log($"已生成 {testPlantsCount} 个测试植物！");
+            UnityEngine.Debug.Log($"已生�?{testPlantsCount} 个测试植物！");
         }
 
         [ContextMenu("生成测试僵尸")]
@@ -113,7 +113,7 @@ namespace PVZ.DOTS.Debug
                 SpawnZombie(ZombieType.Normal, row, position);
             }
 
-            UnityEngine.Debug.Log($"已生成 {testZombiesCount} 个测试僵尸！");
+            UnityEngine.Debug.Log($"已生�?{testZombiesCount} 个测试僵尸！");
         }
 
         PlantConfigElement? GetPlantConfig(PlantType type)
@@ -257,7 +257,7 @@ namespace PVZ.DOTS.Debug
 
         void Update()
         {
-            // 快捷键
+            // 快捷�?
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 SetupTestScene();

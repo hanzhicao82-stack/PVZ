@@ -1,12 +1,12 @@
-using Unity.Entities;
-using Unity.Mathematics;
+﻿using Unity.Entities;
 using UnityEngine;
-using PVZ.DOTS.Components;
+using PVZ;
+using Common;
 
-namespace PVZ.DOTS.Debug
+namespace Debug
 {
     /// <summary>
-    /// 地图网格可视化调试工具
+    /// 地图网格可视化调试工�?
     /// 使用Gizmos绘制关卡配置中的地图格子
     /// </summary>
     public class MapGridDebugDrawer : MonoBehaviour
@@ -82,7 +82,7 @@ namespace PVZ.DOTS.Debug
             int columns = config.ColumnCount;
             float cellSize = config.CellWidth;
 
-            // 计算地图总尺寸（左下角为原点0,0,0）
+            // 计算地图总尺寸（左下角为原点0,0,0�?
             float totalWidth = columns * cellSize;
             float totalHeight = rows * cellSize;
 
@@ -105,10 +105,10 @@ namespace PVZ.DOTS.Debug
                 }
             }
 
-            // 绘制网格线
+            // 绘制网格�?
             Gizmos.color = gridColor;
 
-            // 绘制水平线
+            // 绘制水平�?
             for (int row = 0; row <= rows; row++)
             {
                 Vector3 start = new Vector3(0, 0, row * cellSize);
@@ -116,7 +116,7 @@ namespace PVZ.DOTS.Debug
                 DrawThickLine(start, end, lineWidth);
             }
 
-            // 绘制垂直线
+            // 绘制垂直�?
             for (int col = 0; col <= columns; col++)
             {
                 Vector3 start = new Vector3(col * cellSize, 0, 0);
@@ -130,13 +130,13 @@ namespace PVZ.DOTS.Debug
                 DrawGridLabels(rows, columns, cellSize);
             }
 
-            // 绘制地图边界框
+            // 绘制地图边界�?
             DrawMapBorder(totalWidth, totalHeight);
         }
 
         private void DrawThickLine(Vector3 start, Vector3 end, float thickness)
         {
-            // 使用多条平行线模拟粗线效果
+            // 使用多条平行线模拟粗线效�?
             Gizmos.DrawLine(start, end);
             
             Vector3 offset = Vector3.up * 0.01f;
@@ -146,8 +146,8 @@ namespace PVZ.DOTS.Debug
 
         private void DrawGridLabels(int rows, int columns, float cellSize)
         {
-            // 这部分需要使用Handles在Scene视图中绘制文字
-            // Gizmos本身不支持文字绘制
+            // 这部分需要使用Handles在Scene视图中绘制文�?
+            // Gizmos本身不支持文字绘�?
 #if UNITY_EDITOR
             UnityEditor.Handles.color = gridColor;
             
@@ -169,7 +169,7 @@ namespace PVZ.DOTS.Debug
 
         private void DrawMapBorder(float totalWidth, float totalHeight)
         {
-            // 绘制地图四角的标记点（左下角固定在原点0,0,0）
+            // 绘制地图四角的标记点（左下角固定在原�?,0,0�?
             Gizmos.color = borderColor;
             float markerSize = 1f;
 
@@ -186,7 +186,7 @@ namespace PVZ.DOTS.Debug
                 Gizmos.DrawSphere(corner, markerSize);
             }
 
-            // 绘制中心点
+            // 绘制中心�?
             Vector3 center = new Vector3(totalWidth * 0.5f, 0, totalHeight * 0.5f);
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(center, markerSize * 1.5f);

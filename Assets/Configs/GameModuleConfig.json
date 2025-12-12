@@ -1,0 +1,145 @@
+{
+  "projectName": "Plants vs Zombies DOTS",
+  "projectType": "tower-defense",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "moduleId": "core.ecs",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "core.event-bus",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "service.pool",
+      "enabled": true,
+      "parametersJson": "{\"defaultPoolSize\": 50, \"maxPoolSize\": 200}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "service.resource",
+      "enabled": true,
+      "parametersJson": "{\"cacheEnabled\": true}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "service.audio",
+      "enabled": true,
+      "parametersJson": "{\"masterVolume\": 1.0, \"soundVolume\": 0.8, \"musicVolume\": 0.6}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "service.save",
+      "enabled": true,
+      "parametersJson": "{\"autoSave\": true, \"autoSaveInterval\": 60.0}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "render.core",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "render.spine",
+      "enabled": true,
+      "parametersJson": "{\"enabled\": true, \"lodEnabled\": true, \"lodNearDistance\": 15.0, \"lodFarDistance\": 30.0, \"cullingEnabled\": true, \"cullingMargin\": 0.1, \"baseUpdateFrequency\": 1, \"frameSkipEnabled\": true, \"animationCacheEnabled\": true, \"colorUpdateNearOnly\": true}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "pvz.level-management",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "pvz.game-loop",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "pvz.plant-system",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "pvz.zombie-system",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "combat.projectile",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "ui.health-bar",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "animation.spine-optimization",
+      "enabled": true,
+      "parametersJson": "{\"cullingEnabled\": true, \"lodEnabled\": true}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "debug.map-grid",
+      "enabled": true,
+      "parametersJson": "{\"gridEnabled\": true}",
+      "orderOverride": -1
+    }
+  ],
+  "globalParameters": [
+    {
+      "key": "spine.culling.enabled",
+      "value": "true"
+    },
+    {
+      "key": "spine.lod.enabled",
+      "value": "true"
+    },
+    {
+      "key": "debug.grid.enabled",
+      "value": "true"
+    },
+    {
+      "key": "eventbus.verbose",
+      "value": "false"
+    },
+    {
+      "key": "audio.masterVolume",
+      "value": "1.0"
+    },
+    {
+      "key": "audio.soundVolume",
+      "value": "0.8"
+    },
+    {
+      "key": "audio.musicVolume",
+      "value": "0.6"
+    },
+    {
+      "key": "resource.cacheEnabled",
+      "value": "true"
+    },
+    {
+      "key": "save.autoSave",
+      "value": "true"
+    },
+    {
+      "key": "pool.defaultSize",
+      "value": "50"
+    }
+  ]
+}

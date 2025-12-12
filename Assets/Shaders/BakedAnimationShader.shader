@@ -102,10 +102,10 @@ Shader "Custom/BakedAnimationShader"
                 float3 finalPos = lerp(pos, posNext, frameFrac);
                 
                 // 调试：如果位置异常，使用原始顶点位置
-                if (any(isnan(finalPos)) || any(isinf(finalPos)))
-                {
-                    finalPos = v.vertex.xyz;
-                }
+                // if (any(isnan(finalPos)) || any(isinf(finalPos)))
+                // {
+                //     finalPos = v.vertex.xyz;
+                // }
 
                 // 从贴图读取法线
                 float3 normal = tex2Dlod(_NormalMap, float4(uv, 0, 0)).xyz;

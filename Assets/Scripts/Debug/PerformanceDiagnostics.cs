@@ -1,10 +1,12 @@
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Profiling;
 using UnityEngine;
-using PVZ.DOTS.Components;
 using System.Text;
+using Common;
+using PVZ;
+using Game.TowerDefense;
 
-namespace PVZ.DOTS.Debug
+namespace Debug
 {
     /// <summary>
     /// 性能诊断工具 - 显示详细的性能分析信息
@@ -25,7 +27,7 @@ namespace PVZ.DOTS.Debug
         private float _updateInterval = 0.5f;
         private float _timeSinceUpdate = 0f;
         
-        // 性能计数器
+        // 性能计数�?
         private ProfilerRecorder _mainThreadRecorder;
         private ProfilerRecorder _renderThreadRecorder;
         private ProfilerRecorder _gcRecorder;
@@ -38,7 +40,7 @@ namespace PVZ.DOTS.Debug
                 _entityManager = world.EntityManager;
             }
             
-            // 初始化性能计数器
+            // 初始化性能计数�?
             _mainThreadRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Internal, "Main Thread", 15);
             _renderThreadRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Render Thread", 15);
             _gcRecorder = ProfilerRecorder.StartNew(ProfilerCategory.Memory, "GC.Alloc", 15);
@@ -88,12 +90,12 @@ namespace PVZ.DOTS.Debug
             _sb.Clear();
             
             // === FPS 和性能 ===
-            _sb.AppendLine("=== 性能诊断 (按 F1 切换) ===");
+            _sb.AppendLine("=== 性能诊断 (�?F1 切换) ===");
             _sb.AppendLine();
             
             Color fpsColor = _fps >= 30 ? Color.green : (_fps >= 20 ? Color.yellow : Color.red);
             _sb.AppendLine($"<color=#{ColorUtility.ToHtmlStringRGB(fpsColor)}>FPS: {_fps:F1}</color>");
-            _sb.AppendLine($"帧时间: {(_deltaTime / Mathf.Max(_frameCount, 1)) * 1000f:F2} ms");
+            _sb.AppendLine($"帧时�? {(_deltaTime / Mathf.Max(_frameCount, 1)) * 1000f:F2} ms");
             _sb.AppendLine();
             
             // === 实体统计 ===
@@ -106,18 +108,18 @@ namespace PVZ.DOTS.Debug
             _sb.AppendLine($"植物: {plantCount}");
             _sb.AppendLine($"僵尸: {zombieCount}");
             _sb.AppendLine($"子弹: {projectileCount}");
-            _sb.AppendLine($"血条: {healthBarCount}");
-            _sb.AppendLine($"<b>总实体: {plantCount + zombieCount + projectileCount}</b>");
+            _sb.AppendLine($"血�? {healthBarCount}");
+            _sb.AppendLine($"<b>总实�? {plantCount + zombieCount + projectileCount}</b>");
             _sb.AppendLine();
             
             // === 系统性能 ===
             _sb.AppendLine("=== 系统性能 ===");
             
-            // 主线程时间
+            // 主线程时�?
             if (_mainThreadRecorder.Valid)
             {
-                double mainThreadMs = GetRecorderAverage(_mainThreadRecorder) * 1e-6; // 纳秒转毫秒
-                _sb.AppendLine($"主线程: {mainThreadMs:F2} ms");
+                double mainThreadMs = GetRecorderAverage(_mainThreadRecorder) * 1e-6; // 纳秒转毫�?
+                _sb.AppendLine($"主线�? {mainThreadMs:F2} ms");
             }
             
             // 渲染线程时间
@@ -131,7 +133,7 @@ namespace PVZ.DOTS.Debug
             if (_gcRecorder.Valid)
             {
                 double gcAllocKB = GetRecorderAverage(_gcRecorder) / 1024.0;
-                _sb.AppendLine($"GC 分配: {gcAllocKB:F2} KB/帧");
+                _sb.AppendLine($"GC 分配: {gcAllocKB:F2} KB");
             }
             
             _sb.AppendLine();
@@ -140,7 +142,7 @@ namespace PVZ.DOTS.Debug
             _sb.AppendLine("=== 内存使用 ===");
             long totalMemory = System.GC.GetTotalMemory(false) / (1024 * 1024);
             _sb.AppendLine($"托管内存: {totalMemory} MB");
-            _sb.AppendLine($"Unity 总内存: {UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong() / (1024 * 1024)} MB");
+            _sb.AppendLine($"Unity 总内�? {UnityEngine.Profiling.Profiler.GetTotalAllocatedMemoryLong() / (1024 * 1024)} MB");
             _sb.AppendLine();
             
             // === 优化建议 ===
@@ -148,21 +150,21 @@ namespace PVZ.DOTS.Debug
             
             if (_fps < 20)
             {
-                _sb.AppendLine("<color=red>• FPS 过低！检查以下项：</color>");
+                _sb.AppendLine("<color=red>�?FPS 过低！检查以下项�?/color>");
                 if (projectileCount > 1000)
                     _sb.AppendLine("  - 子弹过多 (>1000)，考虑禁用子弹视图");
                 if (healthBarCount > 500)
-                    _sb.AppendLine("  - 血条过多 (>500)");
+                    _sb.AppendLine("  - 血条过�?(>500)");
                 if (plantCount + zombieCount > 2000)
                     _sb.AppendLine("  - 战斗单位过多 (>2000)");
             }
             else if (_fps < 30)
             {
-                _sb.AppendLine("<color=yellow>• FPS 偏低，可优化</color>");
+                _sb.AppendLine("<color=yellow>�?FPS 偏低，可优化</color>");
             }
             else
             {
-                _sb.AppendLine("<color=green>• 性能良好！</color>");
+                _sb.AppendLine("<color=green>�?性能良好�?/color>");
             }
 
             // 绘制

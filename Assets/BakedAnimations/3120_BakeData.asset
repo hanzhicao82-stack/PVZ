@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680be7246948184fb1f45914324059e, type: 3}
   m_Name: 3120_BakeData
   m_EditorClassIdentifier: 
-  animationName: Ani_Fish_3120_Spe_Run_01
+  animationName: Ani_Fish_3120_Run_01
   frameRate: 30
-  totalFrames: 109
-  clipLength: 3.6000001
+  totalFrames: 36
+  clipLength: 1.2
   textureWidth: 8039
-  textureHeight: 109
+  textureHeight: 36
   meshDataArray:
   - meshName: Fish_3120_Clothes_01
     vertexCount: 8039

@@ -1,0 +1,53 @@
+{
+  "projectName": "PVZ Performance Test",
+  "projectType": "tower-defense-test",
+  "version": "1.0.0",
+  "modules": [
+    {
+      "moduleId": "core.ecs",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "render.view",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "pvz.zombie-system",
+      "enabled": true,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "animation.spine-optimization",
+      "enabled": true,
+      "parametersJson": "{\"cullingEnabled\": true, \"lodEnabled\": true}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "ui.health-bar",
+      "enabled": false,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    },
+    {
+      "moduleId": "debug.map-grid",
+      "enabled": false,
+      "parametersJson": "{}",
+      "orderOverride": -1
+    }
+  ],
+  "globalParameters": [
+    {
+      "key": "spine.culling.enabled",
+      "value": "true"
+    },
+    {
+      "key": "spine.lod.enabled",
+      "value": "true"
+    }
+  ]
+}

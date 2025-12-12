@@ -1,13 +1,15 @@
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using UnityEngine;
-using PVZ.DOTS.Components;
+using Common;
+using PVZ;
+using Game.TowerDefense;
 
-namespace PVZ.DOTS.Debug
+namespace Debug
 {
     /// <summary>
-    /// 游戏调试绘制器 - 使用 Gizmos 可视化游戏对象
+    /// 游戏调试绘制�?- 使用 Gizmos 可视化游戏对�?
     /// </summary>
     public class GameDebugDrawer : MonoBehaviour
     {
@@ -117,7 +119,7 @@ namespace PVZ.DOTS.Debug
                     Gizmos.DrawWireSphere(position + new Vector3(0, 0.5f, 0), plant.AttackRange);
                 }
 
-                // 绘制生命值
+                // 绘制生命�?
                 if (drawHealthBars && _entityManager.HasComponent<HealthComponent>(entity))
                 {
                     var health = _entityManager.GetComponentData<HealthComponent>(entity);
@@ -182,7 +184,7 @@ namespace PVZ.DOTS.Debug
                 Vector3 directionEnd = position + new Vector3(-0.5f, 0.5f, 0);
                 Gizmos.DrawLine(position + new Vector3(0, 0.5f, 0), directionEnd);
 
-                // 绘制生命值
+                // 绘制生命�?
                 if (drawHealthBars && _entityManager.HasComponent<HealthComponent>(entity))
                 {
                     var health = _entityManager.GetComponentData<HealthComponent>(entity);
@@ -256,7 +258,7 @@ namespace PVZ.DOTS.Debug
             float barWidth = 0.6f;
             float barHeight = 0.1f;
 
-            // 背景条
+            // 背景�?
             Gizmos.color = healthBarBackground;
             DrawBar(position, barWidth, barHeight);
 
@@ -278,13 +280,13 @@ namespace PVZ.DOTS.Debug
             Vector3 leftTop = position + new Vector3(-width / 2, height, 0);
             Vector3 rightTop = position + new Vector3(width / 2, height, 0);
 
-            // 绘制四条边
+            // 绘制四条�?
             Gizmos.DrawLine(leftBottom, rightBottom);
             Gizmos.DrawLine(rightBottom, rightTop);
             Gizmos.DrawLine(rightTop, leftTop);
             Gizmos.DrawLine(leftTop, leftBottom);
 
-            // 填充（使用多条线模拟）
+            // 填充（使用多条线模拟�?
             for (float i = 0; i <= height; i += 0.02f)
             {
                 Vector3 start = leftBottom + new Vector3(0, i, 0);
@@ -293,7 +295,7 @@ namespace PVZ.DOTS.Debug
             }
         }
 
-        // 在 Scene 视图中显示调试信息
+        // �?Scene 视图中显示调试信�?
         void OnGUI()
         {
             if (!Application.isPlaying || World.DefaultGameObjectInjectionWorld == null || _entityManager == null)
@@ -323,7 +325,7 @@ namespace PVZ.DOTS.Debug
             drawPlants = GUILayout.Toggle(drawPlants, "显示植物");
             drawZombies = GUILayout.Toggle(drawZombies, "显示僵尸");
             drawProjectiles = GUILayout.Toggle(drawProjectiles, "显示子弹");
-            drawHealthBars = GUILayout.Toggle(drawHealthBars, "显示生命值");
+            drawHealthBars = GUILayout.Toggle(drawHealthBars, "显示生命");
             drawAttackRanges = GUILayout.Toggle(drawAttackRanges, "显示攻击范围");
 
             GUILayout.EndVertical();

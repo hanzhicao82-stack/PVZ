@@ -1,18 +1,18 @@
-using Unity.Entities;
+﻿using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
-using UnityEngine.UI;
-using PVZ.DOTS.Components;
-using PVZ.DOTS.Utils;
 using System;
+using Common;
+using PVZ;
+using Game;
+using Framework;
 
-
-namespace PVZ.DOTS.Debug
+namespace Debug
 {
     /// <summary>
     /// 性能测试生成器 - 自动生成植物和僵尸用于性能测试
-    /// 完整模拟游戏流程，包括关卡加载和游戏状态管理
+    /// 完整模拟游戏流程，包括关卡加载和游戏状态管�?
     /// </summary>
     public class PerformanceTestSpawner : MonoBehaviour
     {
@@ -27,14 +27,14 @@ namespace PVZ.DOTS.Debug
         [Tooltip("是否加载和显示视图模型")]
         public bool enableViewLoading = true;
 
-        [Tooltip("Mesh预制体路径（Resources相对路径，例如：Prefabs/TestMesh）")]
+        [Tooltip("Mesh预制体路径（Resources相对路径，例如：Prefabs/TestMesh)")]
         public string meshPrefabPath = "Prefabs/TestMesh";
 
-        [Tooltip("Spine 预制体回退路径（当配置未设置时使用，Resources 相对路径）")]
+        [Tooltip("Spine 预制体回退路径（当配置未设置时使用，Resources 相对路径")]
         public string spinePrefabPath = "Prefabs/TestSpine";
 
         [Header("子弹视图配置")]
-        [Tooltip("植物子弹预制体路径 (Resources/AssetDatabase)")]
+        [Tooltip("植物子弹预制体路�?(Resources/AssetDatabase)")]
         public string plantProjectilePrefabPath = string.Empty;
 
         [Header("游戏配置")]
@@ -118,30 +118,30 @@ namespace PVZ.DOTS.Debug
         private int _columnCount;
         private float _cellSize;
         private bool _initialized = false;
-        private PVZ.DOTS.GameLoader _gameLoader;
-        private bool _lastGamePlayingState = true; // 记录上一次的游戏状态
+        private GameLoader _gameLoader;
+        private bool _lastGamePlayingState = true; // 记录上一次的游戏状�?
         private Canvas _healthBarCanvas;
         private Transform _healthBarContainer;
 
         private void Start()
         {
-            UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 开始 ===");
+            UnityEngine.Debug.Log("=== PerformanceTestSpawner: Start 开�?===");
             var world = World.DefaultGameObjectInjectionWorld;
             if (world != null)
             {
                 _entityManager = world.EntityManager;
-                UnityEngine.Debug.Log("PerformanceTestSpawner: EntityManager 已获取");
+
             }
             else
             {
-                UnityEngine.Debug.LogError("PerformanceTestSpawner: 无法获取 World!");
+
             }
 
             _random = new Unity.Mathematics.Random((uint)System.DateTime.Now.Ticks);
             _lastPlantSpawnTime = Time.time;
             _lastZombieSpawnTime = Time.time;
 
-            // 初始化血条 Canvas
+            // 初始化血�?Canvas
             InitializeHealthBarCanvas();
 
             // 使用GameLoader加载关卡配置
@@ -158,12 +158,10 @@ namespace PVZ.DOTS.Debug
 
         private void LoadLevelConfig()
         {
-            UnityEngine.Debug.Log("=== PerformanceTestSpawner: LoadLevelConfig 开始 ===");
 
             if (levelConfigJson == null)
             {
                 GameLogger.LogWarning("PerformanceTest", "未设置关卡配置文件，使用默认配置");
-                UnityEngine.Debug.LogWarning("PerformanceTestSpawner: levelConfigJson 为 null!");
                 return;
             }
 
@@ -173,14 +171,14 @@ namespace PVZ.DOTS.Debug
             var loaderObj = GameObject.Find("GameLoader");
             if (loaderObj == null)
             {
-                UnityEngine.Debug.Log("PerformanceTestSpawner: 未找到 GameLoader，创建新的");
+                UnityEngine.Debug.Log("PerformanceTestSpawner: 未找到GameLoader，创建新的");
                 loaderObj = new GameObject("GameLoader");
-                _gameLoader = loaderObj.AddComponent<PVZ.DOTS.GameLoader>();
+                _gameLoader = loaderObj.AddComponent<GameLoader>();
             }
             else
             {
                 UnityEngine.Debug.Log("PerformanceTestSpawner: 找到已存在的 GameLoader");
-                _gameLoader = loaderObj.GetComponent<PVZ.DOTS.GameLoader>();
+                _gameLoader = loaderObj.GetComponent<GameLoader>();
             }
 
             if (_gameLoader != null)
@@ -193,16 +191,16 @@ namespace PVZ.DOTS.Debug
                 _gameLoader.OnLoadComplete += OnLoadComplete;
                 _gameLoader.OnLevelConfigLoaded += OnLevelConfigLoaded;
 
-                UnityEngine.Debug.Log("PerformanceTestSpawner: 回调已注册，开始加载...");
+                UnityEngine.Debug.Log("PerformanceTestSpawner: 回调已注册，开始加�?..");
 
-                // 开始加载
+                // 开始加�?
                 _gameLoader.StartLoad();
 
                 GameLogger.Log("PerformanceTest", $"使用GameLoader加载关卡 {testLevelId}");
             }
             else
             {
-                UnityEngine.Debug.LogError("PerformanceTestSpawner: GameLoader 组件为 null!");
+                UnityEngine.Debug.LogError("PerformanceTestSpawner: GameLoader 组件�?null!");
             }
 
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: LoadLevelConfig 结束 ===");
@@ -213,18 +211,18 @@ namespace PVZ.DOTS.Debug
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: OnLoadComplete 回调触发 ===");
             GameLogger.Log("PerformanceTest", "关卡加载完成");
             GameStateManager.Instance.SetGameStatePlaying();
-            UnityEngine.Debug.Log("PerformanceTestSpawner: 游戏状态已设置为 Playing");
+            UnityEngine.Debug.Log("PerformanceTestSpawner: 游戏状态已设置�?Playing");
         }
 
-        private void OnLevelConfigLoaded(PVZ.DOTS.Components.LevelConfigComponent levelConfig)
+        private void OnLevelConfigLoaded(LevelConfigComponent levelConfig)
         {
             UnityEngine.Debug.Log("=== PerformanceTestSpawner: OnLevelConfigLoaded 回调触发 ===");
             _rowCount = levelConfig.RowCount;
             _columnCount = levelConfig.ColumnCount;
             _cellSize = levelConfig.CellWidth;
             _initialized = true;
-            GameLogger.Log("PerformanceTest", $"关卡配置已加载：{_rowCount}行 × {_columnCount}列，格子大小={_cellSize}");
-            UnityEngine.Debug.Log($"PerformanceTestSpawner: _initialized = true, 行={_rowCount}, 列={_columnCount}");
+            GameLogger.Log("PerformanceTest", $"关卡配置已加载：{_rowCount}�?× {_columnCount}列，格子大小={_cellSize}");
+            UnityEngine.Debug.Log($"PerformanceTestSpawner: _initialized = true, �?{_rowCount}, �?{_columnCount}");
         }
 
         private void Update()
@@ -232,7 +230,7 @@ namespace PVZ.DOTS.Debug
             if (!enableAutoSpawn || _entityManager == null)
                 return;
 
-            // 检查游戏状态，只在Playing时生成
+            // 检查游戏状态，只在Playing时生�?
             bool isPlaying = IsGamePlaying();
 
             // 状态变化时输出日志
@@ -254,7 +252,7 @@ namespace PVZ.DOTS.Debug
                 return;
             }
 
-            // 初始化地图配置
+            // 初始化地图配�?
             if (!_initialized)
             {
                 InitializeMapConfig();
@@ -263,7 +261,7 @@ namespace PVZ.DOTS.Debug
             // 更新统计信息
             UpdateStatistics();
 
-            // 自动生成植物（性能测试专用）
+            // 自动生成植物（性能测试专用�?
             if (enableAutoPlantSpawn && (maxPlants == 0 || currentPlantCount < maxPlants))
             {
                 if (Time.time - _lastPlantSpawnTime >= plantSpawnInterval)
@@ -273,7 +271,7 @@ namespace PVZ.DOTS.Debug
                 }
             }
 
-            // 额外生成僵尸（性能测试，不影响关卡正常僵尸生成）
+            // 额外生成僵尸（性能测试，不影响关卡正常僵尸生成�?
             if (enableExtraZombieSpawn && (maxZombies == 0 || currentZombieCount < maxZombies))
             {
                 if (Time.time - _lastZombieSpawnTime >= zombieSpawnInterval)
@@ -292,7 +290,7 @@ namespace PVZ.DOTS.Debug
                 return;
             }
 
-            // 从关卡配置读取
+            // 从关卡配置读�?
             var query = _entityManager.CreateEntityQuery(typeof(LevelConfigComponent));
 
             if (query.TryGetSingleton<LevelConfigComponent>(out var levelConfig))
@@ -301,7 +299,7 @@ namespace PVZ.DOTS.Debug
                 _columnCount = levelConfig.ColumnCount;
                 _cellSize = levelConfig.CellWidth;
                 _initialized = true;
-                GameLogger.Log("PerformanceTest", $"使用关卡配置：{_rowCount}行 × {_columnCount}列，格子大小={_cellSize}");
+                GameLogger.Log("PerformanceTest", $"使用关卡配置：{_rowCount}�?× {_columnCount}列，格子大小={_cellSize}");
             }
             else
             {
@@ -312,7 +310,7 @@ namespace PVZ.DOTS.Debug
         }
 
         /// <summary>
-        /// 检查游戏是否在Playing状态
+        /// 检查游戏是否在Playing状�?
         /// </summary>
         private bool IsGamePlaying()
         {
@@ -339,7 +337,7 @@ namespace PVZ.DOTS.Debug
                 int row = _random.NextInt(0, _rowCount);
                 int column = _random.NextInt(0, Mathf.FloorToInt(_columnCount / 2));
 
-                // 计算世界坐标（左下角为原点0,0,0）
+                // 计算世界坐标（左下角为原�?,0,0�?
                 float worldX = column * _cellSize;
                 float worldZ = row * _cellSize;
 
@@ -373,10 +371,10 @@ namespace PVZ.DOTS.Debug
 
                 _entityManager.AddComponentData(plantEntity, LocalTransform.FromPosition(new float3(worldX, 0, worldZ)));
 
-                // 添加视图预制体组件（如果启用）
+                // 添加视图预制体组件（如果启用�?
                 if (enableViewLoading)
                 {
-                    var config = Config.ViewSystemConfig.Instance;
+                    var config = ViewSystemConfig.Instance;
                     string prefabPath = GetPlantViewPrefabPath(plantType, config);
 
                     _entityManager.AddComponentData(plantEntity, new ViewPrefabComponent
@@ -417,9 +415,9 @@ namespace PVZ.DOTS.Debug
         {
             for (int i = 0; i < zombiesPerBatch; i++)
             {
-                // 随机选择行
+                // 随机选择�?
                 int row = _random.NextInt(0, _rowCount);
-                // 僵尸从地图右侧外部生成
+                // 僵尸从地图右侧外部生�?
                 int column = _columnCount;
 
                 // 计算世界坐标
@@ -455,10 +453,10 @@ namespace PVZ.DOTS.Debug
 
                 _entityManager.AddComponentData(zombieEntity, LocalTransform.FromPosition(new float3(worldX, 0, worldZ)));
 
-                // 添加视图预制体组件（如果启用）
+                // 添加视图预制体组件（如果启用�?
                 if (enableViewLoading)
                 {
-                    var config = Config.ViewSystemConfig.Instance;
+                    var config = ViewSystemConfig.Instance;
                     string prefabPath = GetZombieViewPrefabPath(zombieType, config);
 
                     _entityManager.AddComponentData(zombieEntity, new ViewPrefabComponent
@@ -495,7 +493,7 @@ namespace PVZ.DOTS.Debug
             }
         }
 
-        private string GetPlantViewPrefabPath(PlantType type, Config.ViewSystemConfig viewConfig)
+        private string GetPlantViewPrefabPath(PlantType type, ViewSystemConfig viewConfig)
         {
             if (viewConfig.enableSpineSystem)
             {
@@ -507,17 +505,17 @@ namespace PVZ.DOTS.Debug
 
                 if (!string.IsNullOrEmpty(spinePrefabPath))
                 {
-                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体路径，使用回退路径 {spinePrefabPath}。");
+                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体路径，使用回退路径 {spinePrefabPath}");
                     return spinePrefabPath;
                 }
 
-                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh 预制体 {meshPrefabPath}。");
+                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh 预制体 {meshPrefabPath}");
             }
 
             return meshPrefabPath;
         }
 
-        private string GetZombieViewPrefabPath(ZombieType type, Config.ViewSystemConfig viewConfig)
+        private string GetZombieViewPrefabPath(ZombieType type, ViewSystemConfig viewConfig)
         {
             if (viewConfig.enableSpineSystem)
             {
@@ -529,18 +527,18 @@ namespace PVZ.DOTS.Debug
 
                 if (!string.IsNullOrEmpty(spinePrefabPath))
                 {
-                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体路径，使用回退路径 {spinePrefabPath}。");
+                    UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未在 ViewSystemConfig 中配置 {type} 的 Spine 预制体路径，使用回退路径 {spinePrefabPath}");
                     return spinePrefabPath;
                 }
 
-                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh 预制体 {meshPrefabPath}。");
+                UnityEngine.Debug.LogWarning($"[PerformanceTestSpawner] 未配置 {type} 的 Spine 预制体路径，将回退到 Mesh 预制体 {meshPrefabPath}");
             }
 
             return meshPrefabPath;
         }
 
         /// <summary>
-        /// 初始化血条 Canvas
+        /// 初始化血�?Canvas
         /// </summary>
         private void InitializeHealthBarCanvas()
         {
@@ -551,7 +549,7 @@ namespace PVZ.DOTS.Debug
             var canvasObj = _healthBarCanvas.gameObject;
 
 
-            // 创建血条容器
+            // 创建血条容�?
             var healthBarContainerObj = new GameObject("HealthBars");
             healthBarContainerObj.layer = LayerMask.NameToLayer("UI");
             healthBarContainerObj.transform.SetParent(_healthBarCanvas.transform, false);
@@ -564,8 +562,8 @@ namespace PVZ.DOTS.Debug
             containerRect.anchoredPosition = Vector2.zero;
             containerRect.localScale = Vector3.one;
 
-            // 设置到 HealthBarManager
-            var healthBarManager = PVZ.DOTS.Systems.HealthBarManager.Instance;
+            // 设置�?HealthBarManager
+            var healthBarManager = HealthBarManager.Instance;
             if (healthBarManager != null)
             {
                 healthBarManager.SetCanvas(_healthBarCanvas, healthBarContainerObj.transform);
@@ -615,20 +613,20 @@ namespace PVZ.DOTS.Debug
             // 显示地图配置
             if (_initialized)
             {
-                GUILayout.Label($"地图: {_rowCount}行×{_columnCount}列 (格子:{_cellSize})", new GUIStyle(GUI.skin.label) { fontSize = 10 });
+                GUILayout.Label($"地图: {_rowCount}行×{_columnCount}列(格子:{_cellSize})", new GUIStyle(GUI.skin.label) { fontSize = 10 });
             }
 
-            // 显示生成状态
+            // 显示生成状�?
             GUILayout.Label($"状态: {(enableAutoSpawn ? "运行中" : "已暂停")}", new GUIStyle(GUI.skin.label) { fontSize = 10 });
             GUILayout.Label($"关卡: Level {testLevelId}", new GUIStyle(GUI.skin.label) { fontSize = 10 });
             if (enableAutoSpawn)
             {
                 if (enableAutoPlantSpawn)
-                    GUILayout.Label($"→ 自动植物: {plantSpawnInterval:F2}s间隔, {plantsPerBatch}个/批", new GUIStyle(GUI.skin.label) { fontSize = 10 });
+                    GUILayout.Label($"√ 自动植物: {plantSpawnInterval:F2}s间隔, {plantsPerBatch}个/批", new GUIStyle(GUI.skin.label) { fontSize = 10 });
                 if (useDefaultZombieSpawn)
-                    GUILayout.Label($"→ 关卡僵尸: 使用关卡配置", new GUIStyle(GUI.skin.label) { fontSize = 10 });
+                    GUILayout.Label($"√ 关卡僵尸: 使用关卡配置", new GUIStyle(GUI.skin.label) { fontSize = 10 });
                 if (enableExtraZombieSpawn)
-                    GUILayout.Label($"→ 额外僵尸: {zombieSpawnInterval:F2}s间隔, {zombiesPerBatch}个/批", new GUIStyle(GUI.skin.label) { fontSize = 10 });
+                    GUILayout.Label($"√ 额外僵尸: {zombieSpawnInterval:F2}s间隔, {zombiesPerBatch}个/批", new GUIStyle(GUI.skin.label) { fontSize = 10 });
             }
 
             GUILayout.Space(10);
